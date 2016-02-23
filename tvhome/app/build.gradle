@@ -27,4 +27,5 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.1.2'
     compile 'com.squareup.okio:okio:1.6.0'
     compile files('libs/analytics_api.jar')
+    compile files('libs/MiStats_SDK_Client_1_2_0.jar')
 }

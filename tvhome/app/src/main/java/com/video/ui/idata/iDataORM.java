@@ -25,7 +25,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.VolleyHelper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.miui.video.R;
+import tvhome.mothership.com.mothership.*;
+
 import com.tv.ui.metro.model.DisplayItem;
 import com.tv.ui.metro.model.TokenInfo;
 import com.tv.ui.metro.model.VideoItem;
