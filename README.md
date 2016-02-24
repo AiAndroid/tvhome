@@ -104,3 +104,7 @@
 聚合，接耦，独立自升级
 <img src="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/vp.png"/></br>
 
+
+#参考文档
+<a href="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/MIUI_Video_Scrum.pdf">
+揭秘MIUI视频从0到千万用户的研发迭代</a>
