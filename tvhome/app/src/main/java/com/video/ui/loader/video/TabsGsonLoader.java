@@ -4,8 +4,7 @@ import android.content.Context;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
-import com.android.volley.RetryPolicy;
-import com.android.volley.toolbox.VolleyHelper;
+import com.duokan.VolleyHelper;
 import com.google.gson.reflect.TypeToken;
 import com.tv.ui.metro.model.DisplayItem;
 import com.tv.ui.metro.model.GenericBlock;

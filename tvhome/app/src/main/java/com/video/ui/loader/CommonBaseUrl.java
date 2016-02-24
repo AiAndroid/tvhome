@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
-import com.squareup.okhttp.internal.Util;
 import com.tv.ui.metro.model.Constants;
 import com.tv.ui.metro.model.TokenInfo;
 import com.video.cp.model.VideoPlayerConstant;

@@ -1,10 +1,13 @@
-package com.android.volley.toolbox;
+package com.duokan;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.Volley;
 
 public class VolleyHelper {
     private final static String TAG="VolleyHelper";
@@ -63,7 +66,7 @@ public class VolleyHelper {
         if (mImageLoaderRequestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
-            mImageLoaderRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext(), 20*1014*1024);
+            mImageLoaderRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
         }
         return mImageLoaderRequestQueue;
     }

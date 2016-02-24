@@ -22,11 +22,9 @@ import android.util.Pair;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.VolleyHelper;
+import com.duokan.VolleyHelper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import tvhome.mothership.com.mothership.*;
-
 import com.tv.ui.metro.model.DisplayItem;
 import com.tv.ui.metro.model.TokenInfo;
 import com.tv.ui.metro.model.VideoItem;
@@ -1065,7 +1063,7 @@ public class iDataORM {
     }
 
     public static String formartEpisodeName(Context context, String title, int episode){
-        return title + " "+ String.format(context.getString(R.string.episode_name_format), episode);
+        return title + episode;
     }
 
 

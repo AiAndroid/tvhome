@@ -2,8 +2,9 @@ package com.video.ui.loader.video;
 
 import android.content.Context;
 import android.text.TextUtils;
+
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.VolleyHelper;
+import com.duokan.VolleyHelper;
 import com.google.gson.reflect.TypeToken;
 import com.tv.ui.metro.model.DisplayItem;
 import com.tv.ui.metro.model.PlaySource;

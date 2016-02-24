@@ -28,4 +28,6 @@ dependencies {
     compile 'com.squareup.okio:okio:1.6.0'
     compile files('libs/analytics_api.jar')
     compile files('libs/MiStats_SDK_Client_1_2_0.jar')
+    compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
+    compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
 }
