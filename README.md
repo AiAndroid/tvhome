@@ -113,6 +113,7 @@ UI 组织和展示块一一对应</br>
 }
 ```
 #商业化
+前贴片由播放器实现，方案与手机视频基本相同。
 ```
 "target": {
     "url": "yymobile://3g.yy.com:80?bundle_extra_type=0",
