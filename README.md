@@ -26,6 +26,7 @@
 
  ##"长视频点击"
  <img src="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/pvideo.png"/></br>
+ ```json
  {
     "target": {
         "url": "o/V000913653",
@@ -54,7 +55,7 @@
     "ns": "video",
     "id": "V000913653"
 }
-
+```
 #商业化
 ```js
 {
