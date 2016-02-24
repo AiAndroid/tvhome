@@ -72,6 +72,9 @@ UI 组织和展示块一一对应</br>
     "id": "V000913653"
 }
 ```
+#API定义
+尽量少的API，
+
 #点击跳转
 支持android的一切跳转，形式最好是deep link模式。
 
@@ -186,3 +189,6 @@ present_url 是展示打点需求,可以是多个,能够集成第三方的打点
 #参考文档
 <a href="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/MIUI_Video_Scrum.pdf">
 揭秘MIUI视频从0到千万用户的研发迭代</a>
+Facebook Stream,
+Twitter tweets,
+MI Mobile Video API,
