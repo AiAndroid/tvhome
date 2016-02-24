@@ -71,6 +71,8 @@ UI 组织和展示块一一对应</br>
 }
 ```
 #点击跳转
+支持android的一切跳转，形式最好是deep link模式。
+
 长视频
 ```json
 "target": {
@@ -111,6 +113,25 @@ UI 组织和展示块一一对应</br>
 }
 ```
 #商业化
+```
+"target": {
+    "url": "yymobile://3g.yy.com:80?bundle_extra_type=0",
+    "params": {
+        "apk_url": "http://image.box.xiaomi.com/.../pFU92B.apk",
+        ...
+        "apk_version": "26",
+        "present_url": "",
+        "new_task": false,
+        "action_url": "",
+        "tick_url": "",
+        "android_action": "com.duowan.mobile.mi.entry",
+        "android_component": "com.duowan.mobile.mi"
+    },
+    "entity": "intent"
+}
+present_url 是展示打点需求,可以是多个,能够集成第三方的打点需求,如秒钟android_component是应用的包名,如果应用已经存在系统中,会接打开应用,如果不存在,会下载对于的应用。
+```
+具体例子
 ```js
 {
   "ui_type": {
