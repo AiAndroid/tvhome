@@ -56,6 +56,46 @@
     "id": "V000913653"
 }
 ```
+#点击跳转
+长视频
+```json
+"target": {
+  "url": "o/V001059222?position=hot.r%7C9.0%7CRichEntrance.TabImageGrid.O",
+  "params": {
+    "entity": "pvideo"
+  },
+  "entity": "pvideo"
+}
+```
+应用跳转,需要android component, intent构建单元
+```json
+"target": {
+  "url": "",
+  "params": {
+    "apk_url": "http://m.app.mi.com/download/2032",
+    "android_mime": "",
+    "app_name": "艺龙旅行-订酒店",
+    "appstore_h5_url": "",
+    "android_extra": "",
+    "apk_version": "",
+    "new_task": false,
+    "miui_ads": "ads://video?mimarket=0&payload=usiLOSvtw4pYVjgtU6qYoVsEb6ZVCJwm8zhGDsGvzIhtwSTdiWT229iGicHHpddr_ma4ers-JwsbYS4vzkoPmgy13iIHdtfAirW6A3N3oZmyfcDqovbtFzLHZDtLDL3fYRhSleY51LerPc_BKdFJMBPLLGP4psIjTTXjdzXup9TFD-dmIJyXgAd7KG58CfeCMe91uMZVw6EiW0m09-ZA3KsBBaMxY6cacl4DJ1aLgENpbaUx20iP8oO4_JVGMwpypuYYLHl074KSF9gssLOsZD-682Ro-ba8nqlonJyfmnReuzwIuD19bv5QDtzrrJKTqdZtuQTs5bqpikHtN4e6CKNpk4zErPV8Nd4cxvE0ZpNbWpej8R-EogPwIClISE7sMS_GHTew0cErUJjnJsuoQUt4_tjUcPhQCOxrrRoUoEydFcGVISP2FVSy9z-JQm1TpKYTKVjqoFbvNokMgi4l5O-F0rgjTROGHpnfrJ4BmLHF-DPqrBViUvDezfqE36D560v4RV1mDhyyReqYuTPKRg",
+    "android_action": "",
+    "android_activity": "",
+    "android_component": "com.dp.android.elong",
+    "app_icon": ""
+  },
+  "entity": "intent"
+}
+```
+集合跳转，没有指定的目标跳转，默认为集合跳转
+```json
+"target": {
+  "url": "c/tv?position=hot.r%7C2.0%7CButtons.Link",
+  "params": {
+  }
+}
+```
 #商业化
 ```js
 {
