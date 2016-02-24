@@ -13,7 +13,7 @@
            
 
 #  展示块
-
+<img src="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/design.jpg"/></br>
 
 
 #  展示单元定义 DisplayItem
