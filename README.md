@@ -1,3 +1,5 @@
+核心逻辑是展示与业务的分离，增加运营的灵活性
+
 # 数据结构
 <img src="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/TV01.jpg"/>
 <img src="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/TV02.jpg"/></br>
