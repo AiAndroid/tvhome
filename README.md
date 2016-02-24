@@ -25,6 +25,7 @@
 4. 商业化打点，包括公司的Post打点和第三方的GET打点</br>
 
  ##"长视频点击"
+ <img src="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/pvideo.png"/></br>
  {
     "target": {
         "url": "o/V000913653",
@@ -53,4 +54,6 @@
     "ns": "video",
     "id": "V000913653"
 }
+
+
 
