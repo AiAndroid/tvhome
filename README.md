@@ -24,3 +24,33 @@
 3. 点击跳转，数据可以得到最终跳转的Intent，URI，包括为跳转准备应用下载，安装</br>
 4. 商业化打点，包括公司的Post打点和第三方的GET打点</br>
 
+ "长视频点击": {
+                "target": {
+                    "url": "o/V000913653",
+                    "params": {
+                        "entity": "pvideo"
+                    },
+                    "entity": "pvideo"
+                },
+                "title": "秦时明月",
+                "hint": {
+                    "left": "58 集全"
+                },
+                "sub_title": "羽练夫妇甜蜜大升级",
+                "times": {
+                    "updated": 1454513273,
+                    "created": 1430924462
+                },
+                "images": {
+                    "poster": {
+                        "url": "http://image.box.xiaomi.com/mfsv2/download/fdsc3/p01UCPBoFQBc/ZonxJhukRlUsWy.jpg"
+                    },
+                    "icon": {
+                        "url": "http://image.box.xiaomi.com/mfsv2/download/s010/p01EI5zF4ESu/3G48UmxYSnr0Yj.jpg"
+                    }
+                },
+                "ns": "video",
+                "id": "V000913653"
+            }, 
+
+
