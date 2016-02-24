@@ -16,7 +16,7 @@
 <img src="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/block.png"/></br>
 
 UI 组织和展示块一一对应</br>
-block首页
+  block首页
     block tab1    block tab2    block tab3
     block轮播图
        电视剧
