@@ -100,3 +100,7 @@
 }
 ```
 
+#播放器插件化
+聚合，接耦，独立自升级
+<img src="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/vp.png"/></br>
+
