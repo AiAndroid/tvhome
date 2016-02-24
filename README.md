@@ -15,6 +15,19 @@
 #  展示块
 <img src="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/block.png"/></br>
 
+UI 组织和展示块一一对应</br>
+block首页
+    block tab1    block tab2    block tab3
+    block轮播图
+       电视剧
+       电影
+       ...
+       
+    block 电影
+        电影入口
+        电影单元
+        ...
+
 
 #  展示单元定义 DisplayItem
 展示数据和业务无关，展示数据能展示，视频，游戏，应用，广告</br>
