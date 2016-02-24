@@ -56,6 +56,7 @@
 }
 
 #商业化
+```js
 {
   "ui_type": {
     "ratio": ​0.5,
@@ -96,5 +97,5 @@
   "ns": "video",
   "id": "http://e.cn.miaozhen.com/r/k=2018069&p=6zOMb&ro=sm&dx=0&rt=2&ns=__IP__&ni=__IESID__&v=__LOC__&nd=__DRA__&np=__POS__&nn=__APP__&vo=3f965d0f3&vr=2&o=http%3A%2F%2Fproall.h5bang.com%2Fcampaign%2Fdefault%2Fxuetl%2Fxtlqlb%2Findex.php%3Ff%3D2"
 }
-
+```
 
