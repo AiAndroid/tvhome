@@ -1,4 +1,6 @@
 # 数据结构
+<img src="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/TV01.jpg"/></br>
+<img src="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/TV02.jpg"/></br>
 
 数据以块为单位组织
 
@@ -11,7 +13,7 @@
            
 
 #  展示块
-
+<img src="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/design.jpg"/></br>
 
 
 #  展示单元定义 DisplayItem
