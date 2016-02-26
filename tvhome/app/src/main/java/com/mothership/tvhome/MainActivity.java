@@ -1,4 +1,4 @@
-package tvhome.mothership.com.mothership;
+package com.mothership.tvhome;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

@@ -3,10 +3,9 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
-
     defaultConfig {
-        applicationId "tvhome.mothership.com.mothership"
-        minSdkVersion 15
+        applicationId 'com.mothership.tvhome'
+        minSdkVersion 17
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -17,17 +16,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile files('libs/analytics_api.jar')
+    compile files('libs/MiStats_SDK_Client_1_2_0.jar')
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.code.gson:gson:2.6.1'
     compile 'com.squareup.okhttp3:okhttp:3.1.2'
     compile 'com.squareup.okio:okio:1.6.0'
-    compile files('libs/analytics_api.jar')
-    compile files('libs/MiStats_SDK_Client_1_2_0.jar')
     compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
     compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
+    compile 'com.android.support:leanback-v17:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:support-v4:23.1.1'
 }
