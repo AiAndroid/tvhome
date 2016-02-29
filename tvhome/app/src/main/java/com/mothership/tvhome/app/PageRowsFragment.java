@@ -117,7 +117,7 @@ public class PageRowsFragment extends BaseRowsFragment {
 
     @Override
     protected VerticalGridView findGridViewFromRoot(View view) {
-        return (VerticalGridView) view.findViewById(android.support.v17.leanback.R.id.container_list);
+        return (VerticalGridView) view.findViewById(R.id.container_list);
     }
 
     /**
@@ -212,7 +212,7 @@ public class PageRowsFragment extends BaseRowsFragment {
     }
 
     @Override
-    int getLayoutResourceId() {
+    public int getLayoutResourceId() {
         return android.support.v17.leanback.R.layout.lb_rows_fragment;
     }
 
@@ -229,7 +229,7 @@ public class PageRowsFragment extends BaseRowsFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        mScaleFrameLayout = (ScaleFrameLayout) view.findViewById(android.support.v17.leanback.R.id.scale_frame);
+        mScaleFrameLayout = (ScaleFrameLayout) view.findViewById(R.id.scale_frame);
         return view;
     }
 
@@ -239,7 +239,7 @@ public class PageRowsFragment extends BaseRowsFragment {
         super.onViewCreated(view, savedInstanceState);
         // Align the top edge of child with id row_content.
         // Need set this for directly using RowsFragment.
-        getVerticalGridView().setItemAlignmentViewId(android.support.v17.leanback.R.id.row_content);
+        //getVerticalGridView().setItemAlignmentViewId(android.support.v17.leanback.R.id.row_content);
         getVerticalGridView().setSaveChildrenPolicy(VerticalGridView.SAVE_LIMITED_CHILD);
 
         mRecycledViewPool = null;

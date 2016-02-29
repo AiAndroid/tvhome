@@ -3,16 +3,16 @@ package com.mothership.tvhome.app;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v17.leanback.app.HeadersFragment;
-import android.support.v17.leanback.app.RowsFragment;
-import android.support.v17.leanback.widget.BrowseFrameLayout;
+import android.support.v17.leanback.widget.ArrayObjectAdapter;
+import android.support.v17.leanback.widget.HeaderItem;
+import android.support.v17.leanback.widget.ListRow;
+import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.ObjectAdapter;
+import android.support.v17.leanback.widget.OnItemViewClickedListener;
 import android.support.v17.leanback.widget.OnItemViewSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
-import android.support.v17.leanback.widget.RowHeaderPresenter;
 import android.support.v17.leanback.widget.RowPresenter;
-import android.support.v17.leanback.widget.TitleView;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mothership.tvhome.R;
+import com.mothership.tvhome.widget.CardPresenter;
 
 
 /**
@@ -58,8 +59,13 @@ public class MainFragment extends Fragment {
     /** The headers fragment is disabled and will never be shown. */
     public static final int HEADERS_DISABLED = 3;
 
+    private OnItemViewSelectedListener mExternalOnItemViewSelectedListener;
+    private OnItemViewClickedListener mOnItemViewClickedListener;
+
     private PageRowsFragment mRowsFragment;
     //private HeadersFragment mHeadersFragment;
+
+    private ArrayObjectAdapter mRowsAdapter;
 
     private ObjectAdapter mAdapter;
 
@@ -100,17 +106,17 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if (getChildFragmentManager().findFragmentById(android.support.v17.leanback.R.id.browse_container_dock) == null) {
+        if (getChildFragmentManager().findFragmentById(R.id.browse_container_dock) == null) {
             mRowsFragment = new PageRowsFragment();
             //mHeadersFragment = new HeadersFragment();
             getChildFragmentManager().beginTransaction()
                     //.replace(android.support.v17.leanback.R.id.browse_headers_dock, mHeadersFragment)
-                    .replace(android.support.v17.leanback.R.id.browse_container_dock, mRowsFragment).commit();
+                    .replace(R.id.browse_container_dock, mRowsFragment).commit();
         } else {
             //mHeadersFragment = (HeadersFragment) getChildFragmentManager()
             //        .findFragmentById(android.support.v17.leanback.R.id.browse_headers_dock);
             mRowsFragment = (PageRowsFragment) getChildFragmentManager()
-                    .findFragmentById(android.support.v17.leanback.R.id.browse_container_dock);
+                    .findFragmentById(R.id.browse_container_dock);
         }
 
         //mHeadersFragment.setHeadersGone(!mCanShowHeaders);
@@ -125,9 +131,9 @@ public class MainFragment extends Fragment {
         mRowsFragment.setOnItemViewSelectedListener(mRowViewSelectedListener);
         //mHeadersFragment.setOnHeaderViewSelectedListener(mHeaderViewSelectedListener);
         //mHeadersFragment.setOnHeaderClickedListener(mHeaderClickedListener);
-        mRowsFragment.setOnItemViewClickedListener(mOnItemViewClickedListener);
+        //mRowsFragment.setOnItemViewClickedListener(mOnItemViewClickedListener);
 
-        View root = inflater.inflate(android.support.v17.leanback.R.layout.lb_browse_fragment, container, false);
+        View root = inflater.inflate(R.layout.lb_browse_fragment, container, false);
 
         //setTitleView((TitleView) root.findViewById(android.support.v17.leanback.R.id.browse_title_group));
 
@@ -238,4 +244,49 @@ public class MainFragment extends Fragment {
         }
     };
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        Log.i(TAG, "onCreate");
+        super.onActivityCreated(savedInstanceState);
+
+        loadRows();
+
+        //setupEventListeners();
+    }
+
+    private void loadRows() {
+        //List<DisplayItem> list =
+
+        mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
+
+
+        int i;
+        for (i = 0; i < 9; i++) {
+            //if (i != 0) {
+            //    Collections.shuffle(list);
+            //}
+            // For good performance, it's important to use a single instance of
+            // a card presenter for all rows using that presenter.
+            final CardPresenter cardPresenter = new CardPresenter();
+            ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(cardPresenter);
+
+            //for (int j = 0; j < list.size(); j++) {
+            //    listRowAdapter.add(list.get(j));
+            //}
+            HeaderItem header = new HeaderItem(i, "HEADER");
+            mRowsAdapter.add(new ListRow(header, listRowAdapter));
+        }
+
+
+        setAdapter(mRowsAdapter);
+
+    }
+
+    public void setAdapter(ObjectAdapter adapter) {
+        mAdapter = adapter;
+        if (mRowsFragment != null) {
+            mRowsFragment.setAdapter(adapter);
+            //mHeadersFragment.setAdapter(adapter);
+        }
+    }
 }
