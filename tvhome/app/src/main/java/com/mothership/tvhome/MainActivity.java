@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getLoaderManager().initLoader(TabsGsonLoader.LOADER_ID, null, MainActivity.this);
     }
 
 
