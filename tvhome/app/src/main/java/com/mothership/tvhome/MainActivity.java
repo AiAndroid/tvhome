@@ -60,18 +60,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<GenericBlock<DisplayItem>> onCreateLoader(int loaderId, Bundle args) {
         if(loaderId == TabsGsonLoader.LOADER_ID){
-            createTabsLoader();
+            mLoader = new TabsGsonLoader(this, item);
             //mLoader.setProgressNotifiable(mLoadingView);
+            mLoader.forceLoad();
             return mLoader;
         }else{
             return null;
         }
     }
 
-    //please override this fun
-    protected void createTabsLoader(){
-        mLoader = new TabsGsonLoader(this, item);
-    }
 
     @Override
     public void onLoadFinished(Loader<GenericBlock<DisplayItem>> loader, GenericBlock<DisplayItem> data) {
