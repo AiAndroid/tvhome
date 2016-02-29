@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/load_view_root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_centerInParent="true">
+
+    <RelativeLayout
+            android:id="@+id/loading_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+        <ProgressBar android:id="@+id/progress"
+                     android:layout_width="100dp"
+                     android:layout_height="100dp"
+                     android:layout_centerHorizontal="true"
+                     android:indeterminateBehavior="repeat"
+                     android:layout_gravity="center" />
+
+        <TextView
+                android:id="@+id/hint_text"
+                android:layout_below="@id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="100dp"
+                android:gravity="center_vertical"
+                android:layout_centerHorizontal="true"
+                android:text="加载中。。。" />
+
+    </RelativeLayout>
+
+
+    <com.video.ui.view.RetryView
+            android:id="@+id/view_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+</RelativeLayout>

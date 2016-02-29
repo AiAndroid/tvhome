@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ads_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@android:color/white">
+
+        <RelativeLayout
+                android:id="@+id/image_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                  <ImageView android:id="@+id/ads_image"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:scaleType="centerCrop"/>
+        </RelativeLayout>
+
+        <!--<TextView-->
+            <!--android:id="@+id/countdown"-->
+            <!--android:textSize="@dimen/size_48"-->
+            <!--android:layout_width="@dimen/size_81"-->
+            <!--android:layout_height="@dimen/size_81"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:textColor="@color/color_sub_text"-->
+            <!--android:gravity="center_horizontal|center_vertical"-->
+            <!--android:background="@drawable/icon_kaiji"-->
+            <!--android:layout_margin="@dimen/size_30"/>-->
+
+
+    <TextView
+        android:id="@+id/countdown"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal|center_vertical"/>
+
+
+            <ImageView android:id="@+id/ads_bottom_image"
+           android:layout_width="match_parent"
+           android:layout_height="100dp"
+           android:layout_alignParentBottom="true"
+           android:scaleType="centerCrop"
+           android:visibility="visible"/>
+
+           <Button android:layout_width="wrap_content"
+                   android:layout_height="33dp"
+                   android:id="@+id/ads_jump"
+                   android:text="Ignore"
+                   android:layout_alignParentRight="true"
+                   android:layout_margin="30dp"
+                   android:layout_above="@+id/ads_dock"/>
+
+           <View android:id="@id/ads_dock" android:layout_width="match_parent"
+                 android:layout_height="0dp"
+                 android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
