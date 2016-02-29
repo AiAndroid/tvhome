@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public Loader<GenericBlock<DisplayItem>> onCreateLoader(int loaderId, Bundle args) {
         if(loaderId == TabsGsonLoader.LOADER_ID){
             createTabsLoader();
-            mLoader.setProgressNotifiable(mLoadingView);
+            //mLoader.setProgressNotifiable(mLoadingView);
             return mLoader;
         }else{
             return null;
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<GenericBlock<DisplayItem>> loader, GenericBlock<DisplayItem> data) {
         //data returned
-        Log.d("MainActivity", "data");
+        Log.d("MainActivity", "data"+data);
 
     }
 
