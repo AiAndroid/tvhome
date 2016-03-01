@@ -1,6 +1,7 @@
 package com.video.ui.loader.video;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
@@ -27,14 +28,14 @@ public class TabsGsonLoader extends BaseGsonLoader<GenericBlock<DisplayItem>> {
         //calledURL = "https://raw.githubusercontent.com/AiAndroid/mobilevideo/master/mobile_port.json";
         //calledURL = "https://raw.githubusercontent.com/AiAndroid/tvhome/master/home.json";
 
-        String calledURL = "https://raw.githubusercontent.com/AiAndroid/tvhome/master/home.json";
+        String homeurl = "https://raw.githubusercontent.com/AiAndroid/tvhome/master/home.json";
         String baseURL = CommonUrl.BaseURL;
         if(item != null && item.settings != null && "1".equals(item.settings.get("from_push"))){
             baseURL += "push/";
         }
 
         //setRawURL(baseURL + "c/home");
-        setRawURL(calledURL);
+        setRawURL(homeurl);
 
         String url = getRawURL();
         if(item != null && item.settings != null && "1".equals(item.settings.get("from_push"))){
@@ -56,6 +57,7 @@ public class TabsGsonLoader extends BaseGsonLoader<GenericBlock<DisplayItem>> {
         RequestQueue requestQueue = VolleyHelper.getInstance(getContext().getApplicationContext()).getAPIRequestQueue();
         GsonRequest<GenericBlock<DisplayItem>> gsonRequest = new GsonRequest<GenericBlock<DisplayItem>>(calledURL, new TypeToken<GenericBlock<DisplayItem>>(){}.getType(), null, listener, errorListener);
         gsonRequest.setRawURL(getRawURL());
+        Log.d("loader", "RawURL " + getRawURL());
         gsonRequest.setCacheNeed(getContext().getCacheDir() + "/" + cacheFileName);
         gsonRequest.setShouldCache(false);
         gsonRequest.setRetryPolicy(new DefaultRetryPolicy(DEFAULT_TIMEOUT_MS, IMAGE_MAX_RETRIES, IMAGE_BACKOFF_MULT));

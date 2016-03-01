@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
-import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.ObjectAdapter;
 import android.support.v17.leanback.widget.OnItemViewClickedListener;
 import android.support.v17.leanback.widget.OnItemViewSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
+import android.support.v17.leanback.widget.PresenterSelector;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v4.app.Fragment;
@@ -20,7 +20,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mothership.tvhome.R;
+import com.mothership.tvhome.widget.BlockRowPresenter;
 import com.mothership.tvhome.widget.CardPresenter;
+import com.mothership.tvhome.widget.CardPresenterSelector;
+import com.tv.ui.metro.model.DisplayItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -63,7 +69,7 @@ public class MainFragment extends Fragment {
     private OnItemViewClickedListener mOnItemViewClickedListener;
 
     private PageRowsFragment mRowsFragment;
-    //private HeadersFragment mHeadersFragment;
+    private HeadersFragment mHeadersFragment;
 
     private ArrayObjectAdapter mRowsAdapter;
 
@@ -110,11 +116,11 @@ public class MainFragment extends Fragment {
             mRowsFragment = new PageRowsFragment();
             //mHeadersFragment = new HeadersFragment();
             getChildFragmentManager().beginTransaction()
-                    //.replace(android.support.v17.leanback.R.id.browse_headers_dock, mHeadersFragment)
+                   // .replace(R.id.browse_headers_dock, mHeadersFragment)
                     .replace(R.id.browse_container_dock, mRowsFragment).commit();
         } else {
             //mHeadersFragment = (HeadersFragment) getChildFragmentManager()
-            //        .findFragmentById(android.support.v17.leanback.R.id.browse_headers_dock);
+            //        .findFragmentById(R.id.browse_headers_dock);
             mRowsFragment = (PageRowsFragment) getChildFragmentManager()
                     .findFragmentById(R.id.browse_container_dock);
         }
@@ -122,9 +128,7 @@ public class MainFragment extends Fragment {
         //mHeadersFragment.setHeadersGone(!mCanShowHeaders);
 
         mRowsFragment.setAdapter(mAdapter);
-       // if (mHeaderPresenterSelector != null) {
-       //     mHeadersFragment.setPresenterSelector(mHeaderPresenterSelector);
-       // }
+
        // mHeadersFragment.setAdapter(mAdapter);
 
         mRowsFragment.enableRowScaling(false);
@@ -257,9 +261,10 @@ public class MainFragment extends Fragment {
     private void loadRows() {
         //List<DisplayItem> list =
 
-        mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
+        mRowsAdapter = new ArrayObjectAdapter(new BlockRowPresenter());
 
-
+        List<DisplayItem> list =  new ArrayList<DisplayItem>();
+        PresenterSelector selector = new CardPresenterSelector();
         int i;
         for (i = 0; i < 9; i++) {
             //if (i != 0) {
@@ -270,9 +275,17 @@ public class MainFragment extends Fragment {
             final CardPresenter cardPresenter = new CardPresenter();
             ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(cardPresenter);
 
-            //for (int j = 0; j < list.size(); j++) {
-            //    listRowAdapter.add(list.get(j));
-            //}
+            for (int j = 0; j < 15; j++) {
+                //listRowAdapter.add(list.get(j));
+                DisplayItem item = new DisplayItem();
+                if(i%2==0) {
+                    item.id = "land";
+                }
+                listRowAdapter.add(item);
+
+                listRowAdapter.setPresenterSelector(selector);
+            }
+
             HeaderItem header = new HeaderItem(i, "HEADER");
             mRowsAdapter.add(new ListRow(header, listRowAdapter));
         }
