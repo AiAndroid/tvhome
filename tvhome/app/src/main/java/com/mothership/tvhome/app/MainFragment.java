@@ -68,8 +68,9 @@ public class MainFragment extends Fragment {
     private OnItemViewSelectedListener mExternalOnItemViewSelectedListener;
     private OnItemViewClickedListener mOnItemViewClickedListener;
 
-    private PageRowsFragment mRowsFragment;
+    //private PageRowsFragment mRowsFragment;
     private HeadersFragment mHeadersFragment;
+    private PagesFragment mPagesFragment;
 
     private ArrayObjectAdapter mRowsAdapter;
 
@@ -113,31 +114,38 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         if (getChildFragmentManager().findFragmentById(R.id.browse_container_dock) == null) {
-            mRowsFragment = new PageRowsFragment();
+            //mRowsFragment = new PageRowsFragment();
             //mHeadersFragment = new HeadersFragment();
-            getChildFragmentManager().beginTransaction()
+            //getChildFragmentManager().beginTransaction()
                    // .replace(R.id.browse_headers_dock, mHeadersFragment)
-                    .replace(R.id.browse_container_dock, mRowsFragment).commit();
+                   // .replace(R.id.browse_container_dock, mRowsFragment).commit();
+            mPagesFragment = new PagesFragment();
+            getChildFragmentManager().beginTransaction()
+             .replace(R.id.browse_container_dock, mPagesFragment).commit();
         } else {
             //mHeadersFragment = (HeadersFragment) getChildFragmentManager()
             //        .findFragmentById(R.id.browse_headers_dock);
-            mRowsFragment = (PageRowsFragment) getChildFragmentManager()
+            //mRowsFragment = (PageRowsFragment) getChildFragmentManager()
+            //        .findFragmentById(R.id.browse_container_dock);
+            mPagesFragment = (PagesFragment) getChildFragmentManager()
                     .findFragmentById(R.id.browse_container_dock);
         }
 
         //mHeadersFragment.setHeadersGone(!mCanShowHeaders);
 
-        mRowsFragment.setAdapter(mAdapter);
+        //mRowsFragment.setAdapter(mAdapter);
 
        // mHeadersFragment.setAdapter(mAdapter);
 
-        mRowsFragment.enableRowScaling(false);
-        mRowsFragment.setOnItemViewSelectedListener(mRowViewSelectedListener);
+        mPagesFragment.setAdapter(mAdapter);
+
+        //mRowsFragment.enableRowScaling(false);
+        //mRowsFragment.setOnItemViewSelectedListener(mRowViewSelectedListener);
         //mHeadersFragment.setOnHeaderViewSelectedListener(mHeaderViewSelectedListener);
         //mHeadersFragment.setOnHeaderClickedListener(mHeaderClickedListener);
         //mRowsFragment.setOnItemViewClickedListener(mOnItemViewClickedListener);
 
-        View root = inflater.inflate(R.layout.lb_browse_fragment, container, false);
+        View root = inflater.inflate(R.layout.browse_fragment, container, false);
 
         //setTitleView((TitleView) root.findViewById(android.support.v17.leanback.R.id.browse_title_group));
 
@@ -238,8 +246,8 @@ public class MainFragment extends Fragment {
         @Override
         public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item,
                                    RowPresenter.ViewHolder rowViewHolder, Row row) {
-            int position = mRowsFragment.getVerticalGridView().getSelectedPosition();
-            if (DEBUG) Log.v(TAG, "row selected position " + position);
+            //int position = mRowsFragment.getVerticalGridView().getSelectedPosition();
+            //if (DEBUG) Log.v(TAG, "row selected position " + position);
             //onRowSelected(position);
             //if (mExternalOnItemViewSelectedListener != null) {
             //    mExternalOnItemViewSelectedListener.onItemSelected(itemViewHolder, item,
@@ -297,9 +305,10 @@ public class MainFragment extends Fragment {
 
     public void setAdapter(ObjectAdapter adapter) {
         mAdapter = adapter;
-        if (mRowsFragment != null) {
-            mRowsFragment.setAdapter(adapter);
+        mPagesFragment.setAdapter(mAdapter);
+        //if (mRowsFragment != null) {
+        //    mRowsFragment.setAdapter(adapter);
             //mHeadersFragment.setAdapter(adapter);
-        }
+       // }
     }
 }
