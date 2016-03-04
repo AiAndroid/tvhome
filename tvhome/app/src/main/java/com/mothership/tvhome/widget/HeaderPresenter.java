@@ -69,6 +69,7 @@ public class HeaderPresenter extends Presenter {
         viewHolder.mUnselectAlpha = parent.getResources().getFraction(
                 android.support.v17.leanback.R.fraction.lb_browse_header_unselect_alpha, 1, 1);
         setSelectLevel(viewHolder, 0);
+        headerView.setFocusable(true);
         return viewHolder;
     }
 

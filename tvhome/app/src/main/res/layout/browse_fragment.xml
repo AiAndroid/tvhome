@@ -39,8 +39,7 @@
             android:id="@+id/browse_headers_dock"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingEnd="50dp" />
+            android:clipToPadding="false" />
         <include layout="@layout/lb_browse_title" />
     </android.support.v17.leanback.widget.BrowseFrameLayout>
 </FrameLayout>

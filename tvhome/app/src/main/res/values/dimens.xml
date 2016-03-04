@@ -6,4 +6,8 @@
     <dimen name="lb_browse_selected_row_top_padding">20dp</dimen>
     <dimen name="lb_browse_expanded_selected_row_top_padding">16dp</dimen>
     <dimen name="lb_browse_expanded_row_no_hovercard_bottom_padding">28dp</dimen>
+
+    <dimen name="lb_browse_headers_height">100dp</dimen>
+    <dimen name="lb_browse_headers_margin_top">80dp</dimen>
+
 </resources>

@@ -8,8 +8,9 @@ import android.os.Bundle;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v17.leanback.widget.ItemBridgeAdapter;
 import android.support.v17.leanback.widget.ObjectAdapter;
+import android.support.v17.leanback.widget.OnChildViewHolderSelectedListener;
+import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.PresenterSelector;
-import android.support.v17.leanback.widget.RowHeaderPresenter;
 import android.support.v17.leanback.widget.SinglePresenterSelector;
 import android.support.v17.leanback.widget.VerticalGridView;
 import android.support.v4.app.Fragment;
@@ -33,8 +34,9 @@ public class HeadersFragment extends Fragment {
     }
 
     interface OnHeaderViewSelectedListener {
-        void onHeaderSelected(RowHeaderPresenter.ViewHolder viewHolder,int position);
+        void onHeaderSelected(Presenter.ViewHolder viewHolder,int position);
     }
+
 
     private ObjectAdapter mAdapter;
     private HorizontalGridView mHorizontalGridView;
@@ -51,6 +53,15 @@ public class HeadersFragment extends Fragment {
     private boolean mBackgroundColorSet;
     private static final PresenterSelector sHeaderPresenter = new SinglePresenterSelector(
             new MainHeaderPresenter());
+
+    private final OnChildViewHolderSelectedListener mSelectedListener =
+            new OnChildViewHolderSelectedListener() {
+                @Override
+                public void onChildViewHolderSelected(RecyclerView parent,
+                                                      RecyclerView.ViewHolder view, int position, int subposition) {
+                    onSelected(parent, view, position, subposition);
+                }
+            };
 
     public HeadersFragment() {
         mPresenterSelector = sHeaderPresenter;
@@ -70,6 +81,7 @@ public class HeadersFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.headers_fragment, container, false);
         mHorizontalGridView = (HorizontalGridView) view.findViewById(R.id.headers);
+        updateAdapter();
         if (mPendingTransitionPrepare) {
             mPendingTransitionPrepare = false;
             onTransitionPrepare();
@@ -83,7 +95,7 @@ public class HeadersFragment extends Fragment {
             if (viewHolder != null && position >= 0) {
                 ItemBridgeAdapter.ViewHolder vh = (ItemBridgeAdapter.ViewHolder) viewHolder;
                 mOnHeaderViewSelectedListener.onHeaderSelected(
-                        (RowHeaderPresenter.ViewHolder) vh.getViewHolder(),position);
+                        (Presenter.ViewHolder) vh.getViewHolder(),position);
             } else {
                 mOnHeaderViewSelectedListener.onHeaderSelected(null, 0);
             }
@@ -130,11 +142,10 @@ public class HeadersFragment extends Fragment {
         if (mHorizontalGridView == null) {
             return;
         }
-        //if (getBridgeAdapter() != null) {
-        //    FocusHighlightHelper.setupHeaderItemFocusHighlight(listView);
-        //}
-        view.setBackgroundColor(getBackgroundColor());
-        updateFadingEdgeToBrandColor(getBackgroundColor());
+        mHorizontalGridView.setOnChildViewHolderSelectedListener(mSelectedListener);
+
+        //view.setBackgroundColor(getBackgroundColor());
+        //updateFadingEdgeToBrandColor(getBackgroundColor());
         updateListViewVisibility();
     }
 
@@ -241,7 +252,7 @@ public class HeadersFragment extends Fragment {
         if (background instanceof GradientDrawable) {
             background.mutate();
             ((GradientDrawable) background).setColors(
-                    new int[] {Color.TRANSPARENT, backgroundColor});
+                    new int[]{Color.TRANSPARENT, backgroundColor});
         }
     }
 
@@ -330,4 +341,12 @@ public class HeadersFragment extends Fragment {
             mHorizontalGridView.setWindowAlignment(VerticalGridView.WINDOW_ALIGN_NO_EDGE);
         }
     }
+
+    public void requestFocus(){
+        //if(mHorizontalGridView!=null) {
+            mHorizontalGridView.requestFocus();
+        //}
+    }
+
+
 }

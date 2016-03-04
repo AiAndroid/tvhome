@@ -15,13 +15,14 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.mothership.tvhome.R;
 
 /**
  * Created by wangwei on 3/1/16.
  */
-public class PagesFragment extends Fragment {
+public class PagesFragment extends BaseFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,23 +35,17 @@ public class PagesFragment extends Fragment {
 
 
     private static final String TAG = "PagesFragment";
-
-
     private static boolean DEBUG = true;
-
 
     private OnItemViewSelectedListener mExternalOnItemViewSelectedListener;
     private OnItemViewClickedListener mOnItemViewClickedListener;
 
-    //private PageRowsFragment mRowsFragment;
-
-    //private ArrayObjectAdapter mRowsAdapter;
-
     private ObjectAdapter mAdapter;
 
     PagesAdapter mPageAdapter ;
-
     ViewPager mPager;
+
+    private boolean mExpand = true;
 
     public class PagesAdapter extends FragmentPagerAdapter {
         public PagesAdapter(FragmentManager fm) {
@@ -59,15 +54,16 @@ public class PagesFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return 3;
+            return mAdapter.size();
         }
 
         @Override
         public Fragment getItem(int position) {
             PageRowsFragment rowsFragment = new PageRowsFragment();
-            rowsFragment.setAdapter(mAdapter);
+            rowsFragment.setAdapter((ObjectAdapter)mAdapter.get(position));
             rowsFragment.enableRowScaling(false);
             rowsFragment.setOnItemViewSelectedListener(mRowViewSelectedListener);
+            rowsFragment.setOnItemViewClickedListener(mOnItemViewClickedListener);
             return rowsFragment;
         }
     }
@@ -108,53 +104,6 @@ public class PagesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-/*        if (getChildFragmentManager().findFragmentById(R.id.browse_container_dock) == null) {
-            mRowsFragment = new PageRowsFragment();
-            getChildFragmentManager().beginTransaction()
-                    .replace(R.id.browse_container_dock, mRowsFragment).commit();
-        } else {
-            mRowsFragment = (PageRowsFragment) getChildFragmentManager()
-                    .findFragmentById(R.id.browse_container_dock);
-        }*/
-
-        //mRowsFragment.setAdapter(mAdapter);
-
-        //mRowsFragment.enableRowScaling(false);
-        //mRowsFragment.setOnItemViewSelectedListener(mRowViewSelectedListener);
-
-        //mRowsFragment.setOnItemViewClickedListener(mOnItemViewClickedListener);
-
-        //View root = inflater.inflate(R.layout.lb_browse_fragment, container, false);
-
-        //setTitleView((TitleView) root.findViewById(android.support.v17.leanback.R.id.browse_title_group));
-
-        //mBrowseFrame = (BrowseFrameLayout) root.findViewById(android.support.v17.leanback.R.id.browse_frame);
-        // mBrowseFrame.setOnChildFocusListener(mOnChildFocusListener);
-        //mBrowseFrame.setOnFocusSearchListener(mOnFocusSearchListener);
-
-        //if (mBrandColorSet) {
-        //    mHeadersFragment.setBackgroundColor(mBrandColor);
-        //}
-/*
-        mSceneWithHeaders = sTransitionHelper.createScene(mBrowseFrame, new Runnable() {
-            @Override
-            public void run() {
-                showHeaders(true);
-            }
-        });
-        mSceneWithoutHeaders =  sTransitionHelper.createScene(mBrowseFrame, new Runnable() {
-            @Override
-            public void run() {
-                showHeaders(false);
-            }
-        });
-        mSceneAfterEntranceTransition = sTransitionHelper.createScene(mBrowseFrame, new Runnable() {
-            @Override
-            public void run() {
-                setEntranceTransitionEndState();
-            }
-        });*/
         View root = inflater.inflate(R.layout.pagers_fragment, container, false);
 
         mPager = (ViewPager)root.findViewById(R.id.pages_fragment);
@@ -200,6 +149,120 @@ public class PagesFragment extends Fragment {
 
     public void setAdapter(ObjectAdapter adapter) {
         mAdapter = adapter;
+    }
+    public void requestFocus(){
+        if(mPager!=null) {
+            mPager.requestFocus();
+        }
+    }
+
+
+    class ExpandPreLayout implements ViewTreeObserver.OnPreDrawListener {
+
+        final View mVerticalView;
+        final Runnable mCallback;
+        int mState;
+
+        final static int STATE_INIT = 0;
+        final static int STATE_FIRST_DRAW = 1;
+        final static int STATE_SECOND_DRAW = 2;
+
+        ExpandPreLayout(Runnable callback) {
+            mVerticalView = mPager;
+            mCallback = callback;
+        }
+
+        void execute() {
+            mVerticalView.getViewTreeObserver().addOnPreDrawListener(this);
+            setExpand(false);
+            mState = STATE_INIT;
+        }
+
+        @Override
+        public boolean onPreDraw() {
+            if (getView() == null || getActivity() == null) {
+                mVerticalView.getViewTreeObserver().removeOnPreDrawListener(this);
+                return true;
+            }
+            if (mState == STATE_INIT) {
+                setExpand(true);
+                mState = STATE_FIRST_DRAW;
+            } else if (mState == STATE_FIRST_DRAW) {
+                mCallback.run();
+                mVerticalView.getViewTreeObserver().removeOnPreDrawListener(this);
+                mState = STATE_SECOND_DRAW;
+            }
+            return false;
+        }
+    }
+
+    void onExpandTransitionStart(boolean expand, final Runnable callback) {
+        onTransitionPrepare();
+        onTransitionStart();
+        if (expand) {
+            callback.run();
+            return;
+        }
+        // Run a "pre" layout when we go non-expand, in order to get the initial
+        // positions of added rows.
+        new ExpandPreLayout(callback).execute();
+    }
+
+    boolean onTransitionPrepare() {
+        boolean prepared = true;
+        if (prepared) {
+            //freezeRows(true);
+        }
+        return prepared;
+    }
+
+    void onTransitionStart() {
+
+    }
+
+    void onTransitionEnd() {
+        //freezeRows(false);
+    }
+
+    /**
+     * Set the visibility of titles/hovercard of browse rows.
+     */
+    public void setExpand(boolean expand) {
+        mExpand = expand;
+        /*VerticalGridView listView = getVerticalGridView();
+        if (listView != null) {
+            updateRowScaling();
+            final int count = listView.getChildCount();
+            if (DEBUG) Log.v(TAG, "setExpand " + expand + " count " + count);
+            for (int i = 0; i < count; i++) {
+                View view = listView.getChildAt(i);
+                ItemBridgeAdapter.ViewHolder vh = (ItemBridgeAdapter.ViewHolder) listView.getChildViewHolder(view);
+                setRowViewExpanded(vh, mExpand);
+            }
+        }*/
+    }
+
+    public void setPage(int index){
+        if(mPager!=null&&index>=0&&index<mPager.getAdapter().getCount()) {
+            mPager.setCurrentItem(index,true);
+        }
+    }
+
+    /**
+     * Sets an item clicked listener on the fragment.
+     * OnItemViewClickedListener will override {@link View.OnClickListener} that
+     * item presenter sets during {@link Presenter#onCreateViewHolder(ViewGroup)}.
+     * So in general,  developer should choose one of the listeners but not both.
+     */
+    public void setOnItemViewClickedListener(OnItemViewClickedListener listener) {
+        mOnItemViewClickedListener = listener;
+    }
+
+    /**
+     * Returns the item clicked listener.
+     */
+    public OnItemViewClickedListener getOnItemViewClickedListener() {
+        return mOnItemViewClickedListener;
     }
 }
 

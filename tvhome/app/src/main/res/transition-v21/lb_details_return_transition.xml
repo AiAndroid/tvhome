@@ -14,14 +14,19 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-
-<com.mothership.tvhome.widget.MainHeaderView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/row_header"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textColor="@color/header_text"
-    android:textSize="@dimen/lb_browse_header_text_size"
-    android:padding="@dimen/lb_browse_headers_vertical_margin"
-    android:focusable="true"
-    />
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android" >
+  <transition class="android.support.v17.leanback.transition.SlideNoPropagation"
+      android:interpolator="@android:interpolator/fast_out_linear_in"
+      android:duration="350"
+      android:slideEdge="bottom">
+      <targets>
+          <target android:excludeId="@id/title_badge" />
+          <target android:excludeId="@id/title_text" />
+          <target android:excludeId="@id/title_orb" />
+      </targets>
+  </transition>
+  <fade
+      android:interpolator="@android:interpolator/fast_out_linear_in"
+      android:duration="350">
+  </fade>
+</transitionSet>

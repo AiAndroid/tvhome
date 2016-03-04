@@ -15,13 +15,9 @@
      limitations under the License.
 -->
 
-<com.mothership.tvhome.widget.MainHeaderView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/row_header"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textColor="@color/header_text"
-    android:textSize="@dimen/lb_browse_header_text_size"
-    android:padding="@dimen/lb_browse_headers_vertical_margin"
-    android:focusable="true"
-    />
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android" >
+  <fade
+      android:interpolator="@android:interpolator/linear_out_slow_in"
+      android:startDelay="75"
+      android:duration="250"/>
+</transitionSet>
