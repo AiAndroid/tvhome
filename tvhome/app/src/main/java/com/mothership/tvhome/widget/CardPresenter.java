@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.mothership.tvhome.R;
 import com.mothership.tvhome.Utils;
 import com.squareup.picasso.Picasso;
@@ -33,46 +34,17 @@ public class CardPresenter extends Presenter {
     static class ViewHolder extends Presenter.ViewHolder {
         private DisplayItem mItems;
         private ImageView mCardView;
-        private Drawable mDefaultCardImage;
-        private PicassoImageCardViewTarget mImageCardViewTarget;
         public ImageView mImageView;
-        public ViewHolder(View view) {
+        public ViewHolder(View view)
+        {
             super(view);
             mCardView = (ImageView) view;
-            mImageCardViewTarget = new PicassoImageCardViewTarget(mCardView);
-            mDefaultCardImage = view.getResources().getDrawable(R.drawable.defaultposter);
             mImageView = (ImageView) view;
         }
 
-        public void setMovie(DisplayItem m) {
+        public void setMovie(DisplayItem m)
+        {
             mItems = m;
-
-            if(m.images != null && m.images.poster() != null)
-            {
-                Log.d(TAG, m.images.poster().url);
-                String posterUrl = m.images.poster().url;
-                if (posterUrl != null)
-                {
-                    updateCardViewImage(posterUrl);
-                }
-            }
-        }
-
-        public DisplayItem getMovie() {
-            return mItems;
-        }
-
-        public ImageView getCardView() {
-            return mCardView;
-        }
-
-        protected void updateCardViewImage(String uri) {
-            Picasso p = Picasso.with(mImageView.getContext());
-            RequestCreator req = p.load(uri);
-                    req.resize(Utils.convertDpToPixel(mImageView.getContext(), getWidth()),
-                            Utils.convertDpToPixel(mImageView.getContext(), getHeight()))
-                    .error(mDefaultCardImage)
-                    .into(mImageCardViewTarget);
         }
     }
 
@@ -95,27 +67,32 @@ public class CardPresenter extends Presenter {
 
     @Override
     public void onBindViewHolder(Presenter.ViewHolder viewHolder, Object item) {
-        DisplayItem mItem = (DisplayItem) item;
-        ((ViewHolder) viewHolder).setMovie(mItem);
-
-
         Log.d(TAG, "onBindViewHolder");
-        /*if (mItem.getCardImageUrl() != null) {
-            ((ViewHolder) viewHolder).mCardView.setTitleText(mItem.getTitle());
-            ((ViewHolder) viewHolder).mCardView.setContentText(mItem.getStudio());
-            ((ViewHolder) viewHolder).mCardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
-            ((ViewHolder) viewHolder).updateCardViewImage(mItem.getCardImageURI());
-        }*/
+        DisplayItem mItem = (DisplayItem) item;
+        ViewHolder holder = ((ViewHolder) viewHolder);
+        holder.setMovie(mItem);
 
-        //((ViewHolder) viewHolder).mImageView.setLayoutParams(new ViewGroup.LayoutParams((int)(CARD_WIDTH * Math.random()*2), (int)(CARD_HEIGHT * Math.random()*2)));
-//        ((ViewHolder) viewHolder).mImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.defaultposter));
-
+        if(mItem.images != null && mItem.images.poster() != null)
+        {
+            Log.d(TAG, mItem.images.poster().url);
+            String posterUrl = mItem.images.poster().url;
+            if (posterUrl != null)
+            {
+                Glide.with(holder.mImageView.getContext())
+                        .load(posterUrl)
+                        .thumbnail(0.1f)
+                        .error(R.mipmap.ic_launcher)
+                        .into(holder.mImageView);
+            }
+        }
     }
 
 
     @Override
     public void onUnbindViewHolder(Presenter.ViewHolder viewHolder) {
         Log.d(TAG, "onUnbindViewHolder");
+        ViewHolder holder = (ViewHolder) viewHolder;
+        Glide.clear(holder.mImageView);
     }
 
     @Override
@@ -123,29 +100,6 @@ public class CardPresenter extends Presenter {
         // TO DO
     }
 
-    public static class PicassoImageCardViewTarget implements Target {
-        private ImageView mImageCardView;
-
-        public PicassoImageCardViewTarget(ImageView imageCardView) {
-            mImageCardView = imageCardView;
-        }
-
-        @Override
-        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom loadedFrom) {
-            Drawable bitmapDrawable = new BitmapDrawable(mContext.getResources(), bitmap);
-            mImageCardView.setImageDrawable(bitmapDrawable);
-        }
-
-        @Override
-        public void onBitmapFailed(Drawable drawable) {
-            mImageCardView.setImageDrawable(drawable);
-        }
-
-        @Override
-        public void onPrepareLoad(Drawable drawable) {
-            // Do nothing, default_background manager has its own transitions
-        }
-    }
 
     public static int getWidth(){
         return CARD_WIDTH;
