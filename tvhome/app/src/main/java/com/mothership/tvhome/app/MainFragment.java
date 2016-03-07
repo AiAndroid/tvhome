@@ -386,7 +386,7 @@ public class MainFragment extends BaseFragment {
         Log.i(TAG, "onCreate");
         super.onActivityCreated(savedInstanceState);
 
-        loadRows();
+//        loadRows();
 
         setupEventListeners();
     }
@@ -434,8 +434,17 @@ public class MainFragment extends BaseFragment {
 
     public void setAdapter(ObjectAdapter adapter) {
         mAdapter = adapter;
-
+        mAdapter.registerObserver(new ObjectAdapter.DataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                if(mPagesFragment != null) {
+                    mPagesFragment.mPageAdapter.notifyDataSetChanged();
+                }
+            }
+        });
         if (mHeadersFragment != null) {
+
             mPagesFragment.setAdapter(mAdapter);
             mHeadersFragment.setAdapter(mAdapter);
         }
