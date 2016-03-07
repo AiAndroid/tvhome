@@ -34,6 +34,7 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<GenericBlock<DisplayItem>>,  AdView.AdListener{
 
+    private static final String TAG = "MainActivity";
     protected DisplayItem item;
     protected EmptyLoadingView mLoadingView;
     protected BaseGsonLoader mLoader;
@@ -97,13 +98,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     public void onLoadFinished(Loader<GenericBlock<DisplayItem>> loader, GenericBlock<DisplayItem> data) {
         //data returned
         Log.d("MainActivity", "dataloaded" + data);
-
         convert2Adapter(data);
-//        setContentView(R.layout.activity_main);
-        MainFragment mf = (MainFragment)getSupportFragmentManager().findFragmentById(R.id.main_browse_fragment);
-//        mf.
-//        mf.setAdapter(mAdapter);
-//        mAdapter.
         mAdapter.notifyArrayItemRangeChanged(0, mAdapter.size());
     }
 
@@ -113,67 +108,33 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mAdapter.removeItems(0, mAdapter.size());
 //        mAdapter = new ArrayObjectAdapter();
 
-        int blockIdx = 0;
         for(Block<DisplayItem> blk : aSrc.blocks)
         {
-            ArrayObjectAdapter blockAdpt = new ArrayObjectAdapter(new BlockRowPresenter());
-            ArrayObjectAdapter listAdpt = new ArrayObjectAdapter(new CardPresenter());
-            flattenBlock(blk, listAdpt);
-            blockAdpt.add(new ListRow(new HeaderItem(blockIdx ++,  blk.title), listAdpt));
-            mAdapter.add(blockAdpt);
-
-
+            ArrayObjectAdapter pageAdt = new ArrayObjectAdapter(new BlockRowPresenter());
+            ArrayObjectAdapter listAdt = new ArrayObjectAdapter(new CardPresenter());
+            flattenBlock(blk, listAdt, pageAdt);
+            Log.d(TAG, "add block " + blk.title);
+            pageAdt.add(new ListRow(new HeaderItem(blk.title), listAdt));
+            mAdapter.add(pageAdt);
         }
-
-/*
-        ArrayObjectAdapter pageAdapter = mAdapter;
-        List<DisplayItem> list =  new ArrayList<DisplayItem>();
-        PresenterSelector selector = new CardPresenterSelector();
-
-        for(int k = 0; k < 5; k++) {
-            ArrayObjectAdapter rowsAdapter = new ArrayObjectAdapter(new BlockRowPresenter());
-            for (int i = 0; i < 9; i++) {
-                //if (i != 0) {
-                //    Collections.shuffle(list);
-                //}
-                // For good performance, it's important to use a single instance of
-                // a card presenter for all rows using that presenter.
-                final CardPresenter cardPresenter = new CardPresenter();
-                ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(cardPresenter);
-
-                for (int j = 0; j < 15; j++) {
-                    //listRowAdapter.add(list.get(j));
-                    DisplayItem item = new DisplayItem();
-                    if (i % 2 == 0) {
-                        item.id = "land";
-                    }
-                    listRowAdapter.add(item);
-
-                    listRowAdapter.setPresenterSelector(selector);
-                }
-
-                HeaderItem header = new HeaderItem(i, "HEADER");
-                rowsAdapter.add(new ListRow(header, listRowAdapter));
-            }
-            pageAdapter.add(rowsAdapter);
-        }
-        */
     }
 
-    void flattenBlock(Block<DisplayItem> aBlk, ArrayObjectAdapter adapter)
+    void flattenBlock(Block<DisplayItem> aBlk, ArrayObjectAdapter aLstAdt, ArrayObjectAdapter aPageAdt)
     {
         if(aBlk.items != null)
         {
             for(DisplayItem itm : aBlk.items)
             {
-                adapter.add(itm);
+                aLstAdt.add(itm);
             }
         }
         if(aBlk.blocks != null)
         {
             for(Block<DisplayItem> blk : aBlk.blocks)
             {
-                flattenBlock(blk, adapter);
+                ArrayObjectAdapter listAdt = new ArrayObjectAdapter(new CardPresenter());
+                flattenBlock(blk, listAdt, aPageAdt);
+                aPageAdt.add(new ListRow(new HeaderItem(blk.title), listAdt));
             }
         }
 
