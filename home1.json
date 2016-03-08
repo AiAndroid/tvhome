@@ -11,7 +11,7 @@
             "name": "block_grid",
             "id": 1,
             "columns": 4,
-            "ratio":1.7778
+            "ratio":1.791
           },
           "items": [
             {
@@ -384,7 +384,7 @@
             "name": "block_grid",
             "id": 1,
             "columns": 5,
-            "ratio":0.5625
+            "ratio":0.6867
           },
           "ns": "video",
           "items": [
@@ -660,7 +660,7 @@
         },
         "entity": "cover_album"
       },
-      "title": "爆点",
+      "title": "推荐",
       "times": {
         "updated": 1455726742,
         "created": 0
