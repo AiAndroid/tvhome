@@ -1,18 +1,12 @@
 package com.mothership.tvhome;
 
-import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.Loader;
-import android.media.MediaActionSound;
+import android.os.Bundle;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
-import android.support.v17.leanback.widget.ObjectAdapter;
-import android.support.v17.leanback.widget.PresenterSelector;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,15 +16,12 @@ import com.mothership.tvhome.view.AdView;
 import com.mothership.tvhome.view.EmptyLoadingView;
 import com.mothership.tvhome.widget.BlockRowPresenter;
 import com.mothership.tvhome.widget.CardPresenter;
-import com.mothership.tvhome.widget.CardPresenterSelector;
+import com.mothership.tvhome.widget.DisplayItemSelector;
 import com.tv.ui.metro.model.Block;
 import com.tv.ui.metro.model.DisplayItem;
 import com.tv.ui.metro.model.GenericBlock;
 import com.video.ui.loader.BaseGsonLoader;
 import com.video.ui.loader.video.TabsGsonLoader;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<GenericBlock<DisplayItem>>,  AdView.AdListener{
 
@@ -38,6 +29,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     protected DisplayItem item;
     protected EmptyLoadingView mLoadingView;
     protected BaseGsonLoader mLoader;
+    DisplayItemSelector mDiSel = new DisplayItemSelector();
     ArrayObjectAdapter mAdapter = new ArrayObjectAdapter(new CardPresenter());
 
     @Override
@@ -111,7 +103,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         for(Block<DisplayItem> blk : aSrc.blocks)
         {
             ArrayObjectAdapter pageAdt = new ArrayObjectAdapter(new BlockRowPresenter());
-            ArrayObjectAdapter listAdt = new ArrayObjectAdapter(new CardPresenter());
+            ArrayObjectAdapter listAdt = new ArrayObjectAdapter(mDiSel);
             flattenBlock(blk, listAdt, pageAdt);
             Log.d(TAG, "add block " + blk.title);
             pageAdt.add(new ListRow(new HeaderItem(blk.title), listAdt));
@@ -132,8 +124,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         {
             for(Block<DisplayItem> blk : aBlk.blocks)
             {
-                ArrayObjectAdapter listAdt = new ArrayObjectAdapter(new CardPresenter());
+                ArrayObjectAdapter listAdt = new ArrayObjectAdapter(mDiSel);
                 flattenBlock(blk, listAdt, aPageAdt);
+                Log.d(TAG, "add row for page " + blk.title + " cnt " + listAdt.size());
                 aPageAdt.add(new ListRow(new HeaderItem(blk.title), listAdt));
             }
         }
