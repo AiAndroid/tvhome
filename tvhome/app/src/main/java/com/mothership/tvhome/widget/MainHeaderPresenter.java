@@ -1,7 +1,6 @@
 package com.mothership.tvhome.widget;
 
 import android.graphics.Paint;
-import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.Presenter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mothership.tvhome.R;
+import com.tv.ui.metro.model.DisplayItem;
 
 /**
  * Created by wangwei on 3/1/16.
@@ -75,15 +75,21 @@ public class MainHeaderPresenter extends Presenter {
 
     @Override
     public void onBindViewHolder(Presenter.ViewHolder viewHolder, Object item) {
-        HeaderItem headerItem = new HeaderItem(0,"page");//item == null ? null : ((Row) item).getHeaderItem();
-        if (headerItem == null) {
-            ((MainHeaderView) viewHolder.view).setText(null);
-            if (mNullItemVisibilityGone) {
-                viewHolder.view.setVisibility(View.GONE);
+        if(item instanceof BlockAdapter) {
+            BlockAdapter blockAdapter = (BlockAdapter)item;
+            DisplayItem displayItem = (DisplayItem) blockAdapter.mBlock;
+            if (displayItem.title != null) {
+                viewHolder.view.setVisibility(View.VISIBLE);
+                ((MainHeaderView) viewHolder.view).setText(displayItem.title);
+            } else {
+                ((MainHeaderView) viewHolder.view).setText(null);
+                if (mNullItemVisibilityGone) {
+                    viewHolder.view.setVisibility(View.GONE);
+                }
             }
-        } else {
+        }else{
             viewHolder.view.setVisibility(View.VISIBLE);
-            ((MainHeaderView) viewHolder.view).setText(headerItem.getName());
+            ((MainHeaderView) viewHolder.view).setText("page");
         }
     }
 

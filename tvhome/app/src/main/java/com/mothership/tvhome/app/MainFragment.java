@@ -27,10 +27,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.mothership.tvhome.R;
-import com.mothership.tvhome.widget.BlockRowPresenter;
+import com.mothership.tvhome.widget.BlockAdapter;
+import com.mothership.tvhome.widget.BlockVerticalPresenter;
 import com.mothership.tvhome.widget.CardPresenter;
 import com.mothership.tvhome.widget.CardPresenterSelector;
+import com.tv.ui.metro.model.Block;
 import com.tv.ui.metro.model.DisplayItem;
+import com.tv.ui.metro.model.GenericBlock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -386,9 +389,8 @@ public class MainFragment extends BaseFragment {
         Log.i(TAG, "onCreate");
         super.onActivityCreated(savedInstanceState);
 
-//        loadRows();
-
         setupEventListeners();
+        //loadRows();
     }
 
     private void loadRows() {
@@ -399,7 +401,8 @@ public class MainFragment extends BaseFragment {
         PresenterSelector selector = new CardPresenterSelector();
 
         for(int k = 0; k < 5; k++) {
-            ArrayObjectAdapter rowsAdapter = new ArrayObjectAdapter(new BlockRowPresenter());
+            ArrayObjectAdapter rowsAdapter = new ArrayObjectAdapter(new BlockVerticalPresenter());
+            //ArrayObjectAdapter rowsAdapter = new ArrayObjectAdapter(new BlockHorizontalPresenter());
             for (int i = 0; i < 9; i++) {
                 //if (i != 0) {
                 //    Collections.shuffle(list);
@@ -444,9 +447,8 @@ public class MainFragment extends BaseFragment {
             }
         });
         if (mHeadersFragment != null) {
-
-            mPagesFragment.setAdapter(mAdapter);
             mHeadersFragment.setAdapter(mAdapter);
+            mPagesFragment.setAdapter(mAdapter);
         }
     }
 
@@ -838,6 +840,22 @@ public class MainFragment extends BaseFragment {
             Toast.makeText(getActivity(), "click item", Toast.LENGTH_SHORT)
                     .show();
 
+        }
+    }
+
+    public void LoadData(GenericBlock<DisplayItem> data){
+        //loadRows();
+        final BlockVerticalPresenter blockVerticalPresenter = new BlockVerticalPresenter();
+        ArrayObjectAdapter pageAdapter = new ArrayObjectAdapter();
+        if(data.blocks!=null) {
+            for (int i = 0; i < data.blocks.size(); i++) {
+                Block<DisplayItem> block = (Block<DisplayItem>)data.blocks.get(i);
+                if(block.ui_type.id() == 1){
+                    BlockAdapter blockAdapter = new BlockAdapter(data.blocks.get(i),blockVerticalPresenter);
+                    pageAdapter.add(blockAdapter);
+                }
+            }
+            setAdapter(pageAdapter);
         }
     }
 

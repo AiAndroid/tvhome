@@ -1,25 +1,17 @@
 package com.mothership.tvhome.widget;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.mothership.tvhome.R;
-import com.mothership.tvhome.Utils;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.RequestCreator;
-import com.squareup.picasso.Target;
 import com.tv.ui.metro.model.DisplayItem;
+import com.bumptech.glide.Glide;
 
-import java.net.URI;
+
 
 /**
  * Created by wangwei on 2/26/16.
@@ -30,6 +22,8 @@ public class CardPresenter extends Presenter {
     protected static Context mContext;
     private static int CARD_WIDTH = 200;
     private static int CARD_HEIGHT = 300;
+    private int mWidth = 0;
+    private int mHeight = 0;
 
     static class ViewHolder extends Presenter.ViewHolder {
         private DisplayItem mItems;
@@ -71,7 +65,7 @@ public class CardPresenter extends Presenter {
         DisplayItem mItem = (DisplayItem) item;
         ViewHolder holder = ((ViewHolder) viewHolder);
         holder.setMovie(mItem);
-
+        ((ViewHolder) viewHolder).mImageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.defaultposter));
         if(mItem.images != null && mItem.images.poster() != null)
         {
             Log.d(TAG, mItem.images.poster().url);
@@ -101,15 +95,18 @@ public class CardPresenter extends Presenter {
     }
 
 
-    public static int getWidth(){
-        return CARD_WIDTH;
-    };
-
-    public static int getHeight(){
-        return CARD_HEIGHT;
-    };
 
     public Context getContext(){return mContext;}
 
+    public int getWidth(){
+        return mWidth;
+    };
 
+    public int getHeight(){
+        return mHeight;
+    };
+    public void setSize(int w,int h){
+        mWidth = w;
+        mHeight = h;
+    };
 }

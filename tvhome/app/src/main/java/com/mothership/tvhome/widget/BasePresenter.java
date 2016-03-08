@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +19,8 @@ import com.tv.ui.metro.model.DisplayItem;
 public class BasePresenter extends Presenter
 {
     private static final String TAG = "BasePresenter";
+    private int mWidth = 0;
+    private int mHeight = 0;
 
     static public class VH extends ViewHolder
     {
@@ -31,6 +34,7 @@ public class BasePresenter extends Presenter
             mImg = (ImageView) aView.findViewById(R.id.di_img);
             mTitle = (TextView) aView.findViewById(R.id.di_title);
             mSubTitle = (TextView) aView.findViewById(R.id.di_subtitle);
+
         }
     }
 
@@ -39,6 +43,8 @@ public class BasePresenter extends Presenter
     {
         LayoutInflater inf = LayoutInflater.from(parent.getContext());
         View res = inf.inflate(R.layout.di_base_view, parent, false);
+        View view = res.findViewById(R.id.di_img);
+        view.setLayoutParams(new LinearLayout.LayoutParams(getWidth(), getHeight()));
         return new VH(res);
     }
 
@@ -49,7 +55,6 @@ public class BasePresenter extends Presenter
         DisplayItem di = (DisplayItem) aItem;
         vh.mSubTitle.setText(di.sub_title);
         vh.mTitle.setText(di.title);
-
         if(di.images != null && di.images.poster() != null)
         {
             Log.d(TAG, di.images.poster().url);
@@ -71,4 +76,16 @@ public class BasePresenter extends Presenter
         VH vh = (VH)viewHolder;
         Glide.clear(vh.mImg);
     }
+
+    public int getWidth(){
+        return mWidth;
+    };
+
+    public int getHeight(){
+        return mHeight;
+    };
+    public void setSize(int w,int h){
+        mWidth = w;
+        mHeight = h;
+    };
 }

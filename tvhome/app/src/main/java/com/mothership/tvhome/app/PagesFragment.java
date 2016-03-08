@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import com.mothership.tvhome.R;
+import com.mothership.tvhome.widget.BlockAdapter;
 
 /**
  * Created by wangwei on 3/1/16.
@@ -54,13 +55,27 @@ public class PagesFragment extends BaseFragment {
 
         @Override
         public int getCount() {
+            if(mAdapter==null) return 0;
             return mAdapter.size();
         }
 
         @Override
         public Fragment getItem(int position) {
             PageRowsFragment rowsFragment = new PageRowsFragment();
-            rowsFragment.setAdapter((ObjectAdapter)mAdapter.get(position));
+            if((BlockAdapter)mAdapter.get(position) instanceof BlockAdapter){
+                BlockAdapter blockAdapter = (BlockAdapter)mAdapter.get(position);
+                rowsFragment.setAdapter(blockAdapter);
+                /*if(blockAdapter.mHasBlocks){
+                    if(blockAdapter.get(position) instanceof Block){
+                        BlockAdapter rowblock = new BlockAdapter((Block)blockAdapter.get(position),new BlockVerticalPresenter());
+                        rowsFragment.setAdapter(rowblock);
+                    }
+
+                }*/
+            }else{
+                rowsFragment.setAdapter((ObjectAdapter)mAdapter.get(position));
+            }
+
             rowsFragment.enableRowScaling(false);
             rowsFragment.setOnItemViewSelectedListener(mRowViewSelectedListener);
             rowsFragment.setOnItemViewClickedListener(mOnItemViewClickedListener);
@@ -149,6 +164,9 @@ public class PagesFragment extends BaseFragment {
 
     public void setAdapter(ObjectAdapter adapter) {
         mAdapter = adapter;
+        if(mPager!=null) {
+            mPager.getAdapter().notifyDataSetChanged();
+        }
     }
     public void requestFocus(){
         if(mPager!=null) {

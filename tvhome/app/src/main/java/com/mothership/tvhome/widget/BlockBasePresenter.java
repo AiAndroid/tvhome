@@ -2,63 +2,68 @@ package com.mothership.tvhome.widget;
 
 import android.content.Context;
 import android.support.v17.leanback.system.Settings;
+import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.FocusHighlight;
 import android.support.v17.leanback.widget.FocusHighlightHelper;
+import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.HorizontalGridView;
-import android.support.v17.leanback.widget.HorizontalHoverCardSwitcher;
 import android.support.v17.leanback.widget.ItemBridgeAdapter;
-import android.support.v17.leanback.widget.ItemBridgeAdapterShadowOverlayWrapper;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowView;
 import android.support.v17.leanback.widget.OnChildSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.PresenterSelector;
-import android.support.v17.leanback.widget.RowHeaderPresenter;
+import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v17.leanback.widget.ShadowOverlayHelper;
-import android.util.Log;
+import android.support.v17.leanback.widget.VerticalGridView;
+import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.mothership.tvhome.R;
+import com.tv.ui.metro.model.Block;
+import com.tv.ui.metro.model.DisplayItem;
 
 import java.util.HashMap;
 
-public class ListRowPresenter extends RowPresenter {
-
-    private static final String TAG = "ListRowPresenter";
+/**
+ * Created by wangwei on 3/4/16.
+ */
+public class BlockBasePresenter extends RowPresenter {
+    private static final String TAG = "BlockBasePresenter";
     private static final boolean DEBUG = true;
-
     private static final int DEFAULT_RECYCLED_POOL_SIZE = 24;
-
+    final BasePresenter cardPresenter = new BasePresenter();
     /**
-     * ViewHolder for the ListRowPresenter.
+     * ViewHolder for the BlockBasePresenter.
      */
     public static class ViewHolder extends RowPresenter.ViewHolder {
-        final ListRowPresenter mListRowPresenter;
-        final HorizontalGridView mGridView;
+        final BlockBasePresenter mBlockBasePresenter;
+        final RecyclerView mGridView;
         ItemBridgeAdapter mItemBridgeAdapter;
-        final HorizontalHoverCardSwitcher mHoverCardViewSwitcher = new HorizontalHoverCardSwitcher();
+        //final HorizontalHoverCardSwitcher mHoverCardViewSwitcher = new HorizontalHoverCardSwitcher();
         final int mPaddingTop;
         final int mPaddingBottom;
         final int mPaddingLeft;
         final int mPaddingRight;
 
-        public ViewHolder(View rootView, HorizontalGridView gridView, ListRowPresenter p) {
+        public ViewHolder(View rootView, RecyclerView gridView, BlockBasePresenter p) {
             super(rootView);
             mGridView = gridView;
-            mListRowPresenter = p;
+            mBlockBasePresenter = p;
             mPaddingTop = mGridView.getPaddingTop();
             mPaddingBottom = mGridView.getPaddingBottom();
             mPaddingLeft = mGridView.getPaddingLeft();
             mPaddingRight = mGridView.getPaddingRight();
         }
 
-        public final ListRowPresenter getListRowPresenter() {
-            return mListRowPresenter;
+        public final BlockBasePresenter getBlockPresenter() {
+            return mBlockBasePresenter;
         }
 
-        public final HorizontalGridView getGridView() {
+        public final RecyclerView getGridView() {
             return mGridView;
         }
 
@@ -67,11 +72,12 @@ public class ListRowPresenter extends RowPresenter {
         }
     }
 
-    class ListRowPresenterItemBridgeAdapter extends ItemBridgeAdapter {
-        ListRowPresenter.ViewHolder mRowViewHolder;
 
-        ListRowPresenterItemBridgeAdapter(ListRowPresenter.ViewHolder rowViewHolder) {
-            mRowViewHolder = rowViewHolder;
+    class BlockPresenterItemBridgeAdapter extends ItemBridgeAdapter {
+        BlockBasePresenter.ViewHolder mBlockViewHolder;
+
+        BlockPresenterItemBridgeAdapter(BlockBasePresenter.ViewHolder rowViewHolder) {
+            mBlockViewHolder = rowViewHolder;
         }
 
         @Override
@@ -79,23 +85,23 @@ public class ListRowPresenter extends RowPresenter {
             if (viewHolder.itemView instanceof ViewGroup) {
                 //TransitionHelper.setTransitionGroup((ViewGroup) viewHolder.itemView, true);
             }
-            if (mShadowOverlayHelper != null) {
-                mShadowOverlayHelper.onViewCreated(viewHolder.itemView);
-            }
+            //if (mShadowOverlayHelper != null) {
+            //    mShadowOverlayHelper.onViewCreated(viewHolder.itemView);
+            //}
         }
 
         @Override
         public void onBind(final ItemBridgeAdapter.ViewHolder viewHolder) {
             // Only when having an OnItemClickListner, we will attach the OnClickListener.
-            if (mRowViewHolder.getOnItemViewClickedListener() != null) {
+            if (mBlockViewHolder.getOnItemViewClickedListener() != null) {
                 viewHolder.getViewHolder().view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ItemBridgeAdapter.ViewHolder ibh = (ItemBridgeAdapter.ViewHolder)
-                                mRowViewHolder.mGridView.getChildViewHolder(viewHolder.itemView);
-                        if (mRowViewHolder.getOnItemViewClickedListener() != null) {
-                            mRowViewHolder.getOnItemViewClickedListener().onItemClicked(viewHolder.getViewHolder(),
-                                    ibh.getItem(), mRowViewHolder, (ListRow) mRowViewHolder.getRow());
+                                mBlockViewHolder.mGridView.getChildViewHolder(viewHolder.itemView);
+                        if (mBlockViewHolder.getOnItemViewClickedListener() != null) {
+                            mBlockViewHolder.getOnItemViewClickedListener().onItemClicked(viewHolder.getViewHolder(),
+                                    ibh.getItem(), mBlockViewHolder, (Row) mBlockViewHolder.getRow());
                         }
                     }
                 });
@@ -104,23 +110,23 @@ public class ListRowPresenter extends RowPresenter {
 
         @Override
         public void onUnbind(ItemBridgeAdapter.ViewHolder viewHolder) {
-            if (mRowViewHolder.getOnItemViewClickedListener() != null) {
+            if (mBlockViewHolder.getOnItemViewClickedListener() != null) {
                 viewHolder.getViewHolder().view.setOnClickListener(null);
             }
         }
 
         @Override
         public void onAttachedToWindow(ItemBridgeAdapter.ViewHolder viewHolder) {
-            if (mShadowOverlayHelper != null && mShadowOverlayHelper.needsOverlay()) {
+            //if (mShadowOverlayHelper != null && mShadowOverlayHelper.needsOverlay()) {
                 //int dimmedColor = mRowViewHolder.mColorDimmer.getPaint().getColor();
                 //mShadowOverlayHelper.setOverlayColor(viewHolder.itemView, dimmedColor);
-            }
-            mRowViewHolder.syncActivatedStatus(viewHolder.itemView);
+            //}
+            mBlockViewHolder.syncActivatedStatus(viewHolder.itemView);
         }
 
         @Override
         public void onAddPresenter(Presenter presenter, int type) {
-            mRowViewHolder.getGridView().getRecycledViewPool().setMaxRecycledViews(
+            mBlockViewHolder.getGridView().getRecycledViewPool().setMaxRecycledViews(
                     type, getRecycledPoolSize(presenter));
         }
     }
@@ -135,19 +141,21 @@ public class ListRowPresenter extends RowPresenter {
     private boolean mRoundedCornersEnabled = true;
     private boolean mKeepChildForeground = true;
     private HashMap<Presenter, Integer> mRecycledPoolSize = new HashMap<Presenter, Integer>();
-    private ShadowOverlayHelper mShadowOverlayHelper;
-    private ItemBridgeAdapter.Wrapper mShadowOverlayWrapper;
+    //private ShadowOverlayHelper mShadowOverlayHelper;
+    //private ItemBridgeAdapter.Wrapper mShadowOverlayWrapper;
 
-    private static int sSelectedRowTopPadding;
-    private static int sExpandedSelectedRowTopPadding;
-    private static int sExpandedRowNoHovercardBottomPadding;
+    //private static int sSelectedRowTopPadding;
+    //private static int sExpandedSelectedRowTopPadding;
+    //private static int sExpandedRowNoHovercardBottomPadding;
+
+    private View mParent;
 
     /**
      * Constructs a ListRowPresenter with defaults.
      * Uses {@link FocusHighlight#ZOOM_FACTOR_MEDIUM} for focus zooming and
      * disabled dimming on focus.
      */
-    public ListRowPresenter() {
+    public BlockBasePresenter() {
         this(FocusHighlight.ZOOM_FACTOR_MEDIUM);
     }
 
@@ -157,19 +165,12 @@ public class ListRowPresenter extends RowPresenter {
      * @param focusZoomFactor Controls the zoom factor used when an item view is focused. One of
      *         {@link FocusHighlight#ZOOM_FACTOR_NONE},
      *         {@link FocusHighlight#ZOOM_FACTOR_SMALL},
-     *         {@link Focu    @Override
-    protected void onBindRowViewHolder(RowPresenter.ViewHolder holder, Object item) {
-        super.onBindRowViewHolder(holder, item);
-        ListRowPresenter.ViewHolder vh = (ListRowPresenter.ViewHolder) holder;
-        ListRow rowItem = (ListRow) item;
-        vh.mItemBridgeAdapter.setAdapter(rowItem.getAdapter());
-        vh.mGridView.setAdapter(vh.mItemBridgeAdapter);
-    }sHighlight#ZOOM_FACTOR_XSMALL},
+     *         {@link FocusHighlight#ZOOM_FACTOR_XSMALL},
      *         {@link FocusHighlight#ZOOM_FACTOR_MEDIUM},
      *         {@link FocusHighlight#ZOOM_FACTOR_LARGE}
      * Dimming on focus defaults to disabled.
      */
-    public ListRowPresenter(int focusZoomFactor) {
+    public BlockBasePresenter(int focusZoomFactor) {
         this(focusZoomFactor, false);
     }
 
@@ -184,7 +185,7 @@ public class ListRowPresenter extends RowPresenter {
      *         {@link FocusHighlight#ZOOM_FACTOR_LARGE}
      * @param useFocusDimmer determines if the FocusHighlighter will use the dimmer
      */
-    public ListRowPresenter(int focusZoomFactor, boolean useFocusDimmer) {
+    public BlockBasePresenter(int focusZoomFactor, boolean useFocusDimmer) {
         //if (!FocusHighlightHelper.isValidZoomIndex(focusZoomFactor)) {
         //    throw new IllegalArgumentException("Unhandled zoom factor");
         //}
@@ -199,16 +200,17 @@ public class ListRowPresenter extends RowPresenter {
      * @param rowHeight Row height in pixels, or WRAP_CONTENT, or 0
      * to use the default height.
      */
-    public void setRowHeight(int rowHeight) {
-        mRowHeight = rowHeight;
-    }
+    //public void setRowHeight(int rowHeight) {
+    //    mRowHeight = rowHeight;
+    //}
 
     /**
      * Returns the row height for list rows created by this Presenter.
      */
-    public int getRowHeight() {
-        return mRowHeight;
-    }
+    //public int getRowHeight() {
+    //    return mRowHeight;
+    //}
+
 
     /**
      * Sets the expanded row height for rows created by this Presenter.
@@ -252,12 +254,13 @@ public class ListRowPresenter extends RowPresenter {
         return mUseFocusDimmer;
     }
 
+
     @Override
     protected void initializeRowViewHolder(RowPresenter.ViewHolder holder) {
         super.initializeRowViewHolder(holder);
-        final ViewHolder rowViewHolder = (ViewHolder) holder;
+        final ViewHolder blockViewHolder = (ViewHolder) holder;
         Context context = holder.view.getContext();
-        /*if (mShadowOverlayHelper == null) {
+/*        if (mShadowOverlayHelper == null) {
             mShadowOverlayHelper = new ShadowOverlayHelper.Builder()
                     .needsOverlay(needsDefaultListSelectEffect())
                     .needsShadow(needsDefaultShadow())
@@ -271,38 +274,42 @@ public class ListRowPresenter extends RowPresenter {
                         mShadowOverlayHelper);
             }
         }*/
-        rowViewHolder.mItemBridgeAdapter = new ListRowPresenterItemBridgeAdapter(rowViewHolder);
+        blockViewHolder.mItemBridgeAdapter = new BlockPresenterItemBridgeAdapter(blockViewHolder);
         // set wrapper if needed
         //rowViewHolder.mItemBridgeAdapter.setWrapper(mShadowOverlayWrapper);
         //mShadowOverlayHelper.prepareParentForShadow(rowViewHolder.mGridView);
 
-        FocusHighlightHelper.setupBrowseItemFocusHighlight(rowViewHolder.mItemBridgeAdapter,
+        FocusHighlightHelper.setupBrowseItemFocusHighlight(blockViewHolder.mItemBridgeAdapter,
                 mFocusZoomFactor, mUseFocusDimmer);
-        //rowViewHolder.mGridView.setFocusDrawingOrderEnabled(mShadowOverlayHelper.getShadowType()
+        //blockViewHolder.mGridView.setFocusDrawingOrderEnabled(mShadowOverlayHelper.getShadowType()
         //        == ShadowOverlayHelper.SHADOW_STATIC);
-        rowViewHolder.mGridView.setOnChildSelectedListener(
-                new OnChildSelectedListener() {
-                    @Override
-                    public void onChildSelected(ViewGroup parent, View view, int position, long id) {
-                        selectChildView(rowViewHolder, view, true);
-                    }
-                });
-       /* rowViewHolder.mGridView.setOnUnhandledKeyListener(
-                new BaseGridView.OnUnhandledKeyListener() {
-                    @Override
-                    public boolean onUnhandledKey(KeyEvent event) {
-                        if (rowViewHolder.getOnKeyListener() != null &&
-                                rowViewHolder.getOnKeyListener().onKey(
-                                        rowViewHolder.view, event.getKeyCode(), event)) {
-                            return true;
-                        }
-                        return false;
-                    }
-                });*/
+        setEventListener(blockViewHolder.mGridView,blockViewHolder);
     }
 
-    final boolean needsDefaultListSelectEffect() {
-        return isUsingDefaultListSelectEffect() && getSelectEffectEnabled();
+    private void setEventListener(RecyclerView view,ViewHolder viewHolder){
+        final ViewHolder blockViewHolder = viewHolder;
+        if(view instanceof HorizontalGridView){
+            HorizontalGridView horizontalGridView = (HorizontalGridView)view;
+            horizontalGridView.setOnChildSelectedListener(
+                    new OnChildSelectedListener() {
+                        @Override
+                        public void onChildSelected(ViewGroup parent, View view, int position, long id) {
+                            selectChildView(blockViewHolder, view, true);
+                        }
+                    });
+            horizontalGridView.setOnUnhandledKeyListener(
+                    new HorizontalGridView.OnUnhandledKeyListener() {
+                        @Override
+                        public boolean onUnhandledKey(KeyEvent event) {
+                            if (blockViewHolder.getOnKeyListener() != null &&
+                                    blockViewHolder.getOnKeyListener().onKey(
+                                            blockViewHolder.view, event.getKeyCode(), event)) {
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
+        }
     }
 
     /**
@@ -343,48 +350,26 @@ public class ListRowPresenter extends RowPresenter {
                 ItemBridgeAdapter.ViewHolder ibh = (ItemBridgeAdapter.ViewHolder)
                         rowViewHolder.mGridView.getChildViewHolder(view);
 
-                if (mHoverCardPresenterSelector != null) {
+                /*if (mHoverCardPresenterSelector != null) {
                     rowViewHolder.mHoverCardViewSwitcher.select(
                             rowViewHolder.mGridView, view, ibh.getItem());
-                }
+                }*/
                 if (fireEvent && rowViewHolder.getOnItemViewSelectedListener() != null) {
                     rowViewHolder.getOnItemViewSelectedListener().onItemSelected(
                             ibh.getViewHolder(), ibh.getItem(), rowViewHolder, rowViewHolder.getRow());
                 }
             }
         } else {
-            if (mHoverCardPresenterSelector != null) {
+            /*if (mHoverCardPresenterSelector != null) {
                 rowViewHolder.mHoverCardViewSwitcher.unselect();
-            }
+            }*/
             if (fireEvent && rowViewHolder.getOnItemViewSelectedListener() != null) {
                 rowViewHolder.getOnItemViewSelectedListener().onItemSelected(
                         null, null, rowViewHolder, rowViewHolder.getRow());
             }
         }
     }
-
-    private static void initStatics(Context context) {
-        if (sSelectedRowTopPadding == 0) {
-            sSelectedRowTopPadding = context.getResources().getDimensionPixelSize(
-                    R.dimen.lb_browse_selected_row_top_padding);
-            sExpandedSelectedRowTopPadding = context.getResources().getDimensionPixelSize(
-                    R.dimen.lb_browse_expanded_selected_row_top_padding);
-            sExpandedRowNoHovercardBottomPadding = context.getResources().getDimensionPixelSize(
-                    R.dimen.lb_browse_expanded_row_no_hovercard_bottom_padding);
-        }
-    }
-
-    private int getSpaceUnderBaseline(ListRowPresenter.ViewHolder vh) {
-        RowHeaderPresenter.ViewHolder headerViewHolder = vh.getHeaderViewHolder();
-        if (headerViewHolder != null) {
-            if (getHeaderPresenter() != null) {
-                return getHeaderPresenter().getSpaceUnderBaseline(headerViewHolder);
-            }
-            return headerViewHolder.view.getPaddingBottom();
-        }
-        return 0;
-    }
-
+/*
     private void setVerticalPadding(ListRowPresenter.ViewHolder vh) {
         int paddingTop, paddingBottom;
         // Note: sufficient bottom padding needed for card shadows.
@@ -404,17 +389,15 @@ public class ListRowPresenter extends RowPresenter {
         }
         vh.getGridView().setPadding(vh.mPaddingLeft, paddingTop, vh.mPaddingRight,
                 paddingBottom);
-    }
+    }*/
 
+    protected BlockBasePresenter.ViewHolder createBlockViewHolder(ViewGroup parent){
+        return null;
+    }
     @Override
-    protected RowPresenter.ViewHolder createRowViewHolder(ViewGroup parent) {
-        initStatics(parent.getContext());
-        ListRowView rowView = new ListRowView(parent.getContext());
-        setupFadingEffect(rowView);
-        if (mRowHeight != 0) {
-            rowView.getGridView().setRowHeight(mRowHeight);
-        }
-        return new ViewHolder(rowView, rowView.getGridView(), this);
+    protected BlockBasePresenter.ViewHolder createRowViewHolder(ViewGroup parent) {
+        mParent = parent;
+        return createBlockViewHolder(parent);
     }
 
     /**
@@ -424,8 +407,17 @@ public class ListRowPresenter extends RowPresenter {
     @Override
     protected void dispatchItemSelectedListener(RowPresenter.ViewHolder holder, boolean selected) {
         ViewHolder vh = (ViewHolder)holder;
-        ItemBridgeAdapter.ViewHolder itemViewHolder = (ItemBridgeAdapter.ViewHolder)
-                vh.mGridView.findViewHolderForPosition(vh.mGridView.getSelectedPosition());
+        ItemBridgeAdapter.ViewHolder itemViewHolder = null;
+        if(vh.mGridView instanceof HorizontalGridView){
+            HorizontalGridView view = (HorizontalGridView)vh.mGridView;
+            itemViewHolder = (ItemBridgeAdapter.ViewHolder)
+                    vh.mGridView.findViewHolderForPosition(view.getSelectedPosition());
+        }else if(vh.mGridView instanceof VerticalGridView){
+            VerticalGridView view = (VerticalGridView)vh.mGridView;
+            itemViewHolder = (ItemBridgeAdapter.ViewHolder)
+                    vh.mGridView.findViewHolderForPosition(view.getSelectedPosition());
+        }
+
         if (itemViewHolder == null) {
             super.dispatchItemSelectedListener(holder, selected);
             return;
@@ -443,30 +435,36 @@ public class ListRowPresenter extends RowPresenter {
     protected void onRowViewSelected(RowPresenter.ViewHolder holder, boolean selected) {
         super.onRowViewSelected(holder, selected);
         ViewHolder vh = (ViewHolder) holder;
-        setVerticalPadding(vh);
+        //setVerticalPadding(vh);
         updateFooterViewSwitcher(vh);
     }
 
     /*
-     * Show or hide hover card when row selection or expanded state is changed.
-     */
+ * Show or hide hover card when row selection or expanded state is changed.
+ */
     private void updateFooterViewSwitcher(ViewHolder vh) {
         if (vh.isExpanded() && vh.isExpanded()) {
             if (mHoverCardPresenterSelector != null) {
-                vh.mHoverCardViewSwitcher.init((ViewGroup) vh.view,
-                        mHoverCardPresenterSelector);
+                //vh.mHoverCardViewSwitcher.init((ViewGroup) vh.view,
+                //        mHoverCardPresenterSelector);
             }
-            ItemBridgeAdapter.ViewHolder ibh = (ItemBridgeAdapter.ViewHolder)
-                    vh.mGridView.findViewHolderForPosition(
-                            vh.mGridView.getSelectedPosition());
+            ItemBridgeAdapter.ViewHolder ibh = null;
+            if(vh.mGridView instanceof HorizontalGridView){
+                HorizontalGridView view = (HorizontalGridView)vh.mGridView;
+                ibh = (ItemBridgeAdapter.ViewHolder)
+                        vh.mGridView.findViewHolderForPosition(view.getSelectedPosition());
+            }else if(vh.mGridView instanceof VerticalGridView){
+                VerticalGridView view = (VerticalGridView)vh.mGridView;
+                ibh = (ItemBridgeAdapter.ViewHolder)
+                        vh.mGridView.findViewHolderForPosition(view.getSelectedPosition());
+            }
             selectChildView(vh, ibh == null ? null : ibh.itemView, false);
         } else {
             if (mHoverCardPresenterSelector != null) {
-                vh.mHoverCardViewSwitcher.unselect();
+                //vh.mHoverCardViewSwitcher.unselect();
             }
         }
     }
-
     private void setupFadingEffect(ListRowView rowView) {
         // content is completely faded at 1/2 padding of left, fading length is 1/2 of padding.
         HorizontalGridView gridView = rowView.getGridView();
@@ -484,21 +482,49 @@ public class ListRowPresenter extends RowPresenter {
     protected void onRowViewExpanded(RowPresenter.ViewHolder holder, boolean expanded) {
         super.onRowViewExpanded(holder, expanded);
         ViewHolder vh = (ViewHolder) holder;
-        if (getRowHeight() != getExpandedRowHeight()) {
+        /*if (getRowHeight() != getExpandedRowHeight()) {
             int newHeight = expanded ? getExpandedRowHeight() : getRowHeight();
             vh.getGridView().setRowHeight(newHeight);
-        }
-        setVerticalPadding(vh);
+        }*/
+        //setVerticalPadding(vh);
         updateFooterViewSwitcher(vh);
     }
 
     @Override
     protected void onBindRowViewHolder(RowPresenter.ViewHolder holder, Object item) {
-        super.onBindRowViewHolder(holder, item);
         ViewHolder vh = (ViewHolder) holder;
-        ListRow rowItem = (ListRow) item;
-        vh.mItemBridgeAdapter.setAdapter(rowItem.getAdapter());
-        vh.mGridView.setAdapter(vh.mItemBridgeAdapter);
+        if(item instanceof Block){
+            Block<DisplayItem> displayItemBlock = (Block<DisplayItem>)item;
+            super.onBindRowViewHolder(holder, new Row(new HeaderItem(0,displayItemBlock.title)));
+            if(displayItemBlock.items!=null){
+                ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(cardPresenter);
+                for(int i=0;i<displayItemBlock.items.size();++i){
+                    listRowAdapter.add(displayItemBlock.items.get(i));
+                }
+                vh.mItemBridgeAdapter.setAdapter(listRowAdapter);
+                vh.mGridView.setAdapter(vh.mItemBridgeAdapter);
+                int columns = displayItemBlock.ui_type.columns();
+                int itemmargin = (int)mParent.getResources().getDimension(R.dimen.grid_item_margin);
+                if(vh.mGridView instanceof HorizontalGridView){
+                    HorizontalGridView gridView = (HorizontalGridView)vh.mGridView;
+                    gridView.setNumRows(displayItemBlock.items.size() / columns);
+                    int itemwidth = (int)((mParent.getWidth()-itemmargin*(columns-1))/columns);
+                    gridView.setItemMargin(itemmargin);
+                    cardPresenter.setSize(itemwidth,(int)(itemwidth/displayItemBlock.ui_type.ratio()));
+                }else if(vh.mGridView instanceof VerticalGridView){
+                    VerticalGridView gridView = (VerticalGridView)vh.mGridView;
+                    gridView.setNumColumns(columns);
+                }
+
+            }
+
+        }else{
+            super.onBindRowViewHolder(holder, item);
+            ListRow rowItem = (ListRow) item;
+            vh.mItemBridgeAdapter.setAdapter(rowItem.getAdapter());
+            vh.mGridView.setAdapter(vh.mItemBridgeAdapter);
+        }
+
     }
 
     @Override
@@ -635,29 +661,43 @@ public class ListRowPresenter extends RowPresenter {
     @Override
     protected void onSelectLevelChanged(RowPresenter.ViewHolder holder) {
         super.onSelectLevelChanged(holder);
-        if (mShadowOverlayHelper != null && mShadowOverlayHelper.needsOverlay()) {
+        /*if (mShadowOverlayHelper != null && mShadowOverlayHelper.needsOverlay()) {
             ViewHolder vh = (ViewHolder) holder;
-            /*int dimmedColor = vh.mColorDimmer.getPaint().getColor();
+            int dimmedColor = vh.mColorDimmer.getPaint().getColor();
             for (int i = 0, count = vh.mGridView.getChildCount(); i < count; i++) {
                 mShadowOverlayHelper.setOverlayColor(vh.mGridView.getChildAt(i), dimmedColor);
-            }*/
+            }
             if (vh.mGridView.getFadingLeftEdge()) {
                 vh.mGridView.invalidate();
             }
-        }
+        }*/
     }
 
     @Override
     public void freeze(RowPresenter.ViewHolder holder, boolean freeze) {
         ViewHolder vh = (ViewHolder) holder;
-        vh.mGridView.setScrollEnabled(!freeze);
+        if(vh.mGridView instanceof HorizontalGridView){
+            HorizontalGridView view = (HorizontalGridView)vh.mGridView;
+            view.setScrollEnabled(!freeze);
+        }else if(vh.mGridView instanceof VerticalGridView){
+            VerticalGridView view = (VerticalGridView)vh.mGridView;
+            view.setScrollEnabled(!freeze);
+        }
     }
 
     @Override
     public void setEntranceTransitionState(RowPresenter.ViewHolder holder,
                                            boolean afterEntrance) {
         super.setEntranceTransitionState(holder, afterEntrance);
-        ((ViewHolder) holder).mGridView.setChildrenVisibility(
-                afterEntrance? View.VISIBLE : View.INVISIBLE);
+
+        if(((ViewHolder) holder).mGridView instanceof HorizontalGridView){
+            HorizontalGridView view = (HorizontalGridView)((ViewHolder)holder).mGridView;
+            view.setChildrenVisibility(
+                    afterEntrance ? View.VISIBLE : View.INVISIBLE);
+        }else if(((ViewHolder) holder).mGridView instanceof VerticalGridView){
+            VerticalGridView view = (VerticalGridView)((ViewHolder)holder).mGridView;
+            view.setChildrenVisibility(
+                    afterEntrance ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 }

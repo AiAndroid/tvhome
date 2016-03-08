@@ -241,7 +241,7 @@ public class PageRowsFragment extends BaseRowsFragment {
         // Need set this for directly using RowsFragment.
         //getVerticalGridView().setItemAlignmentViewId(android.support.v17.leanback.R.id.row_content);
         getVerticalGridView().setSaveChildrenPolicy(VerticalGridView.SAVE_LIMITED_CHILD);
-
+        getVerticalGridView().setVerticalMargin((int)getResources().getDimension(R.dimen.grid_item_margin));
         mRecycledViewPool = null;
         mPresenterMapper = null;
     }

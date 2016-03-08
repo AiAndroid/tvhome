@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import com.mothership.tvhome.app.MainFragment;
 import com.mothership.tvhome.view.AdView;
 import com.mothership.tvhome.view.EmptyLoadingView;
-import com.mothership.tvhome.widget.BlockRowPresenter;
+import com.mothership.tvhome.widget.BlockHorizontalPresenter;
 import com.mothership.tvhome.widget.CardPresenter;
 import com.mothership.tvhome.widget.DisplayItemSelector;
 import com.tv.ui.metro.model.Block;
@@ -90,8 +90,13 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     public void onLoadFinished(Loader<GenericBlock<DisplayItem>> loader, GenericBlock<DisplayItem> data) {
         //data returned
         Log.d("MainActivity", "dataloaded" + data);
-        convert2Adapter(data);
-        mAdapter.notifyArrayItemRangeChanged(0, mAdapter.size());
+        //convert2Adapter(data);
+        //mAdapter.notifyArrayItemRangeChanged(0, mAdapter.size());
+        MainFragment mainFragment = (MainFragment)
+                getSupportFragmentManager().findFragmentById(R.id.main_browse_fragment);
+        if(mainFragment!=null){
+            mainFragment.LoadData(data);
+        }
     }
 
 
@@ -102,7 +107,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         for(Block<DisplayItem> blk : aSrc.blocks)
         {
-            ArrayObjectAdapter pageAdt = new ArrayObjectAdapter(new BlockRowPresenter());
+            ArrayObjectAdapter pageAdt = new ArrayObjectAdapter(new BlockHorizontalPresenter());
             ArrayObjectAdapter listAdt = new ArrayObjectAdapter(mDiSel);
             flattenBlock(blk, listAdt, pageAdt);
             Log.d(TAG, "add block " + blk.title);

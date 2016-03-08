@@ -31,6 +31,7 @@ public class DisplayItem implements Serializable{
         public int    show_vip(){return  getInt(get("show_vip"), 0);}
         public String left() {return  get("left");}
         public String right(){return  get("right");}
+        public int    columns(){return  getInt(get("columns"), 1);}
 
         public UI clone(){
             UI item = new UI();
@@ -40,6 +41,7 @@ public class DisplayItem implements Serializable{
             item.put("show_rank",   get("show_rank"));
             item.put("show_value",   get("show_value"));
             item.put("show_title",   get("show_title"));
+            item.put("columns",   get("columns"));
             return item;
         }
 		public String toString() {

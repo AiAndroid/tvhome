@@ -8,11 +8,11 @@ import android.widget.ImageView;
  */
 public class LandCardPresenter extends CardPresenter{
 
-    public static int getWidth(){
+    public int getWidth(){
         return 300;
     };
 
-    public static int getHeight(){
+    public  int getHeight(){
         return 200;
     };
 
