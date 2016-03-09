@@ -508,9 +508,10 @@ public class BlockBasePresenter extends RowPresenter {
                 if(vh.mGridView instanceof HorizontalGridView){
                     HorizontalGridView gridView = (HorizontalGridView)vh.mGridView;
                     gridView.setNumRows(displayItemBlock.items.size() / columns);
-                    int itemwidth = (int)((mParent.getWidth()-itemmargin*(columns-1))/columns);
+                    int itemwidth = (int)((mParent.getWidth()-vh.mGridView.getPaddingLeft()-vh.mGridView.getPaddingRight()
+                            -itemmargin*(columns-1))/columns);
                     gridView.setItemMargin(itemmargin);
-                    cardPresenter.setSize(itemwidth,(int)(itemwidth/displayItemBlock.ui_type.ratio()));
+                    cardPresenter.setSize(itemwidth, (int) (itemwidth / displayItemBlock.ui_type.ratio()));
                 }else if(vh.mGridView instanceof VerticalGridView){
                     VerticalGridView gridView = (VerticalGridView)vh.mGridView;
                     gridView.setNumColumns(columns);

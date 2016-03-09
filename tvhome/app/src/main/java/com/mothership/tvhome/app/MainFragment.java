@@ -19,7 +19,6 @@ import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,6 +89,8 @@ public class MainFragment extends BaseFragment {
     private boolean mShowingHeaders = true;
     private boolean mCanShowHeaders = true;
     private int mContainerListMarginStart;
+    private int mContainerListMarginStartExpand;
+    private int mContainerListMarginHeader;
     private int mContainerListAlignTop;
     private boolean mRowScaleEnabled = true;
     private OnItemViewSelectedListener mExternalOnItemViewSelectedListener;
@@ -222,8 +223,9 @@ public class MainFragment extends BaseFragment {
                         .getDimensionPixelSize(android.support.v17.leanback.R.dimen.lb_browse_rows_margin_top));
         ta.recycle();*/
 
-        mContainerListMarginStart = (int)getActivity().getResources().getDimension(R.dimen.lb_browse_headers_margin_top);
-
+        mContainerListMarginStart = (int)getActivity().getResources().getDimension(R.dimen.browse_margin_top);
+        mContainerListMarginStartExpand = (int)getActivity().getResources().getDimension(R.dimen.browse_margin_top_expand);
+        mContainerListMarginHeader = (int)getActivity().getResources().getDimension(R.dimen.lb_browse_headers_margin_top);
         //readArguments(getArguments());
 
         if (mCanShowHeaders) {
@@ -592,24 +594,15 @@ public class MainFragment extends BaseFragment {
                         return focused;
                     }
                     if (DEBUG) Log.v(TAG, "onFocusSearch focused " + focused + " + direction " + direction);
-
-
-                    boolean isRtl = ViewCompat.getLayoutDirection(focused) == ViewCompat.LAYOUT_DIRECTION_RTL;
-                    int towardStart = isRtl ? View.FOCUS_RIGHT : View.FOCUS_LEFT;
-                    int towardEnd = isRtl ? View.FOCUS_LEFT : View.FOCUS_RIGHT;
-                    if (mCanShowHeaders && direction == towardStart) {
-                        if (/*isVerticalScrolling() ||*/ mShowingHeaders) {
-                            return focused;
-                        }
+                    if(mCanShowHeaders && direction == View.FOCUS_UP){
                         return mHeadersFragment.getView();
-                    } else if (direction == towardEnd) {
-                        /*if (isVerticalScrolling()) {
-                            return focused;
-                        }*/
+                    }else if(direction == View.FOCUS_DOWN){
                         return mPagesFragment.getView();
-                    } else {
+                    }else{
                         return null;
                     }
+
+
                 }
             };
 
@@ -656,7 +649,7 @@ public class MainFragment extends BaseFragment {
         containerList = mHeadersFragment.getView();
         lp = (ViewGroup.MarginLayoutParams) containerList.getLayoutParams();
         //lp.setMarginStart(onScreen ? 0 : -mContainerListMarginStart);
-        lp.setMargins(0,onScreen ? 0 : -mContainerListMarginStart,0,0);
+        lp.setMargins(0,onScreen ? 0 : -mContainerListMarginHeader,0,0);
         containerList.setLayoutParams(lp);
     }
 
@@ -666,7 +659,7 @@ public class MainFragment extends BaseFragment {
         containerList = mPagesFragment.getView();
         lp = (ViewGroup.MarginLayoutParams) containerList.getLayoutParams();
         //lp.setMarginStart(alignTop ? 0 : mContainerListMarginStart);
-        lp.setMargins(0, alignTop ? 0 : mContainerListMarginStart, 0, 0);
+        lp.setMargins(0, alignTop ? mContainerListMarginStartExpand: mContainerListMarginStart, 0, 0);
         containerList.setLayoutParams(lp);
     }
 

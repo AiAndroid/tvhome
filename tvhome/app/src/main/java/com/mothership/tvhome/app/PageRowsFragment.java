@@ -213,7 +213,7 @@ public class PageRowsFragment extends BaseRowsFragment {
 
     @Override
     public int getLayoutResourceId() {
-        return android.support.v17.leanback.R.layout.lb_rows_fragment;
+        return R.layout.lb_rows_fragment;
     }
 
     @Override
@@ -242,6 +242,7 @@ public class PageRowsFragment extends BaseRowsFragment {
         //getVerticalGridView().setItemAlignmentViewId(android.support.v17.leanback.R.id.row_content);
         getVerticalGridView().setSaveChildrenPolicy(VerticalGridView.SAVE_LIMITED_CHILD);
         getVerticalGridView().setVerticalMargin((int)getResources().getDimension(R.dimen.grid_item_margin));
+        //getVerticalGridView().getLayoutManager().setFocusOutAllowed(true,false);
         mRecycledViewPool = null;
         mPresenterMapper = null;
     }
