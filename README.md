@@ -185,6 +185,49 @@ present_url 是展示打点需求,可以是多个,能够集成第三方的打点
 聚合，接耦，独立自升级
 <img src="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/vp.png"/></br>
 
+#应用跳转
+```
+{
+  "target": {
+    "url": "o/V001118597?position=hot.r%7C1.0%7CCarousel.O",
+    "params": {
+      "entity": "pvideo",
+      "schema": "mivideo"
+    },
+    "entity": "pvideo"
+  },
+  ...
+  "ns": "video",
+  "id": "V001118597",
+  "settings":{} //这是一个k-v 参数会传递到到达的目的地
+}
+
+#
+schema://ns/entity?id=id
+
+
+schema:
+对于video, app, game, music,emarket,player会定义缺省的值
+video： mitvvideo
+app: :  mitvapp
+game :  mitvgame
+music:  mitvmusic
+emarket:mitvemarket
+
+entity：
+这个跳转的对应位置，一般为定义的path
+
+ns定义的应用Host
+
+各个应用自己实现自己的API,以在线视频为例子
+详情页：
+mitvvideo://video/detail?id=视频id&key=value
+
+集合页面
+mitvvideo://video/album?id=视频id&key=value
+
+第三方跳转：follow原来的小米视频逻辑
+```
 
 #参考文档
 <a href="https://raw.githubusercontent.com/AiAndroid/tvhome/master/tvhome/design/MIUI_Video_Scrum.pdf">
