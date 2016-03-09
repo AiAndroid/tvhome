@@ -14,7 +14,7 @@ public class BlockVerticalPresenter extends BlockBasePresenter{
         //initStatics(parent.getContext());
         BlockView rowView = new BlockView(parent.getContext());
         //setupFadingEffect(rowView);
-        rowView.initLayout(R.layout.block_horizontal);
+        rowView.initLayout(R.layout.block_vertical);
         //HorizontalGridView gridView = (HorizontalGridView)rowView.getGridView();
         return new ViewHolder(rowView, rowView.getGridView(), this);
     }

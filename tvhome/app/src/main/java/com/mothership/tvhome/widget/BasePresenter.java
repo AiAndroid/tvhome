@@ -1,5 +1,6 @@
 package com.mothership.tvhome.widget;
 
+import android.content.Context;
 import android.support.v17.leanback.widget.Presenter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,8 +20,8 @@ import com.tv.ui.metro.model.DisplayItem;
 public class BasePresenter extends Presenter
 {
     private static final String TAG = "BasePresenter";
-    private int mWidth = 0;
-    private int mHeight = 0;
+    private int mBaseWidth = 0;
+    private int mBaseHeight = 0;
 
     static public class VH extends ViewHolder
     {
@@ -44,7 +45,7 @@ public class BasePresenter extends Presenter
         LayoutInflater inf = LayoutInflater.from(parent.getContext());
         View res = inf.inflate(R.layout.di_base_view, parent, false);
         View view = res.findViewById(R.id.di_img);
-        view.setLayoutParams(new LinearLayout.LayoutParams(getWidth(), getHeight()));
+        view.setLayoutParams(new LinearLayout.LayoutParams(getBaseWidth(), getBaseHeight()));
         return new VH(res);
     }
 
@@ -77,15 +78,20 @@ public class BasePresenter extends Presenter
         Glide.clear(vh.mImg);
     }
 
-    public int getWidth(){
-        return mWidth;
+    public int getBaseWidth(){
+        return mBaseWidth;
     };
-
-    public int getHeight(){
-        return mHeight;
+    public int getBaseHeight(){
+        return mBaseHeight;
     };
-    public void setSize(int w,int h){
-        mWidth = w;
-        mHeight = h;
+    public void setBaseSize(int w,int h){
+        mBaseWidth = w;
+        mBaseHeight = h;
+    };
+    public int getRealWidth(Context contect){
+        return mBaseWidth;
+    };
+    public int getRealHeight(Context contect){
+        return mBaseHeight+(int)contect.getResources().getDimension(R.dimen.item_text_bar_height);
     };
 }

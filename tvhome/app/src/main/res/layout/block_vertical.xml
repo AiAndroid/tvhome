@@ -23,4 +23,8 @@
     android:layout_height="wrap_content"
     android:clipToPadding="false"
     lb:rowHeight="wrap_content"
-    style="?attr/rowHorizontalGridStyle" />
+    style="?attr/rowsVerticalGridStyle"
+    android:paddingLeft="@dimen/grid_block_horizontal_padding"
+    android:paddingRight="@dimen/grid_block_horizontal_padding"
+    android:paddingTop="@dimen/grid_block_vertical_padding"
+    android:paddingBottom="@dimen/grid_block_vertical_padding"/>
