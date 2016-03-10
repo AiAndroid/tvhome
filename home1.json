@@ -9,7 +9,7 @@
         {
           "ui_type": {
             "name": "block_header",
-            "id": 100,
+            "id": 100
           },
           "items": [
             {
@@ -110,7 +110,7 @@
         {
           "ui_type": {
             "name": "block_port_big",
-            "id": 101,
+            "id": 101
           },
           "items": [
             {
@@ -256,7 +256,7 @@
         {
           "ui_type": {
             "name": "block_port_single",
-            "id": 102,
+            "id": 102
           },
           "items": [
             {
@@ -413,7 +413,7 @@
         {
           "ui_type": {
             "name": "block_land_big",
-            "id": 103,
+            "id": 103
           },
           "items": [
             {
@@ -544,7 +544,7 @@
         {
           "ui_type": {
             "name": "block_land_single",
-            "id": 104,
+            "id": 104
           },
           "items": [
             {
@@ -690,7 +690,7 @@
         {
           "ui_type": {
             "name": "block_square_single",
-            "id": 105,
+            "id": 105
           },
           "items": [
             {
@@ -1533,7 +1533,7 @@
         {
           "ui_type": {
             "name": "block_land_single",
-            "id": 104,
+            "id": 104
           },
           "items": [
             {
@@ -1589,7 +1589,7 @@
         {
           "ui_type": {
             "name": "block_port_small",
-            "id": 106,
+            "id": 106
           },
           "items": [
             {
@@ -1690,7 +1690,7 @@
         {
           "ui_type": {
             "name": "block_port_big",
-            "id": 101,
+            "id": 101
           },
           "items": [
             {
@@ -1836,7 +1836,7 @@
         {
           "ui_type": {
             "name": "block_port_single",
-            "id": 102,
+            "id": 102
           },
           "items": [
             {
@@ -1993,7 +1993,7 @@
         {
           "ui_type": {
             "name": "block_land_big",
-            "id": 103,
+            "id": 103
           },
           "items": [
             {
@@ -2124,7 +2124,7 @@
         {
           "ui_type": {
             "name": "block_land_single",
-            "id": 104,
+            "id": 104
           },
           "items": [
             {
@@ -2270,7 +2270,7 @@
         {
           "ui_type": {
             "name": "block_square_single",
-            "id": 105,
+            "id": 105
           },
           "items": [
             {
