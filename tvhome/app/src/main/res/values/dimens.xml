@@ -9,6 +9,11 @@
 
     <dimen name="lb_browse_headers_height">100dp</dimen>
     <dimen name="lb_browse_headers_margin_top">90dp</dimen>
+
+    <item name="lb_browse_header_select_duration" format="integer" type="dimen">150</item>
+    <item name="lb_browse_header_unselect_alpha" type="fraction">50%</item>
+    <item name="lb_browse_header_select_scale" format="float" type="dimen">1.2</item>
+
     <dimen name="browse_margin_top_expand">20dp</dimen>
     <dimen name="browse_margin_top">50dp</dimen>
     <dimen name="browse_margin_left">20dp</dimen>
@@ -17,4 +22,6 @@
     <dimen name="grid_block_horizontal_padding">50dp</dimen>
     <dimen name="grid_block_vertical_padding">10dp</dimen>
     <dimen name="item_text_bar_height">40dp</dimen>
+
+
 </resources>

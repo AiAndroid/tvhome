@@ -189,7 +189,7 @@ public class HeadersFragment extends Fragment {
 
     // Wrapper needed because of conflict between RecyclerView's use of alpha
     // for ADD animations, and RowHeaderPresnter's use of alpha for selected level.
-    private final ItemBridgeAdapter.Wrapper mWrapper = new ItemBridgeAdapter.Wrapper() {
+    private final ItemBridgeAdapter.Wrapper mWrapper = null;/*new ItemBridgeAdapter.Wrapper() {
         @Override
         public void wrap(View wrapper, View wrapped) {
             ((FrameLayout) wrapper).addView(wrapped);
@@ -199,7 +199,7 @@ public class HeadersFragment extends Fragment {
         public View createWrapper(View root) {
             return new NoOverlappingFrameLayout(root.getContext());
         }
-    };
+    };*/
 
     /**
      * Sets the adapter for the fragment.

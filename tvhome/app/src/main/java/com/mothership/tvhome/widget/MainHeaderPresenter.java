@@ -1,7 +1,12 @@
 package com.mothership.tvhome.widget;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Paint;
+import android.support.v17.leanback.widget.HorizontalGridView;
+import android.support.v17.leanback.widget.ItemBridgeAdapter;
 import android.support.v17.leanback.widget.Presenter;
+import android.support.v17.leanback.widget.RowHeaderPresenter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +23,7 @@ public class MainHeaderPresenter extends Presenter {
     private final int mLayoutResourceId;
     private final Paint mFontMeasurePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private boolean mNullItemVisibilityGone;
-
+    HeaderItemFocusHighlight mHeaderItemFocusHighlight;
     public MainHeaderPresenter() {
         this(R.layout.main_header);
     }
@@ -70,6 +75,17 @@ public class MainHeaderPresenter extends Presenter {
         viewHolder.mUnselectAlpha = parent.getResources().getFraction(
                 R.fraction.lb_browse_header_unselect_alpha, 1, 1);
         setSelectLevel(viewHolder, 0);
+        if(mHeaderItemFocusHighlight==null){
+            mHeaderItemFocusHighlight = new HeaderItemFocusHighlight(parent.getContext());
+        }
+        headerView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(mHeaderItemFocusHighlight!=null) {
+                    mHeaderItemFocusHighlight.onItemFocused(v,hasFocus);
+                }
+            }
+        });
         return viewHolder;
     }
 
@@ -111,8 +127,8 @@ public class MainHeaderPresenter extends Presenter {
      * Called when the select level changes.  The default implementation sets the alpha on the view.
      */
     protected void onSelectLevelChanged(ViewHolder holder) {
-        holder.view.setAlpha(holder.mUnselectAlpha + holder.mSelectLevel *
-                (1f - holder.mUnselectAlpha));
+        /*holder.view.setAlpha(holder.mUnselectAlpha + holder.mSelectLevel *
+                (1f - holder.mUnselectAlpha));*/
     }
 
     /**
@@ -137,4 +153,41 @@ public class MainHeaderPresenter extends Presenter {
         return fontMeasurePaint.descent();
     }
 
+    static class HeaderItemFocusHighlight {
+        private static boolean sInitialized;
+        private static float sSelectScale;
+        private static int sDuration;
+
+        HeaderItemFocusHighlight(Context context) {
+            lazyInit(context.getResources());
+        }
+
+        private static void lazyInit(Resources res) {
+            if (!sInitialized) {
+                sSelectScale =
+                        Float.parseFloat(res.getString(R.dimen.lb_browse_header_select_scale));
+                sDuration =
+                        Integer.parseInt(res.getString(R.dimen.lb_browse_header_select_duration));
+                sInitialized = true;
+            }
+        }
+
+        private void viewFocused(View view, boolean hasFocus) {
+            view.setSelected(hasFocus);
+            FocusHelper.FocusAnimator animator = (FocusHelper.FocusAnimator) view.getTag(android.support.v17.leanback.R.id.lb_focus_animator);
+            if (animator == null) {
+                animator = new FocusHelper.FocusAnimator(view, sSelectScale, false, sDuration);
+                view.setTag(android.support.v17.leanback.R.id.lb_focus_animator, animator);
+            }
+            animator.animateFocus(hasFocus, false);
+        }
+
+        public void onItemFocused(View view, boolean hasFocus) {
+            viewFocused(view, hasFocus);
+        }
+
+        public void onInitializeView(View view) {
+        }
+
+    }
 }

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -45,11 +44,10 @@ public class BasePresenter extends Presenter
         LayoutInflater inf = LayoutInflater.from(parent.getContext());
         View res = inf.inflate(R.layout.di_base_view, parent, false);
         VH vh = new VH(res);
-        /*
+
         ViewGroup.LayoutParams lpImg = vh.mImg.getLayoutParams();
         lpImg.width = mBaseWidth;
         lpImg.height = mBaseHeight;
-        */
         return vh;
     }
 
@@ -60,6 +58,9 @@ public class BasePresenter extends Presenter
         DisplayItem di = (DisplayItem) aItem;
         vh.mSubTitle.setText(di.sub_title);
         vh.mTitle.setText(di.title);
+        ViewGroup.LayoutParams lpImg = vh.mImg.getLayoutParams();
+        lpImg.width = mBaseWidth;
+        lpImg.height = mBaseHeight;
         if(di.images != null && di.images.poster() != null)
         {
             Log.d(TAG, di.images.poster().url);

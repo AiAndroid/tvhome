@@ -363,24 +363,26 @@ public class PageRowsFragment extends BaseRowsFragment {
             };
 
     private void setupSharedViewPool(ItemBridgeAdapter.ViewHolder bridgeVh) {
-        RowPresenter rowPresenter = (RowPresenter) bridgeVh.getPresenter();
-        RowPresenter.ViewHolder rowVh = rowPresenter.getRowViewHolder(bridgeVh.getViewHolder());
+        if(bridgeVh.getPresenter() instanceof RowPresenter) {
+            RowPresenter rowPresenter = (RowPresenter) bridgeVh.getPresenter();
+            RowPresenter.ViewHolder rowVh = rowPresenter.getRowViewHolder(bridgeVh.getViewHolder());
 
-        if (rowVh instanceof BlockBasePresenter.ViewHolder) {
-            RecyclerView view = ((BlockBasePresenter.ViewHolder) rowVh).getGridView();
-            // Recycled view pool is shared between all list rows
-            if (mRecycledViewPool == null) {
-                mRecycledViewPool = view.getRecycledViewPool();
-            } else {
-                view.setRecycledViewPool(mRecycledViewPool);
-            }
+            if (rowVh instanceof BlockBasePresenter.ViewHolder) {
+                RecyclerView view = ((BlockBasePresenter.ViewHolder) rowVh).getGridView();
+                // Recycled view pool is shared between all list rows
+                if (mRecycledViewPool == null) {
+                    mRecycledViewPool = view.getRecycledViewPool();
+                } else {
+                    view.setRecycledViewPool(mRecycledViewPool);
+                }
 
-            ItemBridgeAdapter bridgeAdapter =
-                    ((BlockBasePresenter.ViewHolder) rowVh).getBridgeAdapter();
-            if (mPresenterMapper == null) {
-                mPresenterMapper = bridgeAdapter.getPresenterMapper();
-            } else {
-                bridgeAdapter.setPresenterMapper(mPresenterMapper);
+                ItemBridgeAdapter bridgeAdapter =
+                        ((BlockBasePresenter.ViewHolder) rowVh).getBridgeAdapter();
+                if (mPresenterMapper == null) {
+                    mPresenterMapper = bridgeAdapter.getPresenterMapper();
+                } else {
+                    bridgeAdapter.setPresenterMapper(mPresenterMapper);
+                }
             }
         }
     }

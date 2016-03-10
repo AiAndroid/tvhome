@@ -21,17 +21,18 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/lb_browse_headers_height"
     android:elevation="@dimen/lb_browse_headers_z"
-    android:background="@color/lb_default_brand_color"
     >
     <android.support.v17.leanback.widget.HorizontalGridView
         android:id="@+id/headers"
         android:layout_width="match_parent"
         android:layout_height="@dimen/lb_browse_headers_height"
-        style="?attr/headersVerticalGridStyle"/>
+        style="?attr/headersVerticalGridStyle"
+        />
     <View
         android:id="@+id/fade_out_edge"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/lb_browse_header_fading_length">
+        android:layout_height="@dimen/lb_browse_header_fading_length"
+        android:visibility="gone">
     </View>
 </RelativeLayout>
