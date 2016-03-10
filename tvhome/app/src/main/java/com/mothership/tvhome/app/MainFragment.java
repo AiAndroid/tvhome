@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.mothership.tvhome.R;
 import com.mothership.tvhome.widget.BlockAdapter;
+import com.mothership.tvhome.widget.BlockBasePresenter;
 import com.mothership.tvhome.widget.BlockVerticalPresenter;
 import com.mothership.tvhome.widget.CardPresenter;
 import com.mothership.tvhome.widget.CardPresenterSelector;
@@ -838,13 +839,13 @@ public class MainFragment extends BaseFragment {
 
     public void LoadData(GenericBlock<DisplayItem> data){
         //loadRows();
-        final BlockVerticalPresenter blockVerticalPresenter = new BlockVerticalPresenter();
+        final BlockBasePresenter blockPresenter = new BlockVerticalPresenter();
         ArrayObjectAdapter pageAdapter = new ArrayObjectAdapter();
         if(data.blocks!=null) {
             for (int i = 0; i < data.blocks.size(); i++) {
                 Block<DisplayItem> block = (Block<DisplayItem>)data.blocks.get(i);
                 if(block.ui_type.id() == 1){
-                    BlockAdapter blockAdapter = new BlockAdapter(data.blocks.get(i),blockVerticalPresenter);
+                    BlockAdapter blockAdapter = new BlockAdapter(data.blocks.get(i),blockPresenter);
                     pageAdapter.add(blockAdapter);
                 }
             }

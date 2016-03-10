@@ -15,7 +15,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 
 import com.mothership.tvhome.R;
 import com.mothership.tvhome.widget.BlockAdapter;
@@ -174,46 +173,6 @@ public class PagesFragment extends BaseFragment {
         }
     }
 
-
-    class ExpandPreLayout implements ViewTreeObserver.OnPreDrawListener {
-
-        final View mVerticalView;
-        final Runnable mCallback;
-        int mState;
-
-        final static int STATE_INIT = 0;
-        final static int STATE_FIRST_DRAW = 1;
-        final static int STATE_SECOND_DRAW = 2;
-
-        ExpandPreLayout(Runnable callback) {
-            mVerticalView = mPager;
-            mCallback = callback;
-        }
-
-        void execute() {
-            mVerticalView.getViewTreeObserver().addOnPreDrawListener(this);
-            setExpand(false);
-            mState = STATE_INIT;
-        }
-
-        @Override
-        public boolean onPreDraw() {
-            if (getView() == null || getActivity() == null) {
-                mVerticalView.getViewTreeObserver().removeOnPreDrawListener(this);
-                return true;
-            }
-            if (mState == STATE_INIT) {
-                setExpand(true);
-                mState = STATE_FIRST_DRAW;
-            } else if (mState == STATE_FIRST_DRAW) {
-                mCallback.run();
-                mVerticalView.getViewTreeObserver().removeOnPreDrawListener(this);
-                mState = STATE_SECOND_DRAW;
-            }
-            return false;
-        }
-    }
-
     void onExpandTransitionStart(boolean expand, final Runnable callback) {
         onTransitionPrepare();
         onTransitionStart();
@@ -221,9 +180,6 @@ public class PagesFragment extends BaseFragment {
             callback.run();
             return;
         }
-        // Run a "pre" layout when we go non-expand, in order to get the initial
-        // positions of added rows.
-        new ExpandPreLayout(callback).execute();
     }
 
     boolean onTransitionPrepare() {
@@ -247,17 +203,6 @@ public class PagesFragment extends BaseFragment {
      */
     public void setExpand(boolean expand) {
         mExpand = expand;
-        /*VerticalGridView listView = getVerticalGridView();
-        if (listView != null) {
-            updateRowScaling();
-            final int count = listView.getChildCount();
-            if (DEBUG) Log.v(TAG, "setExpand " + expand + " count " + count);
-            for (int i = 0; i < count; i++) {
-                View view = listView.getChildAt(i);
-                ItemBridgeAdapter.ViewHolder vh = (ItemBridgeAdapter.ViewHolder) listView.getChildViewHolder(view);
-                setRowViewExpanded(vh, mExpand);
-            }
-        }*/
     }
 
     public void setPage(int index){

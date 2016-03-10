@@ -2,9 +2,7 @@ package com.mothership.tvhome.app;
 
 import android.animation.TimeAnimator;
 import android.os.Bundle;
-import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v17.leanback.widget.ItemBridgeAdapter;
-import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.OnItemViewClickedListener;
 import android.support.v17.leanback.widget.OnItemViewSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
@@ -21,6 +19,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 import com.mothership.tvhome.R;
+import com.mothership.tvhome.widget.BlockBasePresenter;
 
 import java.util.ArrayList;
 
@@ -245,6 +244,7 @@ public class PageRowsFragment extends BaseRowsFragment {
         //getVerticalGridView().getLayoutManager().setFocusOutAllowed(true,false);
         mRecycledViewPool = null;
         mPresenterMapper = null;
+        setExpand(true);
     }
 
     @Override
@@ -366,8 +366,8 @@ public class PageRowsFragment extends BaseRowsFragment {
         RowPresenter rowPresenter = (RowPresenter) bridgeVh.getPresenter();
         RowPresenter.ViewHolder rowVh = rowPresenter.getRowViewHolder(bridgeVh.getViewHolder());
 
-        if (rowVh instanceof ListRowPresenter.ViewHolder) {
-            HorizontalGridView view = ((ListRowPresenter.ViewHolder) rowVh).getGridView();
+        if (rowVh instanceof BlockBasePresenter.ViewHolder) {
+            RecyclerView view = ((BlockBasePresenter.ViewHolder) rowVh).getGridView();
             // Recycled view pool is shared between all list rows
             if (mRecycledViewPool == null) {
                 mRecycledViewPool = view.getRecycledViewPool();
@@ -376,7 +376,7 @@ public class PageRowsFragment extends BaseRowsFragment {
             }
 
             ItemBridgeAdapter bridgeAdapter =
-                    ((ListRowPresenter.ViewHolder) rowVh).getBridgeAdapter();
+                    ((BlockBasePresenter.ViewHolder) rowVh).getBridgeAdapter();
             if (mPresenterMapper == null) {
                 mPresenterMapper = bridgeAdapter.getPresenterMapper();
             } else {

@@ -499,8 +499,7 @@ public class BlockBasePresenter extends RowPresenter {
             BasePresenter basePresenter = mDisplayItemSelector.getPresenter(displayItemBlock);
             super.onBindRowViewHolder(holder, new Row(new HeaderItem(0,displayItemBlock.title)));
             if(displayItemBlock.items!=null){
-                ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter();
-                listRowAdapter.setPresenterSelector(mDisplayItemSelector);
+                ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(basePresenter);
                 for(int i=0;i<displayItemBlock.items.size();++i){
                     listRowAdapter.add(displayItemBlock.items.get(i));
                 }
