@@ -44,8 +44,8 @@ public class BasePresenter extends Presenter
     {
         LayoutInflater inf = LayoutInflater.from(parent.getContext());
         View res = inf.inflate(R.layout.di_base_view, parent, false);
-        View view = res.findViewById(R.id.di_img);
-        view.setLayoutParams(new LinearLayout.LayoutParams(getBaseWidth(), getBaseHeight()));
+//        View view = res.findViewById(R.id.di_img);
+//        view.setLayoutParams(new LinearLayout.LayoutParams(getBaseWidth(), getBaseHeight()));
         return new VH(res);
     }
 
@@ -91,7 +91,9 @@ public class BasePresenter extends Presenter
     public int getRealWidth(Context contect){
         return mBaseWidth;
     };
+    /*
     public int getRealHeight(Context contect){
         return mBaseHeight+(int)contect.getResources().getDimension(R.dimen.item_text_bar_height);
     };
+    */
 }

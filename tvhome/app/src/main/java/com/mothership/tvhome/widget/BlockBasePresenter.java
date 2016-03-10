@@ -18,6 +18,7 @@ import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v17.leanback.widget.ShadowOverlayHelper;
 import android.support.v17.leanback.widget.VerticalGridView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -523,8 +524,14 @@ public class BlockBasePresenter extends RowPresenter {
                     int itemheight = (int) (itemwidth / displayItemBlock.ui_type.ratio());
                     int rows = displayItemBlock.items.size() / columns;
                     basePresenter.setBaseSize(itemwidth, itemheight);
+                    //TODO get from recycler
+                    Log.d(TAG, "create measure item");
+                    RecyclerView.ViewHolder bVh = vh.mItemBridgeAdapter.onCreateViewHolder(vh.mGridView, vh.mItemBridgeAdapter.getItemViewType(0));
+                    bVh.itemView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                    int height = bVh.itemView.getMeasuredHeight();
+                    //TODO recycle bVh
                     ViewGroup.LayoutParams lp = gridView.getLayoutParams();
-                    lp.height = basePresenter.getRealHeight(mParent.getContext()) * rows + gridView.getHorizontalMargin() * (rows-1)
+                    lp.height = (height + itemheight) * rows + gridView.getHorizontalMargin() * (rows-1)
                             +gridView.getPaddingTop()+gridView.getPaddingBottom();
                     gridView.setLayoutParams(lp);
                 }
