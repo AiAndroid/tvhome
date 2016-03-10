@@ -525,11 +525,13 @@ public class BlockBasePresenter extends RowPresenter {
                     int rows = displayItemBlock.items.size() / columns;
                     basePresenter.setBaseSize(itemwidth, itemheight);
                     //TODO get from recycler
-                    Log.d(TAG, "create measure item");
-                    RecyclerView.ViewHolder bVh = vh.mItemBridgeAdapter.onCreateViewHolder(vh.mGridView, vh.mItemBridgeAdapter.getItemViewType(0));
-                    bVh.itemView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-                    int height = bVh.itemView.getMeasuredHeight();
+//                    Log.d(TAG, "create measure item");
+//                    RecyclerView.ViewHolder bVh = vh.mItemBridgeAdapter.onCreateViewHolder(vh.mGridView, vh.mItemBridgeAdapter.getItemViewType(0));
+//                    bVh.itemView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+//                    int height = bVh.itemView.getMeasuredHeight();
                     //TODO recycle bVh
+                    int height = basePresenter.getBaseHeight();
+
                     ViewGroup.LayoutParams lp = gridView.getLayoutParams();
                     lp.height = (height + itemheight) * rows + gridView.getHorizontalMargin() * (rows-1)
                             +gridView.getPaddingTop()+gridView.getPaddingBottom();
