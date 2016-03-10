@@ -45,9 +45,11 @@ public class BasePresenter extends Presenter
         LayoutInflater inf = LayoutInflater.from(parent.getContext());
         View res = inf.inflate(R.layout.di_base_view, parent, false);
         VH vh = new VH(res);
+        /*
         ViewGroup.LayoutParams lpImg = vh.mImg.getLayoutParams();
         lpImg.width = mBaseWidth;
         lpImg.height = mBaseHeight;
+        */
         return vh;
     }
 

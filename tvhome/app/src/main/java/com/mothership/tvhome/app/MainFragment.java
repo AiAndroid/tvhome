@@ -31,6 +31,7 @@ import com.mothership.tvhome.widget.BlockBasePresenter;
 import com.mothership.tvhome.widget.BlockVerticalPresenter;
 import com.mothership.tvhome.widget.CardPresenter;
 import com.mothership.tvhome.widget.CardPresenterSelector;
+import com.mothership.tvhome.widget.TvViewGroupPresenter;
 import com.tv.ui.metro.model.Block;
 import com.tv.ui.metro.model.DisplayItem;
 import com.tv.ui.metro.model.GenericBlock;
@@ -840,12 +841,14 @@ public class MainFragment extends BaseFragment {
     public void LoadData(GenericBlock<DisplayItem> data){
         //loadRows();
         final BlockBasePresenter blockPresenter = new BlockVerticalPresenter();
+        TvViewGroupPresenter testP = new TvViewGroupPresenter();
         ArrayObjectAdapter pageAdapter = new ArrayObjectAdapter();
         if(data.blocks!=null) {
             for (int i = 0; i < data.blocks.size(); i++) {
                 Block<DisplayItem> block = (Block<DisplayItem>)data.blocks.get(i);
                 if(block.ui_type.id() == 1){
-                    BlockAdapter blockAdapter = new BlockAdapter(data.blocks.get(i),blockPresenter);
+//                    BlockAdapter blockAdapter = new BlockAdapter(data.blocks.get(i),blockPresenter);
+                    BlockAdapter blockAdapter = new BlockAdapter(data.blocks.get(i), testP);
                     pageAdapter.add(blockAdapter);
                 }
             }
