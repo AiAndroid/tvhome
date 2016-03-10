@@ -699,7 +699,7 @@
           "ui_type": {
             "name": "block_grid",
             "id": 101,
-            "columns": 3,
+            "columns": 6,
             "ratio":0.8059
           },
           "items": [
@@ -1647,7 +1647,7 @@
           "ui_type": {
             "name": "block_grid",
             "id": 101,
-            "columns": 3,
+            "columns": 6,
             "ratio":0.8059
           },
           "items": [
