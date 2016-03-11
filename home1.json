@@ -112,7 +112,7 @@
             "name": "block_grid",
             "id": 101,
             "columns": 6,
-            "ratio":0.657
+            "ratio": 0.657
           },
           "items": [
             {
@@ -260,7 +260,7 @@
             "name": "block_grid",
             "id": 101,
             "columns": 6,
-            "ratio":0.657
+            "ratio": 0.657
           },
           "items": [
             {
@@ -419,11 +419,14 @@
             "name": "block_grid",
             "id": 101,
             "columns": 3,
-            "ratio":1.7419
+            "ratio": 1.7419
           },
           "items": [
             {
-
+              "ui_type": {
+                "name": "t2",
+                "id": 2
+              },
               "target": {
                 "url": "",
                 "entity": "play"
@@ -553,7 +556,7 @@
             "name": "block_grid",
             "id": 101,
             "columns": 3,
-            "ratio":1.7419
+            "ratio": 1.7419
           },
           "items": [
             {
@@ -701,7 +704,7 @@
             "name": "block_grid",
             "id": 101,
             "columns": 6,
-            "ratio":0.8059
+            "ratio": 0.8059
           },
           "items": [
             {
@@ -879,8 +882,12 @@
         "updated": 1455726742,
         "created": 0
       },
-      "headers": [],
-      "meta": {},
+      "headers": [
+        
+      ],
+      "meta": {
+        
+      },
       "images": {
         "poster": {
           "url": ""
@@ -900,7 +907,7 @@
             "name": "block_grid",
             "id": 101,
             "columns": 3,
-            "ratio":1.6006
+            "ratio": 1.6006
           },
           "items": [
             {
@@ -958,7 +965,7 @@
             "name": "block_grid",
             "id": 101,
             "columns": 6,
-            "ratio":0.8059
+            "ratio": 0.8059
           },
           "items": [
             {
@@ -1056,12 +1063,12 @@
           "id": "",
           "title": "分类"
         },
-       {
+        {
           "ui_type": {
             "name": "block_grid",
             "id": 101,
             "columns": 6,
-            "ratio":0.657
+            "ratio": 0.657
           },
           "items": [
             {
@@ -1209,7 +1216,7 @@
             "name": "block_grid",
             "id": 101,
             "columns": 6,
-            "ratio":0.657
+            "ratio": 0.657
           },
           "items": [
             {
@@ -1368,7 +1375,7 @@
             "name": "block_grid",
             "id": 101,
             "columns": 3,
-            "ratio":1.7419
+            "ratio": 1.7419
           },
           "items": [
             {
@@ -1501,7 +1508,7 @@
             "name": "block_grid",
             "id": 101,
             "columns": 3,
-            "ratio":1.7419
+            "ratio": 1.7419
           },
           "items": [
             {
@@ -1649,7 +1656,7 @@
             "name": "block_grid",
             "id": 101,
             "columns": 6,
-            "ratio":0.8059
+            "ratio": 0.8059
           },
           "items": [
             {
@@ -1827,8 +1834,12 @@
         "updated": 1455726742,
         "created": 0
       },
-      "headers": [],
-      "meta": {},
+      "headers": [
+        
+      ],
+      "meta": {
+        
+      },
       "images": {
         "poster": {
           "url": ""
