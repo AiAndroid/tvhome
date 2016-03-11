@@ -502,6 +502,7 @@ public class BlockBasePresenter extends RowPresenter {
                 if (displayItemBlock.items != null) {
                     ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(basePresenter);
                     for (int i = 0; i < displayItemBlock.items.size(); ++i) {
+                        int j = displayItemBlock.items;
                         listRowAdapter.add(displayItemBlock.items.get(i));
                     }
                     vh.mItemBridgeAdapter.setAdapter(listRowAdapter);

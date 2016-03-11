@@ -10,7 +10,7 @@
         android:id="@+id/di_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:adjustViewBounds="true"
         android:layout_weight="0.99"
         />
