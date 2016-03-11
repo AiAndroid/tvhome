@@ -424,10 +424,6 @@
           "items": [
             {
 
-	       "ui_type": {
-            	"name": “test”,
-            	"id": 2,
-              }
               "target": {
                 "url": "",
                 "entity": "play"
