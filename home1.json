@@ -417,16 +417,12 @@
         {
           "ui_type": {
             "name": "block_grid",
-            "id": 101,
+            "id": 102,
             "columns": 3,
             "ratio": 1.7419
           },
           "items": [
             {
-              "ui_type": {
-                "name": "t2",
-                "id": 2
-              },
               "target": {
                 "url": "",
                 "entity": "play"
@@ -442,10 +438,6 @@
               "desc": ""
             },
             {
-              "ui_type": {
-                "name": "t2",
-                "id": 2
-              },
               "target": {
                 "url": "",
                 "entity": "play"
@@ -461,10 +453,6 @@
               "desc": ""
             },
             {
-              "ui_type": {
-                "name": "t2",
-                "id": 2
-              },
               "target": {
                 "url": "",
                 "entity": "play"
