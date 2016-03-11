@@ -19,8 +19,8 @@ import com.tv.ui.metro.model.DisplayItem;
 public class BasePresenter extends Presenter
 {
     private static final String TAG = "BasePresenter";
-    private int mBaseWidth = 0;
-    private int mBaseHeight = 0;
+    protected int mBaseWidth = 0;
+    protected int mBaseHeight = 0;
 
     static public class VH extends ViewHolder
     {
@@ -45,9 +45,9 @@ public class BasePresenter extends Presenter
         View res = inf.inflate(R.layout.di_base_view, parent, false);
         VH vh = new VH(res);
 
-        ViewGroup.LayoutParams lpImg = vh.mImg.getLayoutParams();
-        lpImg.width = mBaseWidth;
-        lpImg.height = mBaseHeight;
+//        ViewGroup.LayoutParams lpImg = vh.mImg.getLayoutParams();
+//        lpImg.width = mBaseWidth;
+//        lpImg.height = mBaseHeight;
         return vh;
     }
 
@@ -56,11 +56,20 @@ public class BasePresenter extends Presenter
     {
         VH vh = (VH) aViewHolder;
         DisplayItem di = (DisplayItem) aItem;
-        vh.mSubTitle.setText(di.sub_title);
-        vh.mTitle.setText(di.title);
+        if(vh.mSubTitle != null)
+        {
+            vh.mSubTitle.setText(di.sub_title);
+        }
+        if(vh.mTitle != null)
+        {
+            vh.mTitle.setText(di.title);
+        }
         ViewGroup.LayoutParams lpImg = vh.mImg.getLayoutParams();
-        lpImg.width = mBaseWidth;
-        lpImg.height = mBaseHeight;
+        if(mBaseHeight != 0 && mBaseWidth != 0)
+        {
+            lpImg.width = mBaseWidth;
+            lpImg.height = mBaseHeight;
+        }
         if(di.images != null && di.images.poster() != null)
         {
             Log.d(TAG, di.images.poster().url);
