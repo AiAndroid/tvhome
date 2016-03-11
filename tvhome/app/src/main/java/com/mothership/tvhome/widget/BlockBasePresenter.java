@@ -495,7 +495,8 @@ public class BlockBasePresenter extends RowPresenter {
         ViewHolder vh = (ViewHolder) holder;
         if(item instanceof Block){
             Block<DisplayItem> displayItemBlock = (Block<DisplayItem>)item;
-            if(displayItemBlock.ui_type.id()==101) {
+            int type = displayItemBlock.ui_type.id();
+            if(101 == type || 102 == type) {
                 BasePresenter basePresenter = (BasePresenter)mDisplayItemSelector.getPresenter(displayItemBlock);
                 super.onBindRowViewHolder(holder, new Row(new HeaderItem(0,displayItemBlock.title)));
                 if (displayItemBlock.items != null) {
@@ -504,7 +505,7 @@ public class BlockBasePresenter extends RowPresenter {
                     if(displayItemBlock.items.size()%columns>0){
                         rows+=1;
                     }
-                    ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(mDisplayItemSelector);//basePresenter);
+                    ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(basePresenter);
 
                     int itemmargin = (int) mParent.getResources().getDimension(R.dimen.grid_item_margin);
                     if (vh.mGridView instanceof HorizontalGridView) {

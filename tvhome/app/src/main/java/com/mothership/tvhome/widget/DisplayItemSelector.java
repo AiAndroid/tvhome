@@ -18,8 +18,8 @@ public class DisplayItemSelector extends PresenterSelector
 
     public DisplayItemSelector()
     {
-        mPresenters.put(1, mDefaultPresenter);
-        mPresenters.put(2, new PresenterT2());
+        mPresenters.put(101, mDefaultPresenter);
+        mPresenters.put(102, new PresenterT2());
     }
     @Override
     public Presenter getPresenter(Object aItem)
@@ -30,8 +30,9 @@ public class DisplayItemSelector extends PresenterSelector
 
         if(type != null)
         {
-            Log.d(TAG, "type " + di.ui_type.id());
-            return mPresenters.get(di.ui_type.id(), mDefaultPresenter);
+
+            Log.d(TAG, "type " + type.id());
+            return mPresenters.get(type.id(), mDefaultPresenter);
         }
         else
         {
