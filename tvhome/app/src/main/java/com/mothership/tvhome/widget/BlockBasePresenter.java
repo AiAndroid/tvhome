@@ -497,36 +497,45 @@ public class BlockBasePresenter extends RowPresenter {
             Block<DisplayItem> displayItemBlock = (Block<DisplayItem>)item;
             if(displayItemBlock.ui_type.id()==101) {
                 BasePresenter basePresenter = mDisplayItemSelector.getPresenter(displayItemBlock);
-                //super.onBindRowViewHolder(holder, new Row(new HeaderItem(0,displayItemBlock.title)));
-                super.onBindRowViewHolder(holder, new Row(new HeaderItem(0, "title")));
+                super.onBindRowViewHolder(holder, new Row(new HeaderItem(0,displayItemBlock.title)));
                 if (displayItemBlock.items != null) {
-                    ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(basePresenter);
-                    for (int i = 0; i < displayItemBlock.items.size(); ++i) {
-                        int j = displayItemBlock.items;
-                        listRowAdapter.add(displayItemBlock.items.get(i));
-                    }
-                    vh.mItemBridgeAdapter.setAdapter(listRowAdapter);
-                    vh.mGridView.setAdapter(vh.mItemBridgeAdapter);
                     int columns = displayItemBlock.ui_type.columns();
+                    int rows = displayItemBlock.items.size() / columns;
+                    if(displayItemBlock.items.size()%columns>0){
+                        rows+=1;
+                    }
+                    ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(basePresenter);
+
                     int itemmargin = (int) mParent.getResources().getDimension(R.dimen.grid_item_margin);
                     if (vh.mGridView instanceof HorizontalGridView) {
+                        //for(int k=0;k<columns;++k) {
+                            for (int i = 0; i < displayItemBlock.items.size(); ++i) {
+                                //if(i%columns==k) {
+                                    listRowAdapter.add(displayItemBlock.items.get(i));
+                                //}
+                            }
+                        //}
+                        vh.mItemBridgeAdapter.setAdapter(listRowAdapter);
+                        vh.mGridView.setAdapter(vh.mItemBridgeAdapter);
                         HorizontalGridView gridView = (HorizontalGridView) vh.mGridView;
-                        gridView.setNumRows(displayItemBlock.items.size() / columns);
+                        gridView.setNumRows(rows);
                         int itemwidth = (int) ((mParent.getWidth() - vh.mGridView.getPaddingLeft() - vh.mGridView.getPaddingRight()
                                 - itemmargin * (columns - 1)) / columns);
                         gridView.setItemMargin(itemmargin);
                         basePresenter.setBaseSize(itemwidth, (int) (itemwidth / displayItemBlock.ui_type.ratio()));
                     } else if (vh.mGridView instanceof VerticalGridView) {
+                        for (int i = 0; i < displayItemBlock.items.size(); ++i) {
+                            listRowAdapter.add(displayItemBlock.items.get(i));
+                        }
+                        vh.mItemBridgeAdapter.setAdapter(listRowAdapter);
+                        vh.mGridView.setAdapter(vh.mItemBridgeAdapter);
                         VerticalGridView gridView = (VerticalGridView) vh.mGridView;
                         gridView.setNumColumns(columns);
                         int itemwidth = (int) ((mParent.getWidth() - vh.mGridView.getPaddingLeft() - vh.mGridView.getPaddingRight()
                                 - itemmargin * (columns - 1)) / columns);
                         gridView.setItemMargin(itemmargin);
                         int itemheight = (int) (itemwidth / displayItemBlock.ui_type.ratio());
-                        int rows = displayItemBlock.items.size() / columns;
-                        if(displayItemBlock.items.size()%columns>0){
-                            rows+=1;
-                        }
+
                         basePresenter.setBaseSize(itemwidth, itemheight);
                         //TODO get from recycler
 //                    Log.d(TAG, "create measure item");
