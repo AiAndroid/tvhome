@@ -56,6 +56,7 @@ public class BasePresenter extends Presenter
     {
         VH vh = (VH) aViewHolder;
         DisplayItem di = (DisplayItem) aItem;
+        vh.view.setId(di.ui_type.rows()+100000);
         if(vh.mSubTitle != null)
         {
             vh.mSubTitle.setText(di.sub_title);
@@ -83,6 +84,7 @@ public class BasePresenter extends Presenter
                         .into(vh.mImg);
             }
         }
+
     }
 
     @Override

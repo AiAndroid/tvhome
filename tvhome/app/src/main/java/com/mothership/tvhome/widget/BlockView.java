@@ -41,6 +41,15 @@ public class BlockView extends LinearLayout {
 
         setOrientation(LinearLayout.VERTICAL);
         setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+        /*if(mGridView instanceof HorizontalGridView){
+            HorizontalGridView view = (HorizontalGridView)mGridView;
+            view.setFocusScrollStrategy(HorizontalGridView.FOCUS_SCROLL_ALIGNED);
+        }else if(mGridView instanceof VerticalGridView){
+            VerticalGridView view = (VerticalGridView)mGridView;
+            view.setFocusScrollStrategy(VerticalGridView.FOCUS_SCROLL_ALIGNED);
+        }*/
+        //mGridView.setFocusable(false);
+
     }
     /**
      * Returns the HorizontalGridView.

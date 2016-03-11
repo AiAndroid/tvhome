@@ -7,6 +7,7 @@ import android.support.v17.leanback.widget.FocusHighlight;
 import android.support.v17.leanback.widget.FocusHighlightHelper;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.HorizontalGridView;
+import android.support.v17.leanback.widget.ItemAlignmentFacet;
 import android.support.v17.leanback.widget.ItemBridgeAdapter;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowView;
@@ -57,6 +58,26 @@ public class BlockBasePresenter extends RowPresenter {
             mPaddingBottom = mGridView.getPaddingBottom();
             mPaddingLeft = mGridView.getPaddingLeft();
             mPaddingRight = mGridView.getPaddingRight();
+
+
+ /*           ItemAlignmentFacet facet = new ItemAlignmentFacet();
+            // by default align details_frame to half window height
+            ItemAlignmentFacet.ItemAlignmentDef alignDef1 = new ItemAlignmentFacet.ItemAlignmentDef();
+            alignDef1.setItemAlignmentViewId(R.id.details_frame);
+            alignDef1.setItemAlignmentOffset(0);
+            alignDef1.setItemAlignmentOffsetPercent(0);
+            // when description is selected, align details_frame to top edge
+            ItemAlignmentFacet.ItemAlignmentDef alignDef2 = new ItemAlignmentFacet.ItemAlignmentDef();
+            alignDef2.setItemAlignmentViewId(R.id.details_frame);
+            alignDef2.setItemAlignmentFocusViewId(R.id.details_overview_description);
+            alignDef2.setItemAlignmentOffset(- rootView.getResources()
+                    .getDimensionPixelSize(R.dimen.lb_details_v2_align_pos_for_description));
+            alignDef2.setItemAlignmentOffsetPercent(0);
+            ItemAlignmentFacet.ItemAlignmentDef[] defs =
+                    new ItemAlignmentFacet.ItemAlignmentDef[] {alignDef1, alignDef2};
+            facet.setAlignmentDefs(defs);
+            //setFacet(ItemAlignmentFacet.class, facet);
+            p.setFacet(ItemAlignmentFacet.class, facet);*/
         }
 
         public final BlockBasePresenter getBlockPresenter() {
@@ -309,6 +330,27 @@ public class BlockBasePresenter extends RowPresenter {
                             return false;
                         }
                     });
+        }else if(view instanceof VerticalGridView){
+            VerticalGridView verticalGridView = (VerticalGridView)view;
+            verticalGridView.setOnChildSelectedListener(
+                    new OnChildSelectedListener() {
+                        @Override
+                        public void onChildSelected(ViewGroup parent, View view, int position, long id) {
+                            selectChildView(blockViewHolder, view, true);
+                        }
+                    });
+            verticalGridView.setOnUnhandledKeyListener(
+                    new HorizontalGridView.OnUnhandledKeyListener() {
+                        @Override
+                        public boolean onUnhandledKey(KeyEvent event) {
+                            if (blockViewHolder.getOnKeyListener() != null &&
+                                    blockViewHolder.getOnKeyListener().onKey(
+                                            blockViewHolder.view, event.getKeyCode(), event)) {
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
         }
     }
 
@@ -549,7 +591,34 @@ public class BlockBasePresenter extends RowPresenter {
                                 + gridView.getPaddingTop() + gridView.getPaddingBottom();
                         gridView.setLayoutParams(lp);
                     }
+                    {
+                        ItemAlignmentFacet.ItemAlignmentDef[] defs = new ItemAlignmentFacet.ItemAlignmentDef[rows + 1];
+                        ItemAlignmentFacet facet = new ItemAlignmentFacet();
+                        // by default align details_frame to half window height
+                        ItemAlignmentFacet.ItemAlignmentDef alignDef0 = new ItemAlignmentFacet.ItemAlignmentDef();
+                        alignDef0.setItemAlignmentOffset(0);
+                        alignDef0.setItemAlignmentOffsetPercent(0);
+                        defs[0] = alignDef0;
 
+                        for (int i = 0; i < rows; ++i) {
+                            // when description is selected, align details_frame to top edge
+                            ItemAlignmentFacet.ItemAlignmentDef alignDef2 = new ItemAlignmentFacet.ItemAlignmentDef();
+                            alignDef2.setItemAlignmentFocusViewId(100000 + i);
+                            alignDef2.setItemAlignmentOffsetPercent(100f / rows * i + 100f / rows * 0.5f);
+                            defs[i + 1] = alignDef2;
+                        }
+
+                        facet.setAlignmentDefs(defs);
+                        //setFacet(ItemAlignmentFacet.class, facet);
+                        setFacet(ItemAlignmentFacet.class, facet);
+
+                        for (int i = 0; i < displayItemBlock.items.size(); ++i) {
+                            if (displayItemBlock.items.get(i).ui_type == null) {
+                                displayItemBlock.items.get(i).ui_type = new DisplayItem.UI();
+                            }
+                            displayItemBlock.items.get(i).ui_type.put("rows", "" + i / columns);
+                        }
+                    }
                 }
 
             }
