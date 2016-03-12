@@ -11,12 +11,9 @@ import android.support.v17.leanback.widget.BrowseFrameLayout;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ObjectAdapter;
-import android.support.v17.leanback.widget.OnItemViewClickedListener;
-import android.support.v17.leanback.widget.OnItemViewSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.PresenterSelector;
 import android.support.v17.leanback.widget.Row;
-import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -31,6 +28,7 @@ import com.mothership.tvhome.widget.BlockPresenterSelector;
 import com.mothership.tvhome.widget.BlockVerticalPresenter;
 import com.mothership.tvhome.widget.CardPresenter;
 import com.mothership.tvhome.widget.CardPresenterSelector;
+import com.mothership.tvhome.widget.RowPresenter;
 import com.tv.ui.metro.model.Block;
 import com.tv.ui.metro.model.DisplayItem;
 import com.tv.ui.metro.model.GenericBlock;
@@ -94,8 +92,8 @@ public class MainFragment extends BaseFragment {
     private int mContainerListMarginHeader;
     private int mContainerListAlignTop;
     private boolean mRowScaleEnabled = true;
-    private OnItemViewSelectedListener mExternalOnItemViewSelectedListener;
-    private OnItemViewClickedListener mOnItemViewClickedListener;
+    private RowPresenter.OnItemViewSelectedListener mExternalOnItemViewSelectedListener;
+    private RowPresenter.OnItemViewClickedListener mOnItemViewClickedListener;
     private int mSelectedPosition = -1;
 
     private PresenterSelector mHeaderPresenterSelector;
@@ -373,7 +371,7 @@ public class MainFragment extends BaseFragment {
                 }
             };*/
 
-    private OnItemViewSelectedListener mRowViewSelectedListener = new OnItemViewSelectedListener() {
+    private RowPresenter.OnItemViewSelectedListener mRowViewSelectedListener = new RowPresenter.OnItemViewSelectedListener() {
         @Override
         public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item,
                                    RowPresenter.ViewHolder rowViewHolder, Row row) {
@@ -784,14 +782,14 @@ public class MainFragment extends BaseFragment {
     /**
      * Sets an item selection listener.
      */
-    public void setOnItemViewSelectedListener(OnItemViewSelectedListener listener) {
+    public void setOnItemViewSelectedListener(RowPresenter.OnItemViewSelectedListener listener) {
         mExternalOnItemViewSelectedListener = listener;
     }
 
     /**
      * Returns an item selection listener.
      */
-    public OnItemViewSelectedListener getOnItemViewSelectedListener() {
+    public RowPresenter.OnItemViewSelectedListener getOnItemViewSelectedListener() {
         return mExternalOnItemViewSelectedListener;
     }
 
@@ -801,7 +799,7 @@ public class MainFragment extends BaseFragment {
      * item presenter sets during {@link Presenter#onCreateViewHolder(ViewGroup)}.
      * So in general,  developer should choose one of the listeners but not both.
      */
-    public void setOnItemViewClickedListener(OnItemViewClickedListener listener) {
+    public void setOnItemViewClickedListener(RowPresenter.OnItemViewClickedListener listener) {
         mOnItemViewClickedListener = listener;
         if (mPagesFragment != null) {
             mPagesFragment.setOnItemViewClickedListener(listener);
@@ -811,11 +809,11 @@ public class MainFragment extends BaseFragment {
     /**
      * Returns the item Clicked listener.
      */
-    public OnItemViewClickedListener getOnItemViewClickedListener() {
+    public RowPresenter.OnItemViewClickedListener getOnItemViewClickedListener() {
         return mOnItemViewClickedListener;
     }
 
-    private final class ItemViewSelectedListener implements OnItemViewSelectedListener {
+    private final class ItemViewSelectedListener implements RowPresenter.OnItemViewSelectedListener {
         @Override
         public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item,
                                    RowPresenter.ViewHolder rowViewHolder, Row row) {
@@ -826,7 +824,7 @@ public class MainFragment extends BaseFragment {
 
         }
     }
-    private final class ItemViewClickedListener implements OnItemViewClickedListener {
+    private final class ItemViewClickedListener implements RowPresenter.OnItemViewClickedListener {
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {

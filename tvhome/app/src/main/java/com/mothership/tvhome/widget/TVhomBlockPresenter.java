@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
-import android.support.v17.leanback.widget.RowPresenter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,7 @@ public class TVhomBlockPresenter extends RowPresenter {
         View view = inf.inflate(R.layout.home_block, parent, false);
         view.setFocusable(true);
         view.setFocusableInTouchMode(true);
+        setSelectEffectEnabled(false);
         return new ViewHolder(view);
     }
 

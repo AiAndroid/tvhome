@@ -3,10 +3,7 @@ package com.mothership.tvhome.app;
 import android.animation.TimeAnimator;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.ItemBridgeAdapter;
-import android.support.v17.leanback.widget.OnItemViewClickedListener;
-import android.support.v17.leanback.widget.OnItemViewSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
-import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v17.leanback.widget.ScaleFrameLayout;
 import android.support.v17.leanback.widget.VerticalGridView;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +17,7 @@ import android.view.animation.Interpolator;
 
 import com.mothership.tvhome.R;
 import com.mothership.tvhome.widget.BlockBasePresenter;
+import com.mothership.tvhome.widget.RowPresenter;
 
 import java.util.ArrayList;
 
@@ -100,8 +98,8 @@ public class PageRowsFragment extends BaseRowsFragment {
     private ScaleFrameLayout mScaleFrameLayout;
     private boolean mAfterEntranceTransition = true;
 
-    private OnItemViewSelectedListener mOnItemViewSelectedListener;
-    private OnItemViewClickedListener mOnItemViewClickedListener;
+    private RowPresenter.OnItemViewSelectedListener mOnItemViewSelectedListener;
+    private RowPresenter.OnItemViewClickedListener mOnItemViewClickedListener;
 
     // Select animation and interpolator are not intended to be
     // exposed at this moment. They might be synced with vertical scroll
@@ -125,7 +123,7 @@ public class PageRowsFragment extends BaseRowsFragment {
      * item presenter sets during {@link Presenter#onCreateViewHolder(ViewGroup)}.
      * So in general,  developer should choose one of the listeners but not both.
      */
-    public void setOnItemViewClickedListener(OnItemViewClickedListener listener) {
+    public void setOnItemViewClickedListener(RowPresenter.OnItemViewClickedListener listener) {
         mOnItemViewClickedListener = listener;
         if (mViewsCreated) {
             throw new IllegalStateException(
@@ -136,7 +134,7 @@ public class PageRowsFragment extends BaseRowsFragment {
     /**
      * Returns the item clicked listener.
      */
-    public OnItemViewClickedListener getOnItemViewClickedListener() {
+    public RowPresenter.OnItemViewClickedListener getOnItemViewClickedListener() {
         return mOnItemViewClickedListener;
     }
 
@@ -161,7 +159,7 @@ public class PageRowsFragment extends BaseRowsFragment {
     /**
      * Sets an item selection listener.
      */
-    public void setOnItemViewSelectedListener(OnItemViewSelectedListener listener) {
+    public void setOnItemViewSelectedListener(RowPresenter.OnItemViewSelectedListener listener) {
         mOnItemViewSelectedListener = listener;
         VerticalGridView listView = getVerticalGridView();
         if (listView != null) {
@@ -180,7 +178,7 @@ public class PageRowsFragment extends BaseRowsFragment {
     /**
      * Returns an item selection listener.
      */
-    public OnItemViewSelectedListener getOnItemViewSelectedListener() {
+    public RowPresenter.OnItemViewSelectedListener getOnItemViewSelectedListener() {
         return mOnItemViewSelectedListener;
     }
 

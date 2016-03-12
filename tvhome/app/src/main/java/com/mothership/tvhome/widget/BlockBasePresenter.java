@@ -15,7 +15,6 @@ import android.support.v17.leanback.widget.OnChildSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.PresenterSelector;
 import android.support.v17.leanback.widget.Row;
-import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v17.leanback.widget.ShadowOverlayHelper;
 import android.support.v17.leanback.widget.VerticalGridView;
 import android.support.v7.widget.RecyclerView;
@@ -578,7 +577,6 @@ public class BlockBasePresenter extends RowPresenter {
                                 - itemmargin * (columns - 1)) / columns);
                         gridView.setItemMargin(itemmargin);
                         int itemheight = (int) (itemwidth / displayItemBlock.ui_type.ratio());
-
                         basePresenter.setBaseSize(itemwidth, itemheight);
                         //TODO get from recycler
 //                    Log.d(TAG, "create measure item");
@@ -591,13 +589,13 @@ public class BlockBasePresenter extends RowPresenter {
                                 + gridView.getPaddingTop() + gridView.getPaddingBottom();
                         gridView.setLayoutParams(lp);
                     }
-                    {
+                    if(rows>1){
                         ItemAlignmentFacet.ItemAlignmentDef[] defs = new ItemAlignmentFacet.ItemAlignmentDef[rows + 1];
                         ItemAlignmentFacet facet = new ItemAlignmentFacet();
                         // by default align details_frame to half window height
                         ItemAlignmentFacet.ItemAlignmentDef alignDef0 = new ItemAlignmentFacet.ItemAlignmentDef();
                         alignDef0.setItemAlignmentOffset(0);
-                        alignDef0.setItemAlignmentOffsetPercent(0);
+                        alignDef0.setItemAlignmentOffsetPercent(50);
                         defs[0] = alignDef0;
 
                         for (int i = 0; i < rows; ++i) {
@@ -609,14 +607,17 @@ public class BlockBasePresenter extends RowPresenter {
                         }
 
                         facet.setAlignmentDefs(defs);
-                        //setFacet(ItemAlignmentFacet.class, facet);
-                        setFacet(ItemAlignmentFacet.class, facet);
+                        vh.mContainerViewHolder.setFacet(ItemAlignmentFacet.class, facet);
 
                         for (int i = 0; i < displayItemBlock.items.size(); ++i) {
                             if (displayItemBlock.items.get(i).ui_type == null) {
                                 displayItemBlock.items.get(i).ui_type = new DisplayItem.UI();
                             }
                             displayItemBlock.items.get(i).ui_type.put("rows", "" + i / columns);
+                        }
+                    }else{
+                        for (int i = 0; i < displayItemBlock.items.size(); ++i) {
+                            displayItemBlock.items.get(i).ui_type = null;
                         }
                     }
                 }
@@ -781,10 +782,10 @@ public class BlockBasePresenter extends RowPresenter {
     public void freeze(RowPresenter.ViewHolder holder, boolean freeze) {
         ViewHolder vh = (ViewHolder) holder;
         if(vh.mGridView instanceof HorizontalGridView){
-            HorizontalGridView view = (HorizontalGridView)vh.mGridView;
+            HorizontalGridView view = (HorizontalGridView) vh.mGridView;
             view.setScrollEnabled(!freeze);
         }else if(vh.mGridView instanceof VerticalGridView){
-            VerticalGridView view = (VerticalGridView)vh.mGridView;
+            VerticalGridView view = (VerticalGridView) vh.mGridView;
             view.setScrollEnabled(!freeze);
         }
     }
@@ -804,4 +805,6 @@ public class BlockBasePresenter extends RowPresenter {
                     afterEntrance ? View.VISIBLE : View.INVISIBLE);
         }
     }
+
+
 }

@@ -3,11 +3,8 @@ package com.mothership.tvhome.app;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.ObjectAdapter;
-import android.support.v17.leanback.widget.OnItemViewClickedListener;
-import android.support.v17.leanback.widget.OnItemViewSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
-import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -18,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.mothership.tvhome.R;
 import com.mothership.tvhome.widget.BlockAdapter;
+import com.mothership.tvhome.widget.RowPresenter;
 
 /**
  * Created by wangwei on 3/1/16.
@@ -37,8 +35,8 @@ public class PagesFragment extends BaseFragment {
     private static final String TAG = "PagesFragment";
     private static boolean DEBUG = true;
 
-    private OnItemViewSelectedListener mExternalOnItemViewSelectedListener;
-    private OnItemViewClickedListener mOnItemViewClickedListener;
+    private RowPresenter.OnItemViewSelectedListener mExternalOnItemViewSelectedListener;
+    private RowPresenter.OnItemViewClickedListener mOnItemViewClickedListener;
 
     private ObjectAdapter mAdapter;
 
@@ -146,7 +144,7 @@ public class PagesFragment extends BaseFragment {
     }
 
 
-    private OnItemViewSelectedListener mRowViewSelectedListener = new OnItemViewSelectedListener() {
+    private RowPresenter.OnItemViewSelectedListener mRowViewSelectedListener = new RowPresenter.OnItemViewSelectedListener() {
         @Override
         public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item,
                                    RowPresenter.ViewHolder rowViewHolder, Row row) {
@@ -217,14 +215,14 @@ public class PagesFragment extends BaseFragment {
      * item presenter sets during {@link Presenter#onCreateViewHolder(ViewGroup)}.
      * So in general,  developer should choose one of the listeners but not both.
      */
-    public void setOnItemViewClickedListener(OnItemViewClickedListener listener) {
+    public void setOnItemViewClickedListener(RowPresenter.OnItemViewClickedListener listener) {
         mOnItemViewClickedListener = listener;
     }
 
     /**
      * Returns the item clicked listener.
      */
-    public OnItemViewClickedListener getOnItemViewClickedListener() {
+    public RowPresenter.OnItemViewClickedListener getOnItemViewClickedListener() {
         return mOnItemViewClickedListener;
     }
 }

@@ -1,6 +1,6 @@
 package com.mothership.tvhome.widget;
 
-import android.support.v17.leanback.widget.Presenter;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,4 +26,12 @@ public class PresenterT2 extends BasePresenter
     {
         super.onBindViewHolder(aViewHolder, aItem);
     }
+
+    public int getRealWidth(Context contect){
+        return mBaseWidth;
+    };
+
+    public int getRealHeight(Context contect){
+        return mBaseHeight;
+    };
 }
