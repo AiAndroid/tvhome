@@ -1,6 +1,5 @@
 package com.mothership.tvhome.widget;
 
-import android.support.v17.leanback.widget.RowPresenter;
 import android.view.ViewGroup;
 
 import com.mothership.tvhome.view.TvViewGroup;
