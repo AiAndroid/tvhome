@@ -109,6 +109,192 @@
         },
         {
           "ui_type": {
+            "name": "block_grid_free",
+            "id": 110,
+            "columns": 6,
+            "ratio": 0.657
+          },
+          "items": [
+            {
+              "ui_type": {
+                "columns": 0,
+                "rows": 0,
+                "columnspan": 2,
+                "rowspan": 2
+              },
+              "target": {
+                "url": "o/V000280918?position=attention.recomm.r%7C0.0%7CRichEntrance.TabImageGrid.O",
+                "entity": "play"
+              },
+              "title": "B1",
+              "images": {
+                "poster": {
+                  "url": "http://image.cdn.mvideo.xiaomi.com/mfsv2/download/fdsc3/p01wFVjQ1vzi/AYDbxvLNCh2Tu4.png"
+                }
+              },
+              "ns": "video",
+              "id": "B1",
+              "desc": ""
+            },
+            {
+              "ui_type": {
+                "columns": 2,
+                "rows": 0
+              },
+              "target": {
+                "url": "",
+                "entity": "play"
+              },
+              "title": "B2",
+              "images": {
+                "poster": {
+                  "url": "http://image.cdn.mvideo.xiaomi.com/mfsv2/download/fdsc3/p01sUHyYiYgn/pxRz4SQGWbS1ng.png"
+                }
+              },
+              "ns": "video",
+              "id": "B2",
+              "desc": ""
+            },
+            {
+              "ui_type": {
+                "columns": 3,
+                "rows": 0
+              },
+              "target": {
+                "url": "",
+                "entity": "play"
+              },
+              "title": "B3",
+              "images": {
+                "poster": {
+                  "url": "http://image.cdn.mvideo.xiaomi.com/mfsv2/download/fdsc3/p01QY4J0v1EA/aH3AZveYKaSESH.png"
+                }
+              },
+              "ns": "video",
+              "id": "B3",
+              "desc": ""
+            },
+            {
+              "ui_type": {
+                "columns": 4,
+                "rows": 0
+              },
+              "target": {
+                "url": "",
+                "entity": "play"
+              },
+              "title": "B4",
+              "images": {
+                "poster": {
+                  "url": "http://image.cdn.mvideo.xiaomi.com/mfsv2/download/fdsc3/p01Wou4yzFK3/HHZqSvRs2OsULV.png"
+                }
+              },
+              "ns": "video",
+              "id": "B4",
+              "desc": ""
+            },
+            {
+              "ui_type": {
+                "columns": 5,
+                "rows": 0
+              },
+              "target": {
+                "url": "",
+                "entity": "play"
+              },
+              "title": "B5",
+              "images": {
+                "poster": {
+                  "url": "http://image.cdn.mvideo.xiaomi.com/mfsv2/download/fdsc3/p01Sj6dHjBZI/qS4Ek4Z7jI3X7D.png"
+                }
+              },
+              "ns": "video",
+              "id": "B5",
+              "desc": ""
+            },
+            {
+              "ui_type": {
+                "columns": 2,
+                "rows": 1
+              },
+              "target": {
+                "url": "",
+                "entity": "play"
+              },
+              "title": "B6",
+              "images": {
+                "poster": {
+                  "url": "http://image.cdn.mvideo.xiaomi.com/mfsv2/download/fdsc3/p01MCSI5shn5/FWrsNdOj1mnYxF.png"
+                }
+              },
+              "ns": "video",
+              "id": "B6",
+              "desc": ""
+            },
+            {
+              "ui_type": {
+                "columns": 3,
+                "rows": 1
+              },
+              "target": {
+                "url": "",
+                "entity": "play"
+              },
+              "title": "B7",
+              "images": {
+                "poster": {
+                  "url": "http://image.cdn.mvideo.xiaomi.com/mfsv2/download/fdsc3/p010tCukBJKa/eiKbNzJ7nCrvHv.png"
+                }
+              },
+              "ns": "video",
+              "id": "B7",
+              "desc": ""
+            },
+            {
+              "ui_type": {
+                "columns": 4,
+                "rows": 1
+              },
+              "target": {
+                "url": "",
+                "entity": "play"
+              },
+              "title": "B8",
+              "images": {
+                "poster": {
+                  "url": "http://image.cdn.mvideo.xiaomi.com/mfsv2/download/fdsc3/p01Io2lAK4M9/Km1YfgihekbfBQ.png"
+                }
+              },
+              "ns": "video",
+              "id": "B8",
+              "desc": ""
+            },
+            {
+                "ui_type": {
+                "columns": 5,
+                "rows": 1
+              },
+              "target": {
+                "url": "",
+                "entity": "play"
+              },
+              "title": "B9",
+              "images": {
+                "poster": {
+                  "url": "http://image.cdn.mvideo.xiaomi.com/mfsv2/download/fdsc3/p01fya4lfJgC/j5bL34l2T4jAq9.png"
+                }
+              },
+              "ns": "video",
+              "id": "B9",
+              "desc": ""
+            }
+          ],
+          "ns": "video",
+          "id": "",
+          "title": "Hot 最热推荐"
+        },
+        {
+          "ui_type": {
             "name": "block_grid",
             "id": 101,
             "columns": 6,
