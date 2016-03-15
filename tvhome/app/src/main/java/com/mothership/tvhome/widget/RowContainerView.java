@@ -53,6 +53,10 @@ final class RowContainerView extends LinearLayout {
 
         mHeaderDock = (ViewGroup) findViewById(R.id.lb_row_container_header_dock);
         setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        int paddingV = (int)context.getResources().getDimension(R.dimen.grid_block_vertical_padding);
+        int paddingH = (int)context.getResources().getDimension(R.dimen.grid_block_horizontal_padding);
+        setPadding(paddingH,paddingV,paddingH,0);
+        setClipToPadding(false);
     }
 
     public void addHeaderView(View headerView) {

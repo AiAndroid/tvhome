@@ -225,7 +225,7 @@ public class MainFragment extends BaseFragment {
 
         mContainerListMarginStart = (int)getActivity().getResources().getDimension(R.dimen.browse_margin_top);
         mContainerListMarginStartExpand = (int)getActivity().getResources().getDimension(R.dimen.browse_margin_top_expand);
-        mContainerListMarginHeader = (int)getActivity().getResources().getDimension(R.dimen.lb_browse_headers_margin_top);
+        mContainerListMarginHeader = (int)getActivity().getResources().getDimension(R.dimen.lb_browse_headers_anim_top);
         //readArguments(getArguments());
 
         if (mCanShowHeaders) {
@@ -521,6 +521,7 @@ public class MainFragment extends BaseFragment {
 
 
     private void startHeadersTransitionInternal(final boolean withHeaders) {
+        //if(true) return;
         if (getFragmentManager().isDestroyed()) {
             return;
         }
@@ -648,7 +649,6 @@ public class MainFragment extends BaseFragment {
         View containerList;
         containerList = mHeadersFragment.getView();
         lp = (ViewGroup.MarginLayoutParams) containerList.getLayoutParams();
-        //lp.setMarginStart(onScreen ? 0 : -mContainerListMarginStart);
         lp.setMargins(0,onScreen ? 0 : -mContainerListMarginHeader,0,0);
         containerList.setLayoutParams(lp);
     }
@@ -658,7 +658,6 @@ public class MainFragment extends BaseFragment {
         View containerList;
         containerList = mPagesFragment.getView();
         lp = (ViewGroup.MarginLayoutParams) containerList.getLayoutParams();
-        //lp.setMarginStart(alignTop ? 0 : mContainerListMarginStart);
         lp.setMargins(0, alignTop ? mContainerListMarginStartExpand: mContainerListMarginStart, 0, 0);
         containerList.setLayoutParams(lp);
     }

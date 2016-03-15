@@ -8,19 +8,22 @@
     <dimen name="lb_browse_expanded_row_no_hovercard_bottom_padding">28dp</dimen>
 
     <dimen name="lb_browse_headers_height">100dp</dimen>
-    <dimen name="lb_browse_headers_margin_top">90dp</dimen>
+    <dimen name="lb_browse_headers_margin_top">20dp</dimen>
+    <dimen name="lb_browse_headers_anim_top">100dp</dimen>
 
     <item name="lb_browse_header_select_duration" format="integer" type="dimen">150</item>
     <item name="lb_browse_header_unselect_alpha" type="fraction">50%</item>
     <item name="lb_browse_header_select_scale" format="float" type="dimen">1.1</item>
 
-    <dimen name="browse_margin_top_expand">20dp</dimen>
-    <dimen name="browse_margin_top">50dp</dimen>
+    <dimen name="browse_margin_top_expand">50dp</dimen>
+    <dimen name="browse_margin_top">70dp</dimen>
     <dimen name="browse_margin_left">20dp</dimen>
     <dimen name="browse_margin_right">20dp</dimen>
+    <dimen name="grid_block_margin">15dp</dimen>
     <dimen name="grid_item_margin">25dp</dimen>
     <dimen name="grid_block_horizontal_padding">50dp</dimen>
-    <dimen name="grid_block_vertical_padding">10dp</dimen>
+    <dimen name="grid_block_vertical_padding">25dp</dimen>
+    <dimen name="grid_block_head_vertical_padding">20dp</dimen>
     <dimen name="item_text_bar_height">20dp</dimen>
 
 

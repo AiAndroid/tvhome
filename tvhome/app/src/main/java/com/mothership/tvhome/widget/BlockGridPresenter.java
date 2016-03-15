@@ -33,7 +33,8 @@ public class BlockGridPresenter extends RowPresenter {
             mContext = rootView.getContext();
             mGridLayout = gridView;
             int paddingh = (int)rootView.getResources().getDimension(R.dimen.grid_block_horizontal_padding);
-            mGridLayout.setPadding(paddingh,0,paddingh,0);
+            int itemmargin = (int) rootView.getResources().getDimension(R.dimen.grid_item_margin);
+            mGridLayout.setPadding(-itemmargin/2,0,0,0);
 
         }
     }
@@ -63,7 +64,8 @@ public class BlockGridPresenter extends RowPresenter {
             int rows = displayItemBlock.items.size() / columns;
             vh.mGridLayout.setColumnCount(columns);
             int itemmargin = (int) mParent.getResources().getDimension(R.dimen.grid_item_margin);
-            int itemwidth = (int) ((mParent.getWidth() - vh.mGridLayout.getPaddingLeft() - vh.mGridLayout.getPaddingRight()
+            int gridpaddingHor = (int) mParent.getResources().getDimension(R.dimen.grid_block_horizontal_padding);
+            int itemwidth = (int) ((mParent.getWidth() - gridpaddingHor*2
                     - itemmargin * (columns - 1)) / columns);
             //vh.mGridLayout.setItemMargin(itemmargin);
             int itemheight = (int) (itemwidth / displayItemBlock.ui_type.ratio());

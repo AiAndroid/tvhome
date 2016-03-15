@@ -34,7 +34,8 @@
         <android.support.v17.leanback.widget.BrowseRowsFrameLayout
             android:id="@+id/browse_container_dock"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/grid_block_vertical_padding">
         </android.support.v17.leanback.widget.BrowseRowsFrameLayout>
         <!-- Padding needed for shadow -->
         <FrameLayout

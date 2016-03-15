@@ -93,4 +93,11 @@ public class TVhomBlockPresenter extends RowPresenter
 
         }
     }
+
+    @Override
+    protected void onRowViewExpanded(ViewHolder vh, boolean expanded) {
+        ViewHolder rowViewHolder = getRowViewHolder(vh);
+        rowViewHolder.mExpanded = false;
+        super.onRowViewExpanded(vh,false);
+    }
 }

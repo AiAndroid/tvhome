@@ -154,7 +154,7 @@ public abstract class RowPresenter extends Presenter {
         private static final int ACTIVATED = 1;
         private static final int NOT_ACTIVATED = 2;
 
-        ContainerViewHolder mContainerViewHolder;
+        public ContainerViewHolder mContainerViewHolder;
         RowHeaderPresenter.ViewHolder mHeaderViewHolder;
         Row mRow;
         int mActivated = ACTIVATED_NOT_ASSIGNED;

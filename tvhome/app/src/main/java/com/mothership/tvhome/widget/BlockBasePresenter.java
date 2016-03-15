@@ -549,6 +549,10 @@ public class BlockBasePresenter extends RowPresenter {
                     ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(basePresenter);
 
                     int itemmargin = (int) mParent.getResources().getDimension(R.dimen.grid_item_margin);
+                    int gridpaddingHor = (int) mParent.getResources().getDimension(R.dimen.grid_block_horizontal_padding);
+                    int itemwidth = (int) ((mParent.getWidth() - gridpaddingHor*2
+                            - itemmargin * (columns - 1)) / columns);
+                    int itemheight = (int) (itemwidth / displayItemBlock.ui_type.ratio());
                     if (vh.mGridView instanceof HorizontalGridView) {
                         //for(int k=0;k<columns;++k) {
                             for (int i = 0; i < displayItemBlock.items.size(); ++i) {
@@ -561,8 +565,6 @@ public class BlockBasePresenter extends RowPresenter {
                         vh.mGridView.setAdapter(vh.mItemBridgeAdapter);
                         HorizontalGridView gridView = (HorizontalGridView) vh.mGridView;
                         gridView.setNumRows(rows);
-                        int itemwidth = (int) ((mParent.getWidth() - vh.mGridView.getPaddingLeft() - vh.mGridView.getPaddingRight()
-                                - itemmargin * (columns - 1)) / columns);
                         gridView.setItemMargin(itemmargin);
                         basePresenter.setBaseSize(itemwidth, (int) (itemwidth / displayItemBlock.ui_type.ratio()));
                     } else if (vh.mGridView instanceof VerticalGridView) {
@@ -573,10 +575,7 @@ public class BlockBasePresenter extends RowPresenter {
                         vh.mGridView.setAdapter(vh.mItemBridgeAdapter);
                         VerticalGridView gridView = (VerticalGridView) vh.mGridView;
                         gridView.setNumColumns(columns);
-                        int itemwidth = (int) ((mParent.getWidth() - vh.mGridView.getPaddingLeft() - vh.mGridView.getPaddingRight()
-                                - itemmargin * (columns - 1)) / columns);
                         gridView.setItemMargin(itemmargin);
-                        int itemheight = (int) (itemwidth / displayItemBlock.ui_type.ratio());
                         basePresenter.setBaseSize(itemwidth, itemheight);
                         //TODO get from recycler
 //                    Log.d(TAG, "create measure item");
@@ -585,7 +584,7 @@ public class BlockBasePresenter extends RowPresenter {
 //                    int height = bVh.itemView.getMeasuredHeight();
                         //TODO recycle bVh
                         ViewGroup.LayoutParams lp = gridView.getLayoutParams();
-                        lp.height = (basePresenter.getRealHeight(mParent.getContext())) * rows + gridView.getHorizontalMargin() * (rows - 1)
+                        lp.height = (basePresenter.getRealHeight(mParent.getContext())) * rows + gridView.getHorizontalMargin() * (rows-1)
                                 + gridView.getPaddingTop() + gridView.getPaddingBottom();
                         gridView.setLayoutParams(lp);
                     }

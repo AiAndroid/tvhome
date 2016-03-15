@@ -7,8 +7,6 @@
 
     android:clipToPadding="false"
     android:orientation="horizontal"
-    android:paddingLeft="@dimen/grid_block_horizontal_padding"
-    android:paddingRight="@dimen/grid_block_horizontal_padding"
     >
 
     <!--<ImageView-->
