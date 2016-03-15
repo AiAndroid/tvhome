@@ -20,6 +20,7 @@ public class DisplayItemSelector extends PresenterSelector
     {
         mPresenters.put(101, mDefaultPresenter);
         mPresenters.put(102, new PresenterT2());
+        mPresenters.put(103, new PresenterT3());
     }
     @Override
     public Presenter getPresenter(Object aItem)
