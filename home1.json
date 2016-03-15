@@ -886,7 +886,7 @@
             "name": "block_grid",
             "id": 101,
             "columns": 6,
-            "ratio": 0.8059
+            "ratio": 1.0
           },
           "items": [
             {
