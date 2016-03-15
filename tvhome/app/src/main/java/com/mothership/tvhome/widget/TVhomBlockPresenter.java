@@ -87,7 +87,7 @@ public class TVhomBlockPresenter extends RowPresenter
             ItemBridgeAdapter adpt = new ItemBridgeAdapter(adapter);
             adpt.setWrapper(wrapper);
 
-            FocusHighlightHelper.setupBrowseItemFocusHighlight(adpt, FocusHighlight.ZOOM_FACTOR_MEDIUM, true);
+            FocusHighlightHelper.setupBrowseItemFocusHighlight(adpt, FocusHighlight.ZOOM_FACTOR_SMALL, true);
 
             ((ChannelContainer) ((ViewHolder) holder).view).setAdapter(adpt);
 

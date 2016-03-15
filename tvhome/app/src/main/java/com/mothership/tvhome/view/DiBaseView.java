@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
  */
 public class DiBaseView extends LinearLayout
 {
-    static final float UnFocusAlpha = 0.3f;
+    static final float UnFocusAlpha = 0.6f;
     static final float FocusAlpha = 1.0f;
     public DiBaseView(Context context, AttributeSet attrs)
     {
