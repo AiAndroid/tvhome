@@ -22,6 +22,7 @@ public class BasePresenter extends Presenter
     protected int mBaseWidth = 0;
     protected int mBaseHeight = 0;
 
+
     static public class VH extends ViewHolder
     {
         public ImageView mImg;
@@ -49,8 +50,6 @@ public class BasePresenter extends Presenter
         View res = inf.inflate(R.layout.di_base_view, parent, false);
         res.setFocusable(true);
         VH vh = new VH(res);
-
-
 //        ViewGroup.LayoutParams lpImg = vh.mImg.getLayoutParams();
 //        lpImg.width = mBaseWidth;
 //        lpImg.height = mBaseHeight;

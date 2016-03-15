@@ -6,8 +6,10 @@ import android.support.v17.leanback.widget.FocusHighlight;
 import android.support.v17.leanback.widget.FocusHighlightHelper;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ItemBridgeAdapter;
+import android.support.v17.leanback.widget.ItemBridgeAdapterShadowOverlayWrapper;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
+import android.support.v17.leanback.widget.ShadowOverlayHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +22,12 @@ import com.tv.ui.metro.model.DisplayItem;
 /**
  * Created by wangwei on 3/10/16.
  */
-public class TVhomBlockPresenter extends RowPresenter {
+public class TVhomBlockPresenter extends RowPresenter
+{
     protected static Context mContext;
 
-    static class BlockViewHolder extends Presenter.ViewHolder {
+    static class BlockViewHolder extends Presenter.ViewHolder
+    {
         public BlockViewHolder(View view)
         {
             super(view);
@@ -32,7 +36,8 @@ public class TVhomBlockPresenter extends RowPresenter {
 
 
     @Override
-    protected ViewHolder createRowViewHolder(ViewGroup parent) {
+    protected ViewHolder createRowViewHolder(ViewGroup parent)
+    {
         mContext = parent.getContext();
         LayoutInflater inf = LayoutInflater.from(parent.getContext());
         View view = inf.inflate(R.layout.home_block, parent, false);
@@ -43,9 +48,11 @@ public class TVhomBlockPresenter extends RowPresenter {
     }
 
     @Override
-    protected void onBindRowViewHolder(RowPresenter.ViewHolder holder, Object item) {
+    protected void onBindRowViewHolder(RowPresenter.ViewHolder holder, Object item)
+    {
         ViewHolder vh = (ViewHolder) holder;
-        if (item instanceof Block) {
+        if (item instanceof Block)
+        {
 //            Block<DisplayItem> displayItemBlock = (Block<DisplayItem>) item;
             super.onBindRowViewHolder(holder, new Row(new HeaderItem(0, "")));
 
@@ -57,8 +64,30 @@ public class TVhomBlockPresenter extends RowPresenter {
             adapter.add(Integer.valueOf(R.drawable.a5));
             adapter.add(Integer.valueOf(R.drawable.a6));
 
+
+            ItemBridgeAdapterShadowOverlayWrapper wrapper = null;
+
+//            ShadowOverlayHelper.Options opts = new ShadowOverlayHelper.Options();
+//            opts.roundedCornerRadius(10);
+//            ShadowOverlayHelper shadowOverlayHelper = new ShadowOverlayHelper.Builder()
+//                    .needsOverlay(true)
+//                    .needsShadow(true)
+//                    .needsRoundedCorner(true)
+//                    .preferZOrder(true)
+//                    .keepForegroundDrawable(true)
+//                    .options(opts)
+//                    .build(((ViewHolder) holder).view.getContext());
+//            if (shadowOverlayHelper.needsWrapper())
+//            {
+//                wrapper = new ItemBridgeAdapterShadowOverlayWrapper(
+//                        shadowOverlayHelper);
+//            }
+
+
             ItemBridgeAdapter adpt = new ItemBridgeAdapter(adapter);
-            FocusHighlightHelper.setupBrowseItemFocusHighlight(adpt, FocusHighlight.ZOOM_FACTOR_MEDIUM, false);
+            adpt.setWrapper(wrapper);
+
+            FocusHighlightHelper.setupBrowseItemFocusHighlight(adpt, FocusHighlight.ZOOM_FACTOR_MEDIUM, true);
 
             ((ChannelContainer) ((ViewHolder) holder).view).setAdapter(adpt);
 
