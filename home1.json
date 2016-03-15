@@ -884,7 +884,7 @@
         {
           "ui_type": {
             "name": "block_grid",
-            "id": 101,
+            "id": 103,
             "columns": 6,
             "ratio": 1.0
           },
