@@ -32,6 +32,8 @@ public class DisplayItem implements Serializable{
         public String left() {return  get("left");}
         public String right(){return  get("right");}
         public int    columns(){return  getInt(get("columns"), 1);}
+        public int    columnspan(){return  getInt(get("columnspan"), 1);}
+        public int    rowspan(){return  getInt(get("rowspan"), 1);}
 
         public UI clone(){
             UI item = new UI();

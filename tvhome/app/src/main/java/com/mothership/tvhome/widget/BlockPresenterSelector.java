@@ -18,6 +18,7 @@ public class BlockPresenterSelector extends PresenterSelector {
     {
         mPresenters.put(101, mVerticalPresenter);
         mPresenters.put(100, mTVhomBlockPresenter);
+        mPresenters.put(110, new BlockGridPresenter());
     }
     @Override
     public Presenter getPresenter(Object item) {

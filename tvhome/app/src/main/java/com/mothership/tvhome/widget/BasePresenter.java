@@ -36,6 +36,10 @@ public class BasePresenter extends Presenter
             mSubTitle = (TextView) aView.findViewById(R.id.di_subtitle);
 
         }
+
+        public View getBaseSizeView(){
+            return mImg;
+        }
     }
 
     @Override
@@ -43,7 +47,9 @@ public class BasePresenter extends Presenter
     {
         LayoutInflater inf = LayoutInflater.from(parent.getContext());
         View res = inf.inflate(R.layout.di_base_view, parent, false);
+        res.setFocusable(true);
         VH vh = new VH(res);
+
 
 //        ViewGroup.LayoutParams lpImg = vh.mImg.getLayoutParams();
 //        lpImg.width = mBaseWidth;

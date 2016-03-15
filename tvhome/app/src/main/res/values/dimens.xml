@@ -12,7 +12,7 @@
 
     <item name="lb_browse_header_select_duration" format="integer" type="dimen">150</item>
     <item name="lb_browse_header_unselect_alpha" type="fraction">50%</item>
-    <item name="lb_browse_header_select_scale" format="float" type="dimen">1.2</item>
+    <item name="lb_browse_header_select_scale" format="float" type="dimen">1.1</item>
 
     <dimen name="browse_margin_top_expand">20dp</dimen>
     <dimen name="browse_margin_top">50dp</dimen>

@@ -35,6 +35,6 @@ public class PresenterT3 extends BasePresenter
     };
 
     public int getRealHeight(Context contect){
-        return mBaseHeight;
+        return mBaseHeight+(int)contect.getResources().getDimension(R.dimen.item_text_bar_height);
     };
 }

@@ -1,12 +1,16 @@
 package com.mothership.tvhome.widget;
 
 import android.animation.TimeAnimator;
+import android.content.Context;
+import android.content.res.Resources;
 import android.support.v17.leanback.graphics.ColorOverlayDimmer;
 import android.support.v17.leanback.widget.ShadowOverlayContainer;
 import android.support.v17.leanback.widget.ShadowOverlayHelper;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
+
+import com.mothership.tvhome.R;
 
 import static android.support.v17.leanback.widget.FocusHighlight.ZOOM_FACTOR_LARGE;
 import static android.support.v17.leanback.widget.FocusHighlight.ZOOM_FACTOR_MEDIUM;
@@ -122,5 +126,44 @@ public class FocusHelper {
             }
             setFocusLevel(mFocusLevelStart + fraction * mFocusLevelDelta);
         }
+    }
+
+
+    static class ItemFocusHighlight {
+        private static boolean sInitialized;
+        private static float sSelectScale;
+        private static int sDuration;
+
+        ItemFocusHighlight(Context context) {
+            lazyInit(context.getResources());
+        }
+
+        private static void lazyInit(Resources res) {
+            if (!sInitialized) {
+                sSelectScale =
+                        Float.parseFloat(res.getString(R.dimen.lb_browse_header_select_scale));
+                sDuration =
+                        Integer.parseInt(res.getString(R.dimen.lb_browse_header_select_duration));
+                sInitialized = true;
+            }
+        }
+
+        private void viewFocused(View view, boolean hasFocus) {
+            view.setSelected(hasFocus);
+            FocusHelper.FocusAnimator animator = (FocusHelper.FocusAnimator) view.getTag(android.support.v17.leanback.R.id.lb_focus_animator);
+            if (animator == null) {
+                animator = new FocusHelper.FocusAnimator(view, sSelectScale, false, sDuration);
+                view.setTag(android.support.v17.leanback.R.id.lb_focus_animator, animator);
+            }
+            animator.animateFocus(hasFocus, false);
+        }
+
+        public void onItemFocused(View view, boolean hasFocus) {
+            viewFocused(view, hasFocus);
+        }
+
+        public void onInitializeView(View view) {
+        }
+
     }
 }
