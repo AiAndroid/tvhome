@@ -17,23 +17,23 @@ public class DisplayItem implements Serializable{
         target = new Target();
     }
 
-	public static class UI extends  HashMap<String, String> implements Serializable {
+	public static class UI extends  HashMap<String, Object> implements Serializable {
 		private static final long serialVersionUID = 4L;
-        public String name(){return get("name");}
-        public int    id()  {return getInt(get("id"), -1);}
-        public int    row_count(){return  getInt(get("row_count"), 2);}
-        public int    rows(){return  getInt(get("rows"), 1);}
-        public float  ratio()    {return  getFloat(get("ratio"), 1.0f);}
-        public int    display_count(){return  getInt(get("display_count"), 2);}
-        public int    show_value(){return  getInt(get("show_value"), 1);}
-        public int    show_rank(){return  getInt(get("show_rank"), 1);}
-        public int    show_title(){return  getInt(get("show_title"), 1);}
-        public int    show_vip(){return  getInt(get("show_vip"), 0);}
-        public String left() {return  get("left");}
-        public String right(){return  get("right");}
-        public int    columns(){return  getInt(get("columns"), 1);}
-        public int    columnspan(){return  getInt(get("columnspan"), 1);}
-        public int    rowspan(){return  getInt(get("rowspan"), 1);}
+        public String name(){return (String)get("name");}
+        public int    id()  {return getInt((String)get("id"), -1);}
+        public int    row_count(){return  getInt((String)get("row_count"), 2);}
+        public int    rows(){return  getInt((String)get("rows"), 1);}
+        public float  ratio()    {return  getFloat((String)get("ratio"), 1.0f);}
+        public int    display_count(){return  getInt((String)get("display_count"), 2);}
+        public int    show_value(){return  getInt((String)get("show_value"), 1);}
+        public int    show_rank(){return  getInt((String)get("show_rank"), 1);}
+        public int    show_title(){return  getInt((String)get("show_title"), 1);}
+        public int    show_vip(){return  getInt((String)get("show_vip"), 0);}
+        public String left() {return  (String)get("left");}
+        public String right(){return  (String)get("right");}
+        public int    columns(){return  getInt((String)get("columns"), 1);}
+        public int    columnspan(){return  getInt((String)get("columnspan"), 1);}
+        public int    rowspan(){return  getInt((String)get("rowspan"), 1);}
 
         public UI clone(){
             UI item = new UI();

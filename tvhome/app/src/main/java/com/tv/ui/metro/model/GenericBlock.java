@@ -4,12 +4,15 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by liuhuadong on 9/23/14.
  */
 public class GenericBlock<T> implements Serializable {
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 3L;
+    public HashMap<String, String> header;
+    public HashMap<String, String> ui_type;
     public ArrayList<Block<T>>  blocks;
     public DisplayItem.Times    times;
 

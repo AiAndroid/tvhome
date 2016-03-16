@@ -28,7 +28,8 @@ public class TabsGsonLoader extends BaseGsonLoader<GenericBlock<DisplayItem>> {
         //calledURL = "https://raw.githubusercontent.com/AiAndroid/mobilevideo/master/mobile_port.json";
         //calledURL = "https://raw.githubusercontent.com/AiAndroid/tvhome/master/home.json";
 
-        String homeurl = "https://raw.githubusercontent.com/AiAndroid/tvhome/master/home1.json";
+//        String homeurl = "https://raw.githubusercontent.com/AiAndroid/tvhome/master/home1.json";
+        String homeurl = "http://media.tv.mitvos.com/tv/lean/aio/data?ptf=207&codever=1&deviceid=deb49000000000000000000000000001&opaque=aedf5d2c3d4e03e7841c4faa7210ba74b86c666d";
         String baseURL = CommonUrl.BaseURL;
         if(item != null && item.settings != null && "1".equals(item.settings.get("from_push"))){
             baseURL += "push/";
