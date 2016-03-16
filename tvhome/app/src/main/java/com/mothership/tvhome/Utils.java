@@ -20,6 +20,10 @@ import android.view.Display;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.tv.ui.metro.model.DisplayItem;
+
+import java.util.HashMap;
+
 /**
  * A collection of utility methods, all static.
  */
@@ -87,5 +91,26 @@ public class Utils {
             result += "0" + sec;
         }
         return result;
+    }
+    static HashMap<String, Integer> sUiMap = new HashMap<String, Integer>();
+    public static int UiNameToId(DisplayItem di){
+        if(sUiMap.size()==0){
+            sUiMap.put("block_list",10001);
+            sUiMap.put("block_grid",20101);
+            sUiMap.put("block_grid_button",20102);
+            sUiMap.put("block_grid_icon",20103);
+            sUiMap.put("display_item",30001);
+        }
+
+        DisplayItem.UI type = di.ui_type;
+        if(type != null)
+        {
+            int id = sUiMap.get(type.name());
+            if(type.unitary()==false){
+                //id+=1000;
+            }
+            return id;
+        }
+        return 0;
     }
 }

@@ -229,7 +229,7 @@ public class MainFragment extends BaseFragment {
 
         mContainerListMarginStart = (int)getActivity().getResources().getDimension(R.dimen.browse_margin_top);
         mContainerListMarginStartExpand = (int)getActivity().getResources().getDimension(R.dimen.browse_margin_top_expand);
-        mContainerListMarginHeader = (int)getActivity().getResources().getDimension(R.dimen.lb_browse_headers_anim_top);
+        mContainerListMarginHeader = (int)getActivity().getResources().getDimension(R.dimen.browse_headers_anim_top);
         //readArguments(getArguments());
 
         if (mCanShowHeaders) {

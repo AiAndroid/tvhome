@@ -20,20 +20,21 @@ public class DisplayItem implements Serializable{
 	public static class UI extends  HashMap<String, Object> implements Serializable {
 		private static final long serialVersionUID = 4L;
         public String name(){return (String)get("name");}
-        public int    id()  {return getInt((String)get("id"), -1);}
-        public int    row_count(){return  getInt((String)get("row_count"), 2);}
-        public int    rows(){return  getInt((String)get("rows"), 1);}
-        public float  ratio()    {return  getFloat((String)get("ratio"), 1.0f);}
-        public int    display_count(){return  getInt((String)get("display_count"), 2);}
-        public int    show_value(){return  getInt((String)get("show_value"), 1);}
-        public int    show_rank(){return  getInt((String)get("show_rank"), 1);}
-        public int    show_title(){return  getInt((String)get("show_title"), 1);}
-        public int    show_vip(){return  getInt((String)get("show_vip"), 0);}
+        public int    id()  {return (int)getFloat(String.valueOf(get("id")), -1.0f);}
+        public int    rows(){return  (int)getFloat(String.valueOf(get("rows")), 1.0f);}
+        public float  ratio()    {return  getFloat(String.valueOf(get("ratio")), 1.0f);}
+        public int    display_count(){return  (int)getFloat(String.valueOf(get("display_count")), 2.0f);}
+        public int    show_value(){return  (int)getFloat(String.valueOf(get("show_value")), 1.0f);}
+        public int    show_rank(){return  (int)getFloat(String.valueOf(get("show_rank")), 1.0f);}
+        public int    show_title(){return  (int)getFloat(String.valueOf(get("show_title")), 1.0f);}
+        public int    show_vip(){return  (int)getFloat(String.valueOf(get("show_vip")), 0.0f);}
         public String left() {return  (String)get("left");}
         public String right(){return  (String)get("right");}
-        public int    columns(){return  getInt((String)get("columns"), 1);}
-        public int    columnspan(){return  getInt((String)get("columnspan"), 1);}
-        public int    rowspan(){return  getInt((String)get("rowspan"), 1);}
+        public int    columns(){return (int)getFloat(String.valueOf(get("columns")), 1.0f);}
+        public int    columnspan(){return   (int)getFloat(String.valueOf(get("columnspan")), 1.0f);}
+        public int    rowspan(){return   (int)getFloat(String.valueOf(get("rowspan")), 1.0f);}
+        public boolean    unitary(){return  (boolean)get("unitary");}
+        public HashMap<String, String> pos(){return (HashMap<String, String>)get("pos");}
 
         public UI clone(){
             UI item = new UI();
@@ -49,6 +50,14 @@ public class DisplayItem implements Serializable{
 		public String toString() {
 			return " type:" + name() + "  id:" + id();
 		}
+
+        public static class Pos extends  HashMap<String, String> implements Serializable {
+            public int    x(){return  getInt((String)get("x"), 0);}
+            public int    y(){return  getInt((String)get("y"), 0);}
+            public int    w(){return  getInt((String)get("w"), 1);}
+            public int    h(){return  getInt((String)get("h"), 1);}
+        }
+        public Pos pos;
 	}
 
     public static class Filter  implements Serializable{

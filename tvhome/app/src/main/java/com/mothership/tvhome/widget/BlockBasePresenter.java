@@ -537,7 +537,7 @@ public class BlockBasePresenter extends RowPresenter {
         if(item instanceof Block){
             Block<DisplayItem> displayItemBlock = (Block<DisplayItem>)item;
             int type = displayItemBlock.ui_type.id();
-            if(101 == type || 102 == type || 103 == type) {
+            {
                 BasePresenter basePresenter = (BasePresenter)mDisplayItemSelector.getPresenter(displayItemBlock);
                 super.onBindRowViewHolder(holder, new Row(new HeaderItem(0,displayItemBlock.title)));
                 if (displayItemBlock.items != null) {

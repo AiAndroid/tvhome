@@ -20,16 +20,17 @@
     android:transitionGroup="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/lb_browse_headers_height"
+    android:layout_marginTop="@dimen/browse_headers_height"
     android:elevation="@dimen/lb_browse_headers_z"
     >
     <android.support.v17.leanback.widget.HorizontalGridView
         android:id="@+id/headers"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/lb_browse_headers_height"
-        android:layout_marginTop="@dimen/lb_browse_headers_margin_top"
+        android:layout_height="@dimen/browse_headers_height"
+        android:paddingTop="@dimen/browse_headers_margin_top"
         style="?attr/headersVerticalGridStyle"
         android:paddingLeft="25dp"
+        android:clipToPadding="false"
         />
     <View
         android:id="@+id/fade_out_edge"

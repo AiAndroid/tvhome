@@ -4,6 +4,7 @@ import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.PresenterSelector;
 import android.util.SparseArray;
 
+import com.mothership.tvhome.Utils;
 import com.tv.ui.metro.model.DisplayItem;
 
 /**
@@ -16,17 +17,18 @@ public class BlockPresenterSelector extends PresenterSelector {
     TVhomBlockPresenter mTVhomBlockPresenter = new TVhomBlockPresenter();
     public BlockPresenterSelector()
     {
-        mPresenters.put(101, mVerticalPresenter);
-        mPresenters.put(100, mTVhomBlockPresenter);
-        mPresenters.put(110, new BlockGridPresenter());
+        mPresenters.put(0, mTVhomBlockPresenter);
+        mPresenters.put(1, mVerticalPresenter);
+        mPresenters.put(11, new BlockGridPresenter());
     }
     @Override
     public Presenter getPresenter(Object item) {
         DisplayItem di = (DisplayItem) item;
         DisplayItem.UI type = di.ui_type;
+        int id = Utils.UiNameToId(di);
         if(type != null)
         {
-            return mPresenters.get(di.ui_type.id(), mVerticalPresenter);
+            return mPresenters.get(id/100%100, mVerticalPresenter);
         }
         else
         {

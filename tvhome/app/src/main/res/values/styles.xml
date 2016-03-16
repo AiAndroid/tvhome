@@ -1,14 +1,16 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-    </style>
     <style name="VerticalGridView" >
         <item name="android:paddingBottom">?attr/browsePaddingBottom</item>
         <item name="focusOutFront">true</item>
         <item name="focusOutEnd">true</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
+    </style>
+
+    <style name="AppTheme.Row.Header" parent="Widget.Leanback.Row.Header">
+        <item name="android:textAppearance">@style/TextAppearance.Leanback.Row.Header</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

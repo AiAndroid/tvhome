@@ -5,6 +5,7 @@ import android.support.v17.leanback.widget.PresenterSelector;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.mothership.tvhome.Utils;
 import com.tv.ui.metro.model.DisplayItem;
 
 /**
@@ -18,9 +19,9 @@ public class DisplayItemSelector extends PresenterSelector
 
     public DisplayItemSelector()
     {
-        mPresenters.put(101, mDefaultPresenter);
-        mPresenters.put(102, new PresenterT2());
-        mPresenters.put(103, new PresenterT3());
+        mPresenters.put(1, mDefaultPresenter);
+        mPresenters.put(2, new PresenterT2());
+        mPresenters.put(3, new PresenterT3());
     }
     @Override
     public Presenter getPresenter(Object aItem)
@@ -28,12 +29,12 @@ public class DisplayItemSelector extends PresenterSelector
         DisplayItem di = (DisplayItem) aItem;
         DisplayItem.UI type = di.ui_type;
 //        return mDefaultPresenter;
-
+        int id = Utils.UiNameToId(di);
         if(type != null)
         {
 
             Log.d(TAG, "type " + type.id());
-            return mPresenters.get(type.id(), mDefaultPresenter);
+            return mPresenters.get(id%100, mDefaultPresenter);
         }
         else
         {

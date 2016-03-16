@@ -21,7 +21,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textColor="@color/header_text"
-    android:textSize="@dimen/lb_browse_header_text_size"
-    android:padding="@dimen/lb_browse_headers_vertical_margin"
+    android:textSize="@dimen/browse_header_text_size"
     android:focusable="true"
+    android:background="@drawable/main_header_bg"
+    android:paddingLeft="@dimen/browse_headers_horizontal_margin"
+    android:paddingRight="@dimen/browse_headers_horizontal_margin"
+    android:paddingTop="@dimen/browse_headers_vertical_margin"
+    android:paddingBottom="@dimen/browse_headers_vertical_margin"
     />
