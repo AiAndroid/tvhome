@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.mothership.tvhome.R;
@@ -28,6 +29,7 @@ import com.mothership.tvhome.widget.BlockPresenterSelector;
 import com.mothership.tvhome.widget.BlockVerticalPresenter;
 import com.mothership.tvhome.widget.CardPresenter;
 import com.mothership.tvhome.widget.CardPresenterSelector;
+import com.mothership.tvhome.widget.FocusHLMgr;
 import com.mothership.tvhome.widget.RowPresenter;
 import com.mothership.tvhome.widget.TvViewGroupPresenter;
 import com.tv.ui.metro.model.Block;
@@ -49,6 +51,8 @@ import java.util.List;
 public class MainFragment extends BaseFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+    FocusHLMgr mFocusHLMgr; //keep ref
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -276,6 +280,7 @@ public class MainFragment extends BaseFragment {
         mPagesFragment.setOnItemViewClickedListener(mOnItemViewClickedListener);
 
         View root = inflater.inflate(R.layout.browse_fragment, container, false);
+        mFocusHLMgr = new FocusHLMgr((ImageView) root.findViewById(R.id.di_focus_hl));
 
         //setTitleView((TitleView) root.findViewById(android.support.v17.leanback.R.id.browse_title_group));
 

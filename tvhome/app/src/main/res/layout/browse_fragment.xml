@@ -21,6 +21,12 @@
     android:background="@drawable/background"
 >
 
+    <ImageView
+        android:id="@+id/di_focus_hl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:src="@drawable/focus"/>
     <!-- BrowseFrameLayout serves as root of transition and manages switch between
          left and right-->
     <android.support.v17.leanback.widget.BrowseFrameLayout
