@@ -6,6 +6,7 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -21,6 +22,7 @@ import java.util.WeakHashMap;
  */
 public class FocusHLMgr implements ViewTreeObserver.OnScrollChangedListener
 {
+    private static final String TAG = "FocusHLMgr";
     static WeakHashMap<Context, WeakReference<FocusHLMgr>> SMgrMap = new WeakHashMap<Context, WeakReference<FocusHLMgr>>();
     ImageView mFocusHL;
     View mFocusHLT;
@@ -54,6 +56,7 @@ public class FocusHLMgr implements ViewTreeObserver.OnScrollChangedListener
     {
         mLastFocus = aFV;
         move2LastFocus();
+
     }
 
     public void viewLostFocus(View aFV)
@@ -67,37 +70,44 @@ public class FocusHLMgr implements ViewTreeObserver.OnScrollChangedListener
 
     void move2LastFocus()
     {
-        mFocusHL.setVisibility(View.VISIBLE);
-        mFocusHLT.setVisibility(View.VISIBLE);
-        mLastFocus.getDrawingRect(mTmpR);
-        ViewGroup pv = (ViewGroup) mFocusHL.getParent();
-
-        pv.offsetDescendantRectToMyCoords(mLastFocus, mTmpR);
-
-        mFocusHL.setX(mTmpR.left + (mTmpR.width() - mFocusHL.getWidth()) / 2);
-        mFocusHL.setY(mTmpR.top + (mTmpR.height() - mFocusHL.getHeight()) / 2);
-
-        NinePatchDrawable np = (NinePatchDrawable) mFocusHLT.getBackground();
-        np.getPadding(mTmpP);
-
-        int deltaXBase = mTmpR.width(), deltaYBase = mTmpR.height();
-        View v = mLastFocus.findViewById(R.id.di_img);
-        if(v != null)
+        try
         {
-            v.getDrawingRect(mTmpR);
+            mFocusHL.setVisibility(View.VISIBLE);
+            mFocusHLT.setVisibility(View.VISIBLE);
+            mLastFocus.getDrawingRect(mTmpR);
+            ViewGroup pv = (ViewGroup) mFocusHL.getParent();
+
             pv.offsetDescendantRectToMyCoords(mLastFocus, mTmpR);
-        }
-        float scaleF = 1.1f, delta = 0.1f;
-        ViewGroup.LayoutParams lp = mFocusHLT.getLayoutParams();
-        lp.width = (int) (scaleF * mTmpR.width()) + mTmpP.left + mTmpP.right;
-        lp.height = (int) (scaleF * (mTmpR.height())) + mTmpP.top + mTmpP.bottom;
-        mFocusHLT.requestLayout();
+
+            mFocusHL.setX(mTmpR.left + (mTmpR.width() - mFocusHL.getWidth()) / 2);
+            mFocusHL.setY(mTmpR.top + (mTmpR.height() - mFocusHL.getHeight()) / 2);
+
+            NinePatchDrawable np = (NinePatchDrawable) mFocusHLT.getBackground();
+            np.getPadding(mTmpP);
+
+            int deltaXBase = mTmpR.width(), deltaYBase = mTmpR.height();
+            View v = mLastFocus.findViewById(R.id.di_img);
+            if (v != null)
+            {
+                v.getDrawingRect(mTmpR);
+                pv.offsetDescendantRectToMyCoords(mLastFocus, mTmpR);
+            }
+            float scaleF = 1.1f, delta = 0.1f;
+            ViewGroup.LayoutParams lp = mFocusHLT.getLayoutParams();
+            lp.width = (int) (scaleF * mTmpR.width()) + mTmpP.left + mTmpP.right;
+            lp.height = (int) (scaleF * (mTmpR.height())) + mTmpP.top + mTmpP.bottom;
+            mFocusHLT.requestLayout();
 //        np.setBounds(0, 0, (int) (scaleF * mTmpR.width()) + mTmpP.left + mTmpP.right,
 //                (int) (scaleF * (mTmpR.height())) + mTmpP.top + mTmpP.bottom);
 //        mFocusHLT.setScaleX(1.1f);
 //        mFocusHLT.setScaleY(1.1f);
-        mFocusHLT.setX(mTmpR.left - deltaXBase * delta / 2 - mTmpP.left);
-        mFocusHLT.setY(mTmpR.top - deltaYBase * delta / 2 - mTmpP.top);
+            mFocusHLT.setX(mTmpR.left - deltaXBase * delta / 2 - mTmpP.left);
+            mFocusHLT.setY(mTmpR.top - deltaYBase * delta / 2 - mTmpP.top);
+        }
+        catch (Exception e)
+        {
+            Log.d(TAG, "view recycled");
+        }
     }
 
 
