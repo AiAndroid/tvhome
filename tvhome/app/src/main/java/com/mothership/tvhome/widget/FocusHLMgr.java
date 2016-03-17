@@ -94,23 +94,32 @@ public class FocusHLMgr implements ViewTreeObserver.OnScrollChangedListener
             np.getPadding(mTmpP);
 
             int deltaXBase = mTmpR.width(), deltaYBase = mTmpR.height();
+            int pl = 0, pt = 0;
             View v = mLastFocus.findViewById(R.id.di_img);
             if (v != null)
             {
+                v.getDrawingRect(mTmpR);
+                ((ViewGroup)mLastFocus).offsetDescendantRectToMyCoords(v, mTmpR);
+                pl = mTmpR.left;
+                pt = mTmpR.top;
+
                 v.getDrawingRect(mTmpR);
                 pv.offsetDescendantRectToMyCoords(mLastFocus, mTmpR);
             }
             float scaleF = 1.1f, delta = 0.1f;
             ViewGroup.LayoutParams lp = mFocusHLT.getLayoutParams();
-            lp.width = (int) (scaleF * mTmpR.width()) + mTmpP.left + mTmpP.right;
-            lp.height = (int) (scaleF * (mTmpR.height())) + mTmpP.top + mTmpP.bottom;
-            mFocusHLT.requestLayout();
-//        np.setBounds(0, 0, (int) (scaleF * mTmpR.width()) + mTmpP.left + mTmpP.right,
-//                (int) (scaleF * (mTmpR.height())) + mTmpP.top + mTmpP.bottom);
-//        mFocusHLT.setScaleX(1.1f);
-//        mFocusHLT.setScaleY(1.1f);
-            int curX = (int)(mTmpR.left - deltaXBase * delta / 2 - mTmpP.left);
-            int curY = (int)(mTmpR.top - deltaYBase * delta / 2 - mTmpP.top);
+            int nw = (int) (scaleF * mTmpR.width()) + mTmpP.left + mTmpP.right;
+            int nh = (int) (scaleF * (mTmpR.height())) + mTmpP.top + mTmpP.bottom;
+            if(lp.width != nw || lp.height != nh)
+            {
+                lp.width = nw;
+                lp.height = nh;
+                mFocusHLT.requestLayout();
+            }
+
+
+            int curX = (int)(mTmpR.left - deltaXBase * delta / 2 + pl - mTmpP.left);
+            int curY = (int)(mTmpR.top - deltaYBase * delta / 2 + pt - mTmpP.top);
             mFocusHLT.setX(curX);
             mFocusHLT.setY(curY);
 
