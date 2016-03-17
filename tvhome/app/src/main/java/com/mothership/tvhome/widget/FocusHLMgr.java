@@ -30,13 +30,17 @@ public class FocusHLMgr implements ViewTreeObserver.OnScrollChangedListener
     Rect mTmpR = new Rect();
     Rect mTmpP = new Rect();
     Handler mHandler;
+    int mCheckLoop;
+    static final int MaxCheckLoop = 5;
     static final int Move2LastFocus = 1;
-    static final int MoveDelay = 10;
+    static final int MoveDelay = 30;
+    int mLastX, mLastY;
     Handler.Callback mCb = new Handler.Callback()
     {
         @Override
         public boolean handleMessage(Message msg)
         {
+            Log.d(TAG, "handle message");
             move2LastFocus();
             return true;
         }
@@ -49,14 +53,14 @@ public class FocusHLMgr implements ViewTreeObserver.OnScrollChangedListener
 
         aFocusHL.getViewTreeObserver().addOnScrollChangedListener(this);
 
-//        mHandler = new Handler(Looper.myLooper(), mCb);
+        mHandler = new Handler(Looper.myLooper(), mCb);
     }
 
     public void viewGotFocus(View aFV)
     {
         mLastFocus = aFV;
         move2LastFocus();
-
+        postCheckMsg();
     }
 
     public void viewLostFocus(View aFV)
@@ -70,6 +74,10 @@ public class FocusHLMgr implements ViewTreeObserver.OnScrollChangedListener
 
     void move2LastFocus()
     {
+        if(!mLastFocus.hasFocus())
+        {
+            return;
+        }
         try
         {
             mFocusHL.setVisibility(View.VISIBLE);
@@ -101,8 +109,26 @@ public class FocusHLMgr implements ViewTreeObserver.OnScrollChangedListener
 //                (int) (scaleF * (mTmpR.height())) + mTmpP.top + mTmpP.bottom);
 //        mFocusHLT.setScaleX(1.1f);
 //        mFocusHLT.setScaleY(1.1f);
-            mFocusHLT.setX(mTmpR.left - deltaXBase * delta / 2 - mTmpP.left);
-            mFocusHLT.setY(mTmpR.top - deltaYBase * delta / 2 - mTmpP.top);
+            int curX = (int)(mTmpR.left - deltaXBase * delta / 2 - mTmpP.left);
+            int curY = (int)(mTmpR.top - deltaYBase * delta / 2 - mTmpP.top);
+            mFocusHLT.setX(curX);
+            mFocusHLT.setY(curY);
+
+            if(curX != mLastX || curY != mLastY)
+            {
+                Log.d(TAG, "check later");
+                postCheckMsg();
+                mCheckLoop = 0;
+            }
+            else
+            {
+                if(++ mCheckLoop < MaxCheckLoop)
+                {
+                    postCheckMsg();
+                }
+            }
+            mLastX = curX;
+            mLastY = curY;
         }
         catch (Exception e)
         {
@@ -124,13 +150,19 @@ public class FocusHLMgr implements ViewTreeObserver.OnScrollChangedListener
         }
     }
 
+
+    void postCheckMsg()
+    {
+        mHandler.removeMessages(Move2LastFocus);
+        mHandler.sendEmptyMessageDelayed(Move2LastFocus, MoveDelay);
+    }
+
     @Override
     public void onScrollChanged()
     {
         if(mLastFocus != null)
         {
-//            mHandler.removeMessages(Move2LastFocus);
-//            mHandler.sendEmptyMessageDelayed(Move2LastFocus, MoveDelay);
+            postCheckMsg();
             move2LastFocus();
         }
     }
