@@ -52,6 +52,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     protected BaseGsonLoader mLoader;
     DisplayItemSelector mDiSel = new DisplayItemSelector();
     ArrayObjectAdapter mAdapter = new ArrayObjectAdapter(new CardPresenter());
+    Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,7 +210,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                                         }
                                         ouput.close();
 
-                                        new Handler().post(new Runnable() {
+                                        mHandler.post(new Runnable() {
                                             @Override
                                             public void run() {
                                                 installManual(context, sdpath);
