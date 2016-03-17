@@ -91,17 +91,20 @@ public class BlockGridPresenter extends RowPresenter {
                     ViewGroup.LayoutParams lpImg = imageView.getLayoutParams();
                     lpImg.width = itemwidth*columnspan+(columnspan-1)*itemmargin;
                     lpImg.height = itemheight*rowspan+(rowspan - 1) * itemmargin;
-                    view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    view.setOnFocusChangeListener(new View.OnFocusChangeListener()
+                    {
                         @Override
-                        public void onFocusChange(View v, boolean hasFocus) {
-                            mFocusHighlight.onItemFocused(v,hasFocus);
+                        public void onFocusChange(View v, boolean hasFocus)
+                        {
+                            mFocusHighlight.onItemFocused(v, hasFocus);
                         }
                     });
+                    final int itemIdx = i;
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             vh.getOnItemViewClickedListener().onItemClicked(itemholder,
-                                    displayItemBlock, vh, null);
+                                    displayItemBlock.items.get(itemIdx), vh, null);
 
                         }
                     });
