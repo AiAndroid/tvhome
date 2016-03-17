@@ -277,7 +277,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private static void installManual(final Context context, final String uriString){
         try {
             Intent actionIntent = new Intent(Intent.ACTION_VIEW);
-            actionIntent.setDataAndType(Uri.parse(uriString), "application/vnd.android.package-archive");
+            actionIntent.setDataAndType(Uri.parse("file://"+uriString), "application/vnd.android.package-archive");
             actionIntent.setClassName("com.android.packageinstaller", "com.android.packageinstaller.PackageInstallerActivity");
             actionIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(actionIntent);
