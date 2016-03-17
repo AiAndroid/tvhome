@@ -2,6 +2,8 @@ package com.tv.ui.metro.model;
 
 import android.text.TextUtils;
 
+import com.google.gson.internal.LinkedTreeMap;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +36,10 @@ public class DisplayItem implements Serializable{
         public int    columnspan(){return   (int)getFloat(String.valueOf(get("columnspan")), 1.0f);}
         public int    rowspan(){return   (int)getFloat(String.valueOf(get("rowspan")), 1.0f);}
         public boolean    unitary(){return  (boolean)get("unitary");}
-        public HashMap<String, String> pos(){return (HashMap<String, String>)get("pos");}
+        public int    x(){return  (int)getFloat(String.valueOf(((LinkedTreeMap) get("pos")).get("x")),0.0f);}
+        public int    y(){return  (int)getFloat(String.valueOf(((LinkedTreeMap) get("pos")).get("y")),0.0f);}
+        public int    w(){return  (int)getFloat(String.valueOf(((LinkedTreeMap) get("pos")).get("w")),1.0f);}
+        public int    h(){return  (int)getFloat(String.valueOf(((LinkedTreeMap) get("pos")).get("h")),1.0f);}
 
         public UI clone(){
             UI item = new UI();
@@ -51,13 +56,6 @@ public class DisplayItem implements Serializable{
 			return " type:" + name() + "  id:" + id();
 		}
 
-        public static class Pos extends  HashMap<String, String> implements Serializable {
-            public int    x(){return  getInt((String)get("x"), 0);}
-            public int    y(){return  getInt((String)get("y"), 0);}
-            public int    w(){return  getInt((String)get("w"), 1);}
-            public int    h(){return  getInt((String)get("h"), 1);}
-        }
-        public Pos pos;
 	}
 
     public static class Filter  implements Serializable{

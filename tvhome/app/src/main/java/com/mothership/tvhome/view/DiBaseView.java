@@ -6,8 +6,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.mothership.tvhome.widget.FocusHLMgr;
-
 /**
  * Created by Shawn on 16/3/15.
  */
@@ -18,7 +16,7 @@ public class DiBaseView extends LinearLayout
     public DiBaseView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        setAlpha(UnFocusAlpha);
+        //setAlpha(UnFocusAlpha);
     }
 
     @Override
@@ -30,7 +28,7 @@ public class DiBaseView extends LinearLayout
 
     static final void onFocusChange(View aView, boolean aGainFocus)
     {
-        if(aGainFocus)
+    /*    if(aGainFocus)
         {
             aView.animate().withLayer().alpha(FocusAlpha);
             FocusHLMgr mgr = FocusHLMgr.getMgr(aView.getContext());
@@ -43,6 +41,6 @@ public class DiBaseView extends LinearLayout
         else
         {
             aView.animate().withLayer().alpha(UnFocusAlpha);
-        }
+        }*/
     }
 }

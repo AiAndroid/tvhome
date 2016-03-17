@@ -95,6 +95,7 @@ public class Utils {
     static HashMap<String, Integer> sUiMap = new HashMap<String, Integer>();
     public static int UiNameToId(DisplayItem di){
         if(sUiMap.size()==0){
+            sUiMap.put("tv_home",20001);
             sUiMap.put("block_list",10001);
             sUiMap.put("block_grid",20101);
             sUiMap.put("block_grid_button",20102);
@@ -107,7 +108,7 @@ public class Utils {
         {
             int id = sUiMap.get(type.name());
             if(type.unitary()==false){
-                //id+=1000;
+                id+=1000;
             }
             return id;
         }

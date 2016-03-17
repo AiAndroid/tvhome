@@ -2,21 +2,16 @@ package com.mothership.tvhome.widget;
 
 import android.content.Context;
 import android.support.v17.leanback.widget.HeaderItem;
-import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v7.widget.GridLayout;
-import android.support.v7.widget.GridLayout.Spec;
-import static android.support.v7.widget.GridLayout.spec;
-
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.mothership.tvhome.R;
 import com.tv.ui.metro.model.Block;
 import com.tv.ui.metro.model.DisplayItem;
+
+import static android.support.v7.widget.GridLayout.spec;
 
 /**
  * Created by wangwei on 3/14/16.
@@ -78,10 +73,10 @@ public class BlockGridPresenter extends RowPresenter {
                     BasePresenter.VH itemholder = (BasePresenter.VH)basePresenter.onCreateViewHolder(vh.mGridLayout);
                     basePresenter.onBindViewHolder(itemholder,di);
                     View view = itemholder.view;
-                    int columnstart = displayItemBlock.items.get(i).ui_type.columns();
-                    int columnspan = displayItemBlock.items.get(i).ui_type.columnspan();
-                    int rowstart = displayItemBlock.items.get(i).ui_type.rows();
-                    int rowspan = displayItemBlock.items.get(i).ui_type.rowspan();
+                    int columnstart = displayItemBlock.items.get(i).ui_type.x();
+                    int columnspan = displayItemBlock.items.get(i).ui_type.w();
+                    int rowstart = displayItemBlock.items.get(i).ui_type.y();
+                    int rowspan = displayItemBlock.items.get(i).ui_type.h();
                     GridLayout.Spec itemColumnSpec              = spec(columnstart, columnspan);
                     GridLayout.Spec itemRowSpec              = spec(rowstart,rowspan);
                     GridLayout.LayoutParams gridlayout = (GridLayout.LayoutParams)view.getLayoutParams();
