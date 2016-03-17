@@ -1,27 +1,46 @@
 package com.mothership.tvhome;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.duokan.VolleyHelper;
+import com.google.gson.reflect.TypeToken;
 import com.mothership.tvhome.app.MainFragment;
 import com.mothership.tvhome.view.AdView;
+import com.mothership.tvhome.view.AlertDialogHelper;
 import com.mothership.tvhome.view.EmptyLoadingView;
 import com.mothership.tvhome.widget.BlockHorizontalPresenter;
 import com.mothership.tvhome.widget.CardPresenter;
 import com.mothership.tvhome.widget.DisplayItemSelector;
+import com.tv.ui.metro.model.AppVersion;
 import com.tv.ui.metro.model.Block;
 import com.tv.ui.metro.model.DisplayItem;
 import com.tv.ui.metro.model.GenericBlock;
+import com.video.ui.idata.BackgroundService;
+import com.video.ui.idata.iDataORM;
 import com.video.ui.loader.BaseGsonLoader;
+import com.video.ui.loader.CommonBaseUrl;
+import com.video.ui.loader.CommonUrl;
 import com.video.ui.loader.video.TabsGsonLoader;
+
+import java.io.BufferedReader;
+import java.io.StringReader;
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<GenericBlock<DisplayItem>>,  AdView.AdListener{
 
@@ -43,6 +62,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mf.setAdapter(mAdapter);
 
         getLoaderManager().initLoader(TabsGsonLoader.LOADER_ID, null, MainActivity.this);
+
+
+        //check version upgrade
+        checkForAppUpgrade(getApplicationContext());
     }
 
 
@@ -141,5 +164,67 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     @Override
     public void onLoaderReset(Loader<GenericBlock<DisplayItem>> loader) {
 
+    }
+
+    private void checkForAppUpgrade(final Context context){
+        Response.Listener<AppVersion> listener = new Response.Listener<AppVersion>() {
+            @Override
+            public void onResponse(final AppVersion response) {
+                PackageManager pm = context.getPackageManager();
+                try {
+                    int versionCode = CommonBaseUrl.versionCode;
+                    if (versionCode < 0) {
+                        versionCode = pm.getPackageInfo(context.getPackageName(), 0).versionCode;
+                    }
+
+                    if (response.version_code() > versionCode) {
+                        String msg = response.recent_change() + "\nVersion Code:" +
+                                response.version_code() + "\n" +
+                                response.release_date() + "\n" +
+                                response.released_by() + "\n";
+
+                        AlertDialog dialog = new AlertDialog.Builder(context).create();
+                        dialog.setTitle("软件更新");
+                        dialog.setMessage(msg);
+                        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "立即更新", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+
+                                //begin to download apk
+                                
+                            }
+                        });
+                        dialog.setCanceledOnTouchOutside(false);
+                        dialog.setCancelable(true);
+                        try {
+                            dialog.show();
+                        } catch (Exception e) {
+                            Log.e(TAG, e.getLocalizedMessage());
+                        }
+                    }
+                } catch (Exception e) {}
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        };
+
+        final String appCheck = "https://raw.githubusercontent.com/AiAndroid/tvhome/master/appupgrade.json";
+        RequestQueue requestQueue = VolleyHelper.getInstance(context).getAPIRequestQueue();
+        BaseGsonLoader.GsonRequest<AppVersion> gsonRequest = new BaseGsonLoader.GsonRequest<AppVersion>(appCheck, new TypeToken<AppVersion>() {
+        }.getType(), null, listener, errorListener);
+        requestQueue.add(gsonRequest);
     }
 }
