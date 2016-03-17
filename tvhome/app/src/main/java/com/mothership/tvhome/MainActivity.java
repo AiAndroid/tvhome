@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
@@ -40,7 +42,14 @@ import com.video.ui.loader.CommonUrl;
 import com.video.ui.loader.video.TabsGsonLoader;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.StringReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<GenericBlock<DisplayItem>>,  AdView.AdListener{
 
@@ -199,6 +208,35 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                                 dialog.dismiss();
 
                                 //begin to download apk
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        try {
+                                            URL url = new URL(response.apk_url());
+                                            HttpURLConnection httpConn =(HttpURLConnection)url.openConnection();
+                                            InputStream inputStream=httpConn.getInputStream();
+
+                                            try {
+
+                                                String sdpath = context.getCacheDir() + "/appupgrade.apk";
+                                                File file  = new File(sdpath);
+                                                OutputStream ouput =new FileOutputStream(file);
+                                                byte buffer[] = new byte[4*1024];
+                                                while((inputStream.read(buffer)) != -1) {
+                                                    ouput.write(buffer);
+                                                }
+                                                ouput.close();
+                                                installManual(context, sdpath);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }finally{
+                                            }
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }).start();
 
                             }
                         });
@@ -227,4 +265,16 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }.getType(), null, listener, errorListener);
         requestQueue.add(gsonRequest);
     }
+
+    private static void installManual(Context context, String uriString){
+        try {
+            Intent actionIntent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+            actionIntent.setDataAndType(Uri.parse(uriString), "application/vnd.android.package-archive");
+            actionIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(actionIntent);
+        }catch (Exception ne){
+            ne.printStackTrace();
+        }
+    }
+
 }
