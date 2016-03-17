@@ -1,5 +1,5 @@
 {
-    data: {
+    "data": {
         "version_code":2,
         "recent_change":"V60 更新：修改UI，广告替换CMS\n\nBingo for operator\n\n支持主播秀\n\n短视频，选内容，可以动态转屏\n\n广告,运营商版本\n\n加入详情页面商业化，首页后退键直接回桌面,播放器插件化, 直播入口，剧集的选中状态\n\n电影票，主播秀展示统一的样式\n\n单独海报图\n\n首页性能提升加载速度\n\n支持爆点，PPTV清晰度切换\n\n支持视频源 sohu, iqiyi,pptv,leshi,funshion\n\n加入RecyleView节省内存\n",
         "version_name":"MotherShip——开发版(V02)",
