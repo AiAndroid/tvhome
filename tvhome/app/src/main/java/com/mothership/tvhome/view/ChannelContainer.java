@@ -141,7 +141,7 @@ public class ChannelContainer extends LinearLayout
             vh = mAdpt.onCreateViewHolder(this, mAdpt.getItemViewType(4));
             mAdpt.onBindViewHolder(vh, 4);
             lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-            lp.topMargin = 50;
+            lp.topMargin = 47;
             vh.itemView.setLayoutParams(lp);
             mC3.addView(vh.itemView);
 
@@ -162,7 +162,7 @@ public class ChannelContainer extends LinearLayout
             vh = mAdpt.onCreateViewHolder(this, mAdpt.getItemViewType(5));
             mAdpt.onBindViewHolder(vh, 5);
             lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-            lp.topMargin = 50;
+            lp.topMargin = 47;
             vh.itemView.setLayoutParams(lp);
             mC3.addView(vh.itemView);
 
