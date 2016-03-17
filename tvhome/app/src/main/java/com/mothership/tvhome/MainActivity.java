@@ -34,7 +34,6 @@ import com.tv.ui.metro.model.Block;
 import com.tv.ui.metro.model.DisplayItem;
 import com.tv.ui.metro.model.GenericBlock;
 import com.video.ui.loader.BaseGsonLoader;
-import com.video.ui.loader.CommonBaseUrl;
 import com.video.ui.loader.video.TabsGsonLoader;
 
 import java.io.File;
@@ -178,7 +177,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
                 PackageManager pm = context.getPackageManager();
                 try {
-                    int versionCode = CommonBaseUrl.versionCode;
+                    int versionCode = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode;//CommonBaseUrl.versionCode;
                     if (versionCode < 0) {
                         versionCode = pm.getPackageInfo(context.getPackageName(), 0).versionCode;
                     }
