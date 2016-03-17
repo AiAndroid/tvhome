@@ -19,7 +19,6 @@ import static android.support.v7.widget.GridLayout.spec;
 public class BlockGridPresenter extends RowPresenter {
     ViewGroup mParent;
     final DisplayItemSelector mDisplayItemSelector = new DisplayItemSelector();
-    FocusHelper.ItemFocusHighlight mFocusHighlight;
     public static class ViewHolder extends RowPresenter.ViewHolder {
         Context mContext;
         GridLayout mGridLayout;
@@ -42,9 +41,6 @@ public class BlockGridPresenter extends RowPresenter {
         gridLayout.setUseDefaultMargins(true);
         gridLayout.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
         gridLayout.setClipToPadding(false);
-        if(mFocusHighlight==null){
-            mFocusHighlight = new FocusHelper.ItemFocusHighlight(parent.getContext());
-        }
         return new ViewHolder(gridLayout,gridLayout);
     }
 
@@ -91,14 +87,7 @@ public class BlockGridPresenter extends RowPresenter {
                     ViewGroup.LayoutParams lpImg = imageView.getLayoutParams();
                     lpImg.width = itemwidth*columnspan+(columnspan-1)*itemmargin;
                     lpImg.height = itemheight*rowspan+(rowspan - 1) * itemmargin;
-                    view.setOnFocusChangeListener(new View.OnFocusChangeListener()
-                    {
-                        @Override
-                        public void onFocusChange(View v, boolean hasFocus)
-                        {
-                            mFocusHighlight.onItemFocused(v, hasFocus);
-                        }
-                    });
+
                     final int itemIdx = i;
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override

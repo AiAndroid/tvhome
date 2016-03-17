@@ -299,8 +299,8 @@ public class BlockBasePresenter extends RowPresenter {
         //rowViewHolder.mItemBridgeAdapter.setWrapper(mShadowOverlayWrapper);
         //mShadowOverlayHelper.prepareParentForShadow(rowViewHolder.mGridView);
 
-        FocusHighlightHelper.setupBrowseItemFocusHighlight(blockViewHolder.mItemBridgeAdapter,
-                mFocusZoomFactor, mUseFocusDimmer);
+       // FocusHighlightHelper.setupBrowseItemFocusHighlight(blockViewHolder.mItemBridgeAdapter,
+       //         mFocusZoomFactor, mUseFocusDimmer);
         //blockViewHolder.mGridView.setFocusDrawingOrderEnabled(mShadowOverlayHelper.getShadowType()
         //        == ShadowOverlayHelper.SHADOW_STATIC);
         setEventListener(blockViewHolder.mGridView,blockViewHolder);

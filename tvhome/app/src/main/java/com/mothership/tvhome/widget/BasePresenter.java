@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide;
 import com.mothership.tvhome.R;
 import com.tv.ui.metro.model.DisplayItem;
 
+import static android.support.v17.leanback.widget.FocusHighlight.ZOOM_FACTOR_SMALL;
+
 /**
  * Created by Shawn on 16/3/8.
  */
@@ -21,14 +23,14 @@ public class BasePresenter extends Presenter
     private static final String TAG = "BasePresenter";
     protected int mBaseWidth = 0;
     protected int mBaseHeight = 0;
+    private FocusHelper.FocusHighlightHandler mFocusHighlight = new FocusHelper.BrowseItemFocusHighlight(ZOOM_FACTOR_SMALL,false);
 
-
-    static public class VH extends ViewHolder
+    public class VH extends ViewHolder
     {
         public ImageView mImg;
         public TextView mTitle;
         public TextView mSubTitle;
-
+        OnFocusChangeListener mFocusChangeListener = new OnFocusChangeListener();
         public VH(View aView)
         {
             super(aView);
@@ -44,16 +46,33 @@ public class BasePresenter extends Presenter
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent)
+    final public ViewHolder onCreateViewHolder(ViewGroup parent)
     {
-        LayoutInflater inf = LayoutInflater.from(parent.getContext());
-        View res = inf.inflate(R.layout.di_base_view, parent, false);
-        res.setFocusable(true);
-        VH vh = new VH(res);
+        VH vh = (VH)createViewHolder(parent);
 //        ViewGroup.LayoutParams lpImg = vh.mImg.getLayoutParams();
 //        lpImg.width = mBaseWidth;
 //        lpImg.height = mBaseHeight;
+        View presenterView = vh.view;
+        if (presenterView != null) {
+            vh.mFocusChangeListener.mChainedListener = presenterView.getOnFocusChangeListener();
+            presenterView.setOnFocusChangeListener(vh.mFocusChangeListener);
+        }
+        if (mFocusHighlight != null) {
+            mFocusHighlight.onInitializeView(presenterView);
+        }
         return vh;
+    }
+
+    public ViewHolder createViewHolder(ViewGroup parent){
+        LayoutInflater inf = LayoutInflater.from(parent.getContext());
+        View presenterView = inf.inflate(getLayoutResId(), parent, false);
+        presenterView.setFocusable(true);
+        VH vh = new VH(presenterView);
+        return vh;
+    }
+
+    public int getLayoutResId(){
+        return R.layout.di_base_view;
     }
 
     @Override
@@ -121,4 +140,17 @@ public class BasePresenter extends Presenter
         return mBaseHeight+(int)contect.getResources().getDimension(R.dimen.item_text_bar_height);
     };
 
+    final class OnFocusChangeListener implements View.OnFocusChangeListener {
+        View.OnFocusChangeListener mChainedListener;
+
+        @Override
+        public void onFocusChange(View view, boolean hasFocus) {
+            if (mFocusHighlight != null) {
+                mFocusHighlight.onItemFocused(view, hasFocus);
+            }
+            if (mChainedListener != null) {
+                mChainedListener.onFocusChange(view, hasFocus);
+            }
+        }
+    }
 }

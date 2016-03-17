@@ -148,24 +148,6 @@ public abstract class RowPresenter extends Presenter {
                                   RowPresenter.ViewHolder rowViewHolder, Row row);
     }
 
-    public static class OnFocusChangeListener implements View.OnFocusChangeListener {
-        View.OnFocusChangeListener mChainedListener;
-
-        @Override
-        public void onFocusChange(View view, boolean hasFocus) {
-            /*if (DEBUG) Log.v(TAG, "onFocusChange " + hasFocus + " " + view
-                    + " mFocusHighlight" + mFocusHighlight);
-            if (mWrapper != null) {
-                view = (View) view.getParent();
-            }*/
-            if (mFocusHighlight != null) {
-                mFocusHighlight.onItemFocused(view, hasFocus);
-            }
-            if (mChainedListener != null) {
-                mChainedListener.onFocusChange(view, hasFocus);
-            }
-        }
-    }
     /**
      * A ViewHolder for a {@link Row}.
      */
@@ -186,7 +168,6 @@ public abstract class RowPresenter extends Presenter {
         private View.OnKeyListener mOnKeyListener;
         private OnItemViewSelectedListener mOnItemViewSelectedListener;
         private OnItemViewClickedListener mOnItemViewClickedListener;
-        private OnFocusChangeListener mFocusChangeListener = new OnFocusChangeListener();
 
         /**
          * Constructor for ViewHolder.

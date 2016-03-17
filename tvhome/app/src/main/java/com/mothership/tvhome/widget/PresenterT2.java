@@ -1,9 +1,6 @@
 package com.mothership.tvhome.widget;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.mothership.tvhome.R;
 
@@ -13,12 +10,8 @@ import com.mothership.tvhome.R;
 public class PresenterT2 extends BasePresenter
 {
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent)
-    {
-        LayoutInflater inf = LayoutInflater.from(parent.getContext());
-        View res = inf.inflate(R.layout.di_view_t2, parent, false);
-        VH vh = new VH(res);
-        return vh;
+    public int getLayoutResId(){
+        return R.layout.di_view_t2;
     }
 
     @Override
