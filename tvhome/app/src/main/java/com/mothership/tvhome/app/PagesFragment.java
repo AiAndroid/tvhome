@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import com.mothership.tvhome.R;
 import com.mothership.tvhome.widget.BlockAdapter;
 import com.mothership.tvhome.widget.FocusHLMgr;
+import com.mothership.tvhome.widget.PagerGroup;
 import com.mothership.tvhome.widget.RowPresenter;
 import com.tv.ui.metro.model.Block;
 import com.tv.ui.metro.model.DisplayItem;
@@ -46,7 +47,7 @@ public class PagesFragment extends BaseFragment implements ViewPager.OnPageChang
     private ObjectAdapter mAdapter;
 
     PagesAdapter mPageAdapter ;
-    ViewPager mPager;
+    PagerGroup mPager;
 
     private boolean mExpand = true;
     FocusHLMgr mFocusHLMgr; //keep ref
@@ -143,7 +144,7 @@ public class PagesFragment extends BaseFragment implements ViewPager.OnPageChang
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.pagers_fragment, container, false);
 
-        mPager = (ViewPager)root.findViewById(R.id.pages_fragment);
+        mPager = (PagerGroup)root.findViewById(R.id.pages_fragment);
         //mPager.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
         //        ViewGroup.LayoutParams.WRAP_CONTENT));
         mPageAdapter = new PagesAdapter(getChildFragmentManager());
