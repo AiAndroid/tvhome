@@ -17,6 +17,7 @@ import android.support.v17.leanback.widget.PresenterSelector;
 import android.support.v17.leanback.widget.Row;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -837,9 +838,25 @@ public class MainFragment extends BaseFragment {
 
             try
             {
-                Intent intent = Intent.parseUri(di.target.action, 0);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                getContext().startActivity(intent);
+                //for launch 3-rd application
+                if("intent".equals(di.target.entity)){
+                    if(!TextUtils.isEmpty(di.target.url)) {
+                        String data = di.target.url;
+
+                        Intent intent = new Intent();
+                        intent.setData(Uri.parse(data));
+                        try {
+                            getContext().startActivity(intent);
+                            return;
+                        }catch (Exception ne){}
+                    }
+                }
+
+                if(!TextUtils.isEmpty(di.target.action)) {
+                    Intent intent = Intent.parseUri(di.target.action, 0);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                    getContext().startActivity(intent);
+                }
             }
             catch (Exception e)
             {
