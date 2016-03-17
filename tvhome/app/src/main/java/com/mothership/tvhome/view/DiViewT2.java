@@ -15,7 +15,7 @@ public class DiViewT2 extends FrameLayout
     public DiViewT2(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        setAlpha(DiBaseView.UnFocusAlpha);
+//        setAlpha(DiBaseView.UnFocusAlpha);
     }
 
     @Override
