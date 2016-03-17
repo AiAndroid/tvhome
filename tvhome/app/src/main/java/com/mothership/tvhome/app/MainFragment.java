@@ -1,6 +1,7 @@
 package com.mothership.tvhome.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -834,6 +835,20 @@ public class MainFragment extends BaseFragment {
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
 
+            DisplayItem di = (DisplayItem) item;
+
+            try
+            {
+                Intent intent = Intent.parseUri(di.target.action, 0);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                getContext().startActivity(intent);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
 //            Toast.makeText(getActivity(), "click item", Toast.LENGTH_SHORT)
 //                    .show();
 
