@@ -50,5 +50,11 @@
             android:clipToPadding="false" />
         <include layout="@layout/lb_browse_title" />
     </android.support.v17.leanback.widget.BrowseFrameLayout>
+
+    <View android:id="@+id/di_focus_hl_t"
+        android:layout_width="960dp"
+          android:layout_height="540dp"
+        android:background="@drawable/img_focus"
+        android:visibility="invisible"/>
 </FrameLayout>
     <!-- From: file:/usr/local/google/buildbot/src/googleplex-android/mnc-supportlib-release/frameworks/support/v17/leanback/res/layout/lb_browse_fragment.xml -->

@@ -280,7 +280,7 @@ public class MainFragment extends BaseFragment {
         mPagesFragment.setOnItemViewClickedListener(mOnItemViewClickedListener);
 
         View root = inflater.inflate(R.layout.browse_fragment, container, false);
-        mFocusHLMgr = new FocusHLMgr((ImageView) root.findViewById(R.id.di_focus_hl));
+        mFocusHLMgr = new FocusHLMgr((ImageView) root.findViewById(R.id.di_focus_hl), root.findViewById(R.id.di_focus_hl_t));
 
         //setTitleView((TitleView) root.findViewById(android.support.v17.leanback.R.id.browse_title_group));
 
@@ -834,8 +834,9 @@ public class MainFragment extends BaseFragment {
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
 
-            Toast.makeText(getActivity(), "click item", Toast.LENGTH_SHORT)
-                    .show();
+//            Toast.makeText(getActivity(), "click item", Toast.LENGTH_SHORT)
+//                    .show();
+
 
         }
     }
