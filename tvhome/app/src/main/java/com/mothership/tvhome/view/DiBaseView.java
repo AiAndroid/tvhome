@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.mothership.tvhome.R;
 import com.mothership.tvhome.widget.FocusHLMgr;
 
 /**
@@ -39,7 +40,6 @@ public class DiBaseView extends LinearLayout
             {
                 mgr.viewGotFocus(aView);
             }
-
         }
         else
         {
@@ -48,6 +48,12 @@ public class DiBaseView extends LinearLayout
                 mgr.viewLostFocus(aView);
             }
 //            aView.animate().withLayer().alpha(UnFocusAlpha);
+        }
+
+        View tv = aView.findViewById(R.id.di_title);
+        if(tv != null)
+        {
+            tv.setSelected(aGainFocus);
         }
     }
 }
