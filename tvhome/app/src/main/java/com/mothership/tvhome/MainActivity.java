@@ -207,8 +207,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                                         File file  = new File(sdpath);
                                         OutputStream ouput =new FileOutputStream(file);
                                         byte buffer[] = new byte[4*1024];
-                                        while((inputStream.read(buffer)) != -1) {
-                                            ouput.write(buffer);
+                                        int len = 0;
+                                        while((len = inputStream.read(buffer)) != -1) {
+                                            ouput.write(buffer, 0, len);
                                         }
                                         ouput.close();
 
@@ -276,7 +277,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private static void installManual(final Context context, final String uriString){
         try {
             Intent actionIntent = new Intent(Intent.ACTION_VIEW);
-            actionIntent.setDataAndType(Uri.parse("file://"+Uri.parse(uriString).toString()), "application/vnd.android.package-archive");
+            actionIntent.setDataAndType(Uri.parse(uriString), "application/vnd.android.package-archive");
             actionIntent.setClassName("com.android.packageinstaller", "com.android.packageinstaller.PackageInstallerActivity");
             actionIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(actionIntent);
