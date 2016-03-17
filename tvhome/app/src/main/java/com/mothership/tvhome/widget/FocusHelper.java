@@ -128,8 +128,24 @@ public class FocusHelper {
         }
     }
 
+    public interface FocusHighlightHandler {
+        /**
+         * Called when an item gains or loses focus.
+         * @hide
+         *
+         * @param view The view whose focus is changing.
+         * @param hasFocus True if focus is gained; false otherwise.
+         */
+        void onItemFocused(View view, boolean hasFocus);
 
-    static class ItemFocusHighlight {
+        /**
+         * Called when the view is being created.
+         */
+        void onInitializeView(View view);
+    }
+
+
+    static class ItemFocusHighlight implements FocusHighlightHandler{
         private static boolean sInitialized;
         private static float sSelectScale;
         private static int sDuration;
@@ -163,6 +179,46 @@ public class FocusHelper {
         }
 
         public void onInitializeView(View view) {
+        }
+
+    }
+
+    static class BrowseItemFocusHighlight implements FocusHighlightHandler{
+        private static final int DURATION_MS = 150;
+
+        private int mScaleIndex;
+        private final boolean mUseDimmer;
+
+        BrowseItemFocusHighlight(int zoomIndex, boolean useDimmer) {
+            if (!isValidZoomIndex(zoomIndex)) {
+                throw new IllegalArgumentException("Unhandled zoom index");
+            }
+            mScaleIndex = zoomIndex;
+            mUseDimmer = useDimmer;
+        }
+
+        private float getScale(Resources res) {
+            return mScaleIndex == ZOOM_FACTOR_NONE ? 1f :
+                    res.getFraction(getResId(mScaleIndex), 1, 1);
+        }
+
+        public void onItemFocused(View view, boolean hasFocus) {
+            view.setSelected(hasFocus);
+            getOrCreateAnimator(view).animateFocus(hasFocus, false);
+        }
+
+        public void onInitializeView(View view) {
+            getOrCreateAnimator(view).animateFocus(false, true);
+        }
+
+        private FocusAnimator getOrCreateAnimator(View view) {
+            FocusAnimator animator = (FocusAnimator) view.getTag(android.support.v17.leanback.R.id.lb_focus_animator);
+            if (animator == null) {
+                animator = new FocusAnimator(
+                        view, getScale(view.getResources()), mUseDimmer, DURATION_MS);
+                view.setTag(android.support.v17.leanback.R.id.lb_focus_animator, animator);
+            }
+            return animator;
         }
 
     }

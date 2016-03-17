@@ -20,6 +20,7 @@ import android.support.v17.leanback.graphics.ColorOverlayDimmer;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowHeaderPresenter;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -146,6 +147,25 @@ public abstract class RowPresenter extends Presenter {
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row);
     }
+
+    public static class OnFocusChangeListener implements View.OnFocusChangeListener {
+        View.OnFocusChangeListener mChainedListener;
+
+        @Override
+        public void onFocusChange(View view, boolean hasFocus) {
+            /*if (DEBUG) Log.v(TAG, "onFocusChange " + hasFocus + " " + view
+                    + " mFocusHighlight" + mFocusHighlight);
+            if (mWrapper != null) {
+                view = (View) view.getParent();
+            }*/
+            if (mFocusHighlight != null) {
+                mFocusHighlight.onItemFocused(view, hasFocus);
+            }
+            if (mChainedListener != null) {
+                mChainedListener.onFocusChange(view, hasFocus);
+            }
+        }
+    }
     /**
      * A ViewHolder for a {@link Row}.
      */
@@ -166,6 +186,7 @@ public abstract class RowPresenter extends Presenter {
         private View.OnKeyListener mOnKeyListener;
         private OnItemViewSelectedListener mOnItemViewSelectedListener;
         private OnItemViewClickedListener mOnItemViewClickedListener;
+        private OnFocusChangeListener mFocusChangeListener = new OnFocusChangeListener();
 
         /**
          * Constructor for ViewHolder.
@@ -290,13 +311,15 @@ public abstract class RowPresenter extends Presenter {
         public final OnItemViewClickedListener getOnItemViewClickedListener() {
             return mOnItemViewClickedListener;
         }
+
+
     }
 
     private RowHeaderPresenter mHeaderPresenter = new RowHeaderPresenter();
 
     boolean mSelectEffectEnabled = false;
     int mSyncActivatePolicy = SYNC_ACTIVATED_TO_EXPANDED;
-
+    private static FocusHelper.FocusHighlightHandler mFocusHighlight;
 
     /**
      * Constructs a RowPresenter.

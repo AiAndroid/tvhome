@@ -49,10 +49,10 @@ public class BlockGridPresenter extends RowPresenter {
     }
 
     @Override
-    protected void onBindRowViewHolder(RowPresenter.ViewHolder holder, Object item) {
-        ViewHolder vh = (ViewHolder) holder;
+    protected void onBindRowViewHolder(final RowPresenter.ViewHolder holder, Object item) {
+        final ViewHolder vh = (ViewHolder) holder;
         if (item instanceof Block) {
-            Block<DisplayItem> displayItemBlock = (Block<DisplayItem>) item;
+            final Block<DisplayItem> displayItemBlock = (Block<DisplayItem>) item;
             super.onBindRowViewHolder(holder, new Row(new HeaderItem(0, displayItemBlock.title)));
             vh.mGridLayout.removeAllViews();
             int columns = displayItemBlock.ui_type.columns();
@@ -70,7 +70,7 @@ public class BlockGridPresenter extends RowPresenter {
                 if (displayItemBlock.items.get(i).ui_type != null) {
                     DisplayItem di = displayItemBlock.items.get(i);
 
-                    BasePresenter.VH itemholder = (BasePresenter.VH)basePresenter.onCreateViewHolder(vh.mGridLayout);
+                    final BasePresenter.VH itemholder = (BasePresenter.VH)basePresenter.onCreateViewHolder(vh.mGridLayout);
                     basePresenter.onBindViewHolder(itemholder,di);
                     View view = itemholder.view;
                     int columnstart = displayItemBlock.items.get(i).ui_type.x();
@@ -95,6 +95,14 @@ public class BlockGridPresenter extends RowPresenter {
                         @Override
                         public void onFocusChange(View v, boolean hasFocus) {
                             mFocusHighlight.onItemFocused(v,hasFocus);
+                        }
+                    });
+                    view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            vh.getOnItemViewClickedListener().onItemClicked(itemholder,
+                                    displayItemBlock, vh, null);
+
                         }
                     });
 
