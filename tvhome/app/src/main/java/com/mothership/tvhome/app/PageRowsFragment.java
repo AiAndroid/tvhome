@@ -325,7 +325,7 @@ public class PageRowsFragment extends BaseRowsFragment {
                     // attached views.  For no-structure-change update,  the view is rebound to new data,
                     // but again it should use the unchanged mExpand value,  so we don't need do any
                     // thing in onBind.
-                    setRowViewExpanded(vh, mExpand);
+                    //setRowViewExpanded(vh, mExpand);
                     RowPresenter rowPresenter = (RowPresenter) vh.getPresenter();
                     RowPresenter.ViewHolder rowVh = rowPresenter.getRowViewHolder(vh.getViewHolder());
                     rowVh.setOnItemViewSelectedListener(mOnItemViewSelectedListener);

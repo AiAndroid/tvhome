@@ -20,6 +20,7 @@ import android.support.v17.leanback.graphics.ColorOverlayDimmer;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowHeaderPresenter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -595,6 +596,11 @@ public abstract class RowPresenter extends Presenter {
         vh.mRow = (Row) item;
         if (vh.mHeaderViewHolder != null) {
             mHeaderPresenter.onBindViewHolder(vh.mHeaderViewHolder, item);
+        }
+        if(TextUtils.isEmpty(vh.mRow.getHeaderItem().getName())){
+            setRowViewExpanded(vh,false);
+        }else{
+            setRowViewExpanded(vh, true);
         }
     }
 

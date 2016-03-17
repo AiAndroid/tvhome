@@ -9,7 +9,6 @@ import android.support.v17.leanback.widget.ItemBridgeAdapter;
 import android.support.v17.leanback.widget.ItemBridgeAdapterShadowOverlayWrapper;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
-import android.support.v17.leanback.widget.ShadowOverlayHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 import com.mothership.tvhome.R;
 import com.mothership.tvhome.view.ChannelContainer;
 import com.tv.ui.metro.model.Block;
-import com.tv.ui.metro.model.DisplayItem;
 
 /**
  * Created by wangwei on 3/10/16.
@@ -93,11 +91,5 @@ public class TVhomBlockPresenter extends RowPresenter
 
         }
     }
-
-    @Override
-    protected void onRowViewExpanded(ViewHolder vh, boolean expanded) {
-        ViewHolder rowViewHolder = getRowViewHolder(vh);
-        rowViewHolder.mExpanded = false;
-        super.onRowViewExpanded(vh,false);
-    }
+    
 }
