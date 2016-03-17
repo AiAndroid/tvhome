@@ -12,9 +12,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.mothership.tvhome.R;
 import com.mothership.tvhome.widget.BlockAdapter;
+import com.mothership.tvhome.widget.FocusHLMgr;
 import com.mothership.tvhome.widget.RowPresenter;
 
 /**
@@ -44,7 +46,7 @@ public class PagesFragment extends BaseFragment {
     ViewPager mPager;
 
     private boolean mExpand = true;
-
+    FocusHLMgr mFocusHLMgr; //keep ref
     public class PagesAdapter extends FragmentPagerAdapter {
         public PagesAdapter(FragmentManager fm) {
             super(fm);
@@ -123,6 +125,7 @@ public class PagesFragment extends BaseFragment {
         //        ViewGroup.LayoutParams.WRAP_CONTENT));
         mPageAdapter = new PagesAdapter(getChildFragmentManager());
         mPager.setAdapter(mPageAdapter);
+        mFocusHLMgr = new FocusHLMgr((ImageView) root.findViewById(R.id.di_focus_hl), root.findViewById(R.id.di_focus_hl_t));
         return root;
     }
 
