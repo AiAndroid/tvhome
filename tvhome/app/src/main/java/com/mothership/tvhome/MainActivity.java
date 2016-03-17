@@ -199,7 +199,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                                 dialog.dismiss();
 
                                 //begin to download apk
-                                
+
                             }
                         });
                         dialog.setCanceledOnTouchOutside(false);
