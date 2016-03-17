@@ -7,6 +7,7 @@ import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
@@ -201,7 +202,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
                                     try {
 
-                                        final String sdpath = context.getCacheDir() + "/appupgrade.apk";
+                                        final String sdpath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/appupgrade.apk";
+                                        Log.d(TAG, sdpath);
                                         File file  = new File(sdpath);
                                         OutputStream ouput =new FileOutputStream(file);
                                         byte buffer[] = new byte[4*1024];
@@ -273,8 +275,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
     private static void installManual(final Context context, final String uriString){
         try {
-            Intent actionIntent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-            actionIntent.setDataAndType(Uri.parse(uriString), "application/vnd.android.package-archive");
+            Intent actionIntent = new Intent(Intent.ACTION_VIEW);
+            actionIntent.setDataAndType(Uri.parse("file://"+Uri.parse(uriString).toString()), "application/vnd.android.package-archive");
+            actionIntent.setClassName("com.android.packageinstaller", "com.android.packageinstaller.PackageInstallerActivity");
             actionIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(actionIntent);
         }catch (Exception ne){
