@@ -348,5 +348,7 @@ public class HeadersFragment extends Fragment {
         //}
     }
 
-
+    public void setSelectedPosition(int position){
+        mHorizontalGridView.setSelectedPosition(position);
+    }
 }

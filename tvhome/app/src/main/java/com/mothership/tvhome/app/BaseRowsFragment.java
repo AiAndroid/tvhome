@@ -152,6 +152,7 @@ public class BaseRowsFragment extends Fragment {
             // If presenter selector is null, adapter ps will be used
             mBridgeAdapter = new ItemBridgeAdapter(mAdapter, mPresenterSelector);
         }
+
         if (mVerticalGridView != null) {
             mVerticalGridView.setAdapter(mBridgeAdapter);
             if (mBridgeAdapter != null && mSelectedPosition != -1) {

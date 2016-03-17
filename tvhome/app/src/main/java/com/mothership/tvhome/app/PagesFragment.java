@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +19,13 @@ import com.mothership.tvhome.R;
 import com.mothership.tvhome.widget.BlockAdapter;
 import com.mothership.tvhome.widget.FocusHLMgr;
 import com.mothership.tvhome.widget.RowPresenter;
+import com.tv.ui.metro.model.Block;
+import com.tv.ui.metro.model.DisplayItem;
 
 /**
  * Created by wangwei on 3/1/16.
  */
-public class PagesFragment extends BaseFragment {
+public class PagesFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,11 +50,41 @@ public class PagesFragment extends BaseFragment {
 
     private boolean mExpand = true;
     FocusHLMgr mFocusHLMgr; //keep ref
+    BlockAdapter blockAdapter = new BlockAdapter(new Block<DisplayItem>());
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        for(int i=0;i<mPageAdapter.getCount();++i){
+            PageRowsFragment rowsFragment = (PageRowsFragment)mPageAdapter.getItem(i);
+            if(position==i){
+                if((BlockAdapter)mAdapter.get(position) instanceof BlockAdapter){
+                    BlockAdapter blockAdapter = (BlockAdapter)mAdapter.get(position);
+                    rowsFragment.setAdapter(blockAdapter);
+                }else{
+                    rowsFragment.setAdapter((ObjectAdapter)mAdapter.get(position));
+                }
+            }else{
+                rowsFragment.setAdapter(null);
+            }
+        }
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
     public class PagesAdapter extends FragmentPagerAdapter {
         public PagesAdapter(FragmentManager fm) {
             super(fm);
         }
-
+        SparseArray<PageRowsFragment> mFragments = new SparseArray<PageRowsFragment>();
         @Override
         public int getCount() {
             if(mAdapter==null) return 0;
@@ -60,24 +93,14 @@ public class PagesFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
-            PageRowsFragment rowsFragment = new PageRowsFragment();
-            if((BlockAdapter)mAdapter.get(position) instanceof BlockAdapter){
-                BlockAdapter blockAdapter = (BlockAdapter)mAdapter.get(position);
-                rowsFragment.setAdapter(blockAdapter);
-                /*if(blockAdapter.mHasBlocks){
-                    if(blockAdapter.get(position) instanceof Block){
-                        BlockAdapter rowblock = new BlockAdapter((Block)blockAdapter.get(position),new BlockVerticalPresenter());
-                        rowsFragment.setAdapter(rowblock);
-                    }
-
-                }*/
-            }else{
-                rowsFragment.setAdapter((ObjectAdapter)mAdapter.get(position));
+            PageRowsFragment rowsFragment = mFragments.get(position);
+            if(rowsFragment==null){
+                rowsFragment = new PageRowsFragment();
+                rowsFragment.enableRowScaling(false);
+                rowsFragment.setOnItemViewSelectedListener(mRowViewSelectedListener);
+                rowsFragment.setOnItemViewClickedListener(mOnItemViewClickedListener);
+                mFragments.put(position, rowsFragment);
             }
-
-            rowsFragment.enableRowScaling(false);
-            rowsFragment.setOnItemViewSelectedListener(mRowViewSelectedListener);
-            rowsFragment.setOnItemViewClickedListener(mOnItemViewClickedListener);
             return rowsFragment;
         }
     }
@@ -125,6 +148,7 @@ public class PagesFragment extends BaseFragment {
         //        ViewGroup.LayoutParams.WRAP_CONTENT));
         mPageAdapter = new PagesAdapter(getChildFragmentManager());
         mPager.setAdapter(mPageAdapter);
+        mPager.addOnPageChangeListener(this);
         mFocusHLMgr = new FocusHLMgr((ImageView) root.findViewById(R.id.di_focus_hl), root.findViewById(R.id.di_focus_hl_t));
         return root;
     }

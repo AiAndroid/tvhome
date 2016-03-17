@@ -902,6 +902,7 @@ public class MainFragment extends BaseFragment {
                 //}*/
             }
             setAdapter(pageAdapter);
+            mHeadersFragment.setSelectedPosition(1);
         }
     }
 

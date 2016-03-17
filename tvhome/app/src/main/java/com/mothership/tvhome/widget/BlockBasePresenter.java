@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v17.leanback.system.Settings;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.FocusHighlight;
-import android.support.v17.leanback.widget.FocusHighlightHelper;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v17.leanback.widget.ItemAlignmentFacet;
