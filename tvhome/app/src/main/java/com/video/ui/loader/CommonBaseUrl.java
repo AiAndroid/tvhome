@@ -16,7 +16,6 @@ import com.video.cp.model.VideoPlayerConstant;
 import com.video.ui.idata.AccountUtils;
 import com.video.ui.idata.iDataORM;
 import com.video.utils.WLReflect;
-import miui.os.BuildV5;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -24,6 +23,8 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 import java.util.Random;
+
+import miui.os.BuildV5;
 
 public abstract class CommonBaseUrl {
 	protected Context mAppContext;
@@ -119,12 +120,14 @@ public abstract class CommonBaseUrl {
                 iDataORM.addSetting(context, iDataORM.version_type, iDataORM.version_stable);
             }
 
+            //TODO
+            /*
             int lastTwoVersion = Integer.parseInt(iDataORM.application_type);
             if((versionCode%100 - lastTwoVersion) <= 9 && (versionCode%100 - lastTwoVersion) >=0){
                 versionCode = 100 * (versionCode / 100) + versionCode%100;
             }else {
                 versionCode = 100 * (versionCode / 100) + lastTwoVersion;
-            }
+            }*/
         }catch (Exception ne){}
     }
 

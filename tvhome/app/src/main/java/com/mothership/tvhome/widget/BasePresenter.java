@@ -93,6 +93,7 @@ public class BasePresenter extends Presenter
         {
             vh.mTitle.setText(di.title);
         }
+
         ViewGroup.LayoutParams lpImg = vh.mImg.getLayoutParams();
         if(mBaseHeight != 0 && mBaseWidth != 0)
         {
@@ -107,12 +108,12 @@ public class BasePresenter extends Presenter
             {
                 Glide.with(vh.mImg.getContext())
                         .load(posterUrl)
+                        .fitCenter()
                         .thumbnail(0.1f)
                         .error(R.mipmap.ic_launcher)
                         .into(vh.mImg);
             }
         }
-
     }
 
     @Override
@@ -120,6 +121,7 @@ public class BasePresenter extends Presenter
     {
         VH vh = (VH)viewHolder;
         Glide.clear(vh.mImg);
+
     }
 
     public int getBaseWidth(){
