@@ -355,7 +355,7 @@ public class iDataORM {
     public static List<Pair<String, Integer>> getDownloadableCps(Context context) {
         String downloadable_cps = "";
 
-        if ((!TextUtils.isEmpty(CommonBaseUrl.getmothershipVersion()) &&  !"V5".equalsIgnoreCase(CommonBaseUrl.getmothershipVersion()))) {
+        if ((!TextUtils.isEmpty(CommonBaseUrl.getMIUIVersion()) &&  !"V5".equalsIgnoreCase(CommonBaseUrl.getMIUIVersion()))) {
             // V6 version
             downloadable_cps = getStringValue(context, cps_supported_download, "");
         } else {
@@ -1173,7 +1173,7 @@ public class iDataORM {
     }
 
     public static void formartDeviceMap(HashMap<String, String> map){
-        map.put("mothership",                CommonBaseUrl.getmothershipVersion());
+        map.put("mothership",                CommonBaseUrl.getMIUIVersion());
         map.put("version",             String.valueOf(CommonBaseUrl.versionCode));
         map.put("version.incremental", Build.VERSION.INCREMENTAL);
         map.put("version.release",     Build.VERSION.RELEASE);
