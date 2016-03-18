@@ -24,6 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="com.mothership.video.mobile"
+            android:name="com.video.ui.idata.iDataProvider"/>
     </application>
 
 </manifest>

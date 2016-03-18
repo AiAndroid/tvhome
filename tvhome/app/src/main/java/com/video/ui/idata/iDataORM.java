@@ -53,8 +53,8 @@ import java.util.Set;
  *
  */
 public class iDataORM {
-    public static final String AUTHORITY                 = "com.miui.video.mobile";
-    public static final String AUTHORITY_MIBROWSER                 = "com.miui.browser.video";
+    public static final String AUTHORITY                 = "com.mothership.video.mobile";
+    public static final String AUTHORITY_MIBROWSER                 = "com.mothership.browser.video";
     public static final Uri SETTINGS_CONTENT_URI         = Uri.parse("content://" + AUTHORITY + "/settings");
     public static final Uri ALBUM_CONTENT_URI            = Uri.parse("content://" + AUTHORITY + "/local_album");
     public static final Uri DOWNLOAD_CONTENT_URI         = Uri.parse("content://" + AUTHORITY + "/download");
@@ -107,7 +107,7 @@ public class iDataORM {
     public static final String enable_crash_handler      = "enable_crash_handler";
     public static final String mi_router_versioncode     = "mi_router_versioncode";
     public static final String upgrade_mirouter_by_market= "upgrade_mirouter_by_market";
-    public static final String enable_miui_ads           = "enable_miui_ads";
+    public static final String enable_mothership_ads           = "enable_mothership_ads";
     public static final String cps_supported_download    = "downloadable_cps";
     public static final String banned_media_type         = "banned_media";
     public static final String enable_switch_source_on_ad = "enable_switch_source_on_ad";
@@ -355,7 +355,7 @@ public class iDataORM {
     public static List<Pair<String, Integer>> getDownloadableCps(Context context) {
         String downloadable_cps = "";
 
-        if ((!TextUtils.isEmpty(CommonBaseUrl.getMIUIVersion()) &&  !"V5".equalsIgnoreCase(CommonBaseUrl.getMIUIVersion()))) {
+        if ((!TextUtils.isEmpty(CommonBaseUrl.getmothershipVersion()) &&  !"V5".equalsIgnoreCase(CommonBaseUrl.getmothershipVersion()))) {
             // V6 version
             downloadable_cps = getStringValue(context, cps_supported_download, "");
         } else {
@@ -1173,7 +1173,7 @@ public class iDataORM {
     }
 
     public static void formartDeviceMap(HashMap<String, String> map){
-        map.put("miui",                CommonBaseUrl.getMIUIVersion());
+        map.put("mothership",                CommonBaseUrl.getmothershipVersion());
         map.put("version",             String.valueOf(CommonBaseUrl.versionCode));
         map.put("version.incremental", Build.VERSION.INCREMENTAL);
         map.put("version.release",     Build.VERSION.RELEASE);
