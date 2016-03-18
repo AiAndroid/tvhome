@@ -12,5 +12,6 @@
         <item name="android:textAppearance">@style/TextAppearance.Leanback.Row.Header</item>
         <item name="android:textSize">22sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:paddingTop">@dimen/grid_header_padding_top</item>>
     </style>
 </resources>
