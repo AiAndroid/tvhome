@@ -109,6 +109,7 @@ public class BasePresenter extends Presenter
                 Glide.with(vh.mImg.getContext())
                         .load(posterUrl)
                         .fitCenter()
+                        .dontTransform()
                         .thumbnail(0.1f)
                         .error(R.mipmap.ic_launcher)
                         .into(vh.mImg);
