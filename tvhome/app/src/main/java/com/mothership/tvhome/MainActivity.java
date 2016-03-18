@@ -1,22 +1,22 @@
 package com.mothership.tvhome;
 
-import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v4.app.FragmentActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,7 +25,6 @@ import com.duokan.VolleyHelper;
 import com.google.gson.reflect.TypeToken;
 import com.mothership.tvhome.app.MainFragment;
 import com.mothership.tvhome.view.AdView;
-import com.mothership.tvhome.view.AlertDialogHelper;
 import com.mothership.tvhome.view.EmptyLoadingView;
 import com.mothership.tvhome.widget.BlockHorizontalPresenter;
 import com.mothership.tvhome.widget.CardPresenter;
@@ -34,20 +33,14 @@ import com.tv.ui.metro.model.AppVersion;
 import com.tv.ui.metro.model.Block;
 import com.tv.ui.metro.model.DisplayItem;
 import com.tv.ui.metro.model.GenericBlock;
-import com.video.ui.idata.BackgroundService;
-import com.video.ui.idata.iDataORM;
 import com.video.ui.loader.BaseGsonLoader;
-import com.video.ui.loader.CommonBaseUrl;
-import com.video.ui.loader.CommonUrl;
 import com.video.ui.loader.video.TabsGsonLoader;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -59,6 +52,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     protected BaseGsonLoader mLoader;
     DisplayItemSelector mDiSel = new DisplayItemSelector();
     ArrayObjectAdapter mAdapter = new ArrayObjectAdapter(new CardPresenter());
+    Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,9 +173,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         Response.Listener<AppVersion> listener = new Response.Listener<AppVersion>() {
             @Override
             public void onResponse(final AppVersion response) {
+                Log.d(TAG, ""+response);
+
                 PackageManager pm = context.getPackageManager();
                 try {
-                    int versionCode = CommonBaseUrl.versionCode;
+                    int versionCode = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode;//CommonBaseUrl.versionCode;
                     if (versionCode < 0) {
                         versionCode = pm.getPackageInfo(context.getPackageName(), 0).versionCode;
                     }
@@ -192,6 +188,48 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                                 response.release_date() + "\n" +
                                 response.released_by() + "\n";
 
+                        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+                        //begin to download apk
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                try {
+                                    URL url = new URL(response.apk_url());
+                                    HttpURLConnection httpConn =(HttpURLConnection)url.openConnection();
+                                    InputStream inputStream=httpConn.getInputStream();
+
+                                    try {
+
+                                        final String sdpath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/appupgrade.apk";
+                                        Log.d(TAG, sdpath);
+                                        File file  = new File(sdpath);
+                                        OutputStream ouput =new FileOutputStream(file);
+                                        byte buffer[] = new byte[4*1024];
+                                        int len = 0;
+                                        while((len = inputStream.read(buffer)) != -1) {
+                                            ouput.write(buffer, 0, len);
+                                        }
+                                        ouput.close();
+
+                                        mHandler.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                installManual(context, sdpath);
+                                            }
+                                        });
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }finally{
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
+
+                        /*
                         AlertDialog dialog = new AlertDialog.Builder(context).create();
                         dialog.setTitle("软件更新");
                         dialog.setMessage(msg);
@@ -207,46 +245,15 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
 
-                                //begin to download apk
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
 
-                                        try {
-                                            URL url = new URL(response.apk_url());
-                                            HttpURLConnection httpConn =(HttpURLConnection)url.openConnection();
-                                            InputStream inputStream=httpConn.getInputStream();
-
-                                            try {
-
-                                                String sdpath = context.getCacheDir() + "/appupgrade.apk";
-                                                File file  = new File(sdpath);
-                                                OutputStream ouput =new FileOutputStream(file);
-                                                byte buffer[] = new byte[4*1024];
-                                                while((inputStream.read(buffer)) != -1) {
-                                                    ouput.write(buffer);
-                                                }
-                                                ouput.close();
-                                                installManual(context, sdpath);
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }finally{
-                                            }
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }).start();
 
                             }
                         });
-                        dialog.setCanceledOnTouchOutside(false);
-                        dialog.setCancelable(true);
                         try {
                             dialog.show();
                         } catch (Exception e) {
                             Log.e(TAG, e.getLocalizedMessage());
-                        }
+                        }*/
                     }
                 } catch (Exception e) {}
             }
@@ -266,10 +273,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         requestQueue.add(gsonRequest);
     }
 
-    private static void installManual(Context context, String uriString){
+    private static void installManual(final Context context, final String uriString){
         try {
-            Intent actionIntent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-            actionIntent.setDataAndType(Uri.parse(uriString), "application/vnd.android.package-archive");
+            Intent actionIntent = new Intent(Intent.ACTION_VIEW);
+            actionIntent.setDataAndType(Uri.parse("file://"+uriString), "application/vnd.android.package-archive");
+            actionIntent.setClassName("com.android.packageinstaller", "com.android.packageinstaller.PackageInstallerActivity");
             actionIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(actionIntent);
         }catch (Exception ne){
