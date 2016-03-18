@@ -14,4 +14,8 @@
         <item name="android:textStyle">bold</item>
         <item name="android:paddingTop">@dimen/grid_header_padding_top</item>>
     </style>
+
+    <style name="tv_text" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/tv_text</item>
+    </style>
 </resources>
