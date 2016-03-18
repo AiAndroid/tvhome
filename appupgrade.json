@@ -1,10 +1,10 @@
 {
     "data": {
-        "version_code":2,
-        "recent_change":"V60 更新：修改UI \n\n加入RecyleView节省内存\n",
-        "version_name":"MotherShip——开发版(V02)",
+        "version_code":3,
+        "recent_change":"V60 更新：bug fix",
+        "version_name":"MotherShip——开发版(V03)",
         "apk_url":"https://raw.githubusercontent.com/AiAndroid/tvhome/master/release/mothership.apk",
-        "release_date":"2016-03-17 18:45PM",
+        "release_date":"2016-03-18 18:45PM",
         "released_by":"爱码士出品"
     }
 }

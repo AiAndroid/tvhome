@@ -8,8 +8,6 @@ import android.support.v17.leanback.widget.Row;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +24,7 @@ import com.tv.ui.metro.model.DisplayItem;
 /**
  * Created by wangwei on 3/1/16.
  */
-public class PagesFragment extends BaseFragment implements ViewPager.OnPageChangeListener{
+public class PagesFragment extends BaseFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,39 +51,13 @@ public class PagesFragment extends BaseFragment implements ViewPager.OnPageChang
     FocusHLMgr mFocusHLMgr; //keep ref
     BlockAdapter blockAdapter = new BlockAdapter(new Block<DisplayItem>());
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        for(int i=0;i<mPageAdapter.getCount();++i){
-            PageRowsFragment rowsFragment = (PageRowsFragment)mPageAdapter.getItem(i);
-            if(position==i){
-                if((BlockAdapter)mAdapter.get(position) instanceof BlockAdapter){
-                    BlockAdapter blockAdapter = (BlockAdapter)mAdapter.get(position);
-                    rowsFragment.setAdapter(blockAdapter);
-                }else{
-                    rowsFragment.setAdapter((ObjectAdapter)mAdapter.get(position));
-                }
-            }else{
-                rowsFragment.setAdapter(null);
-            }
-        }
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
 
     public class PagesAdapter extends FragmentPagerAdapter {
+        PageRowsFragment mPreFragment;
         public PagesAdapter(FragmentManager fm) {
             super(fm);
         }
-        SparseArray<PageRowsFragment> mFragments = new SparseArray<PageRowsFragment>();
+
         @Override
         public int getCount() {
             if(mAdapter==null) return 0;
@@ -94,18 +66,51 @@ public class PagesFragment extends BaseFragment implements ViewPager.OnPageChang
 
         @Override
         public Fragment getItem(int position) {
-            PageRowsFragment rowsFragment = mFragments.get(position);
-            if(rowsFragment==null){
-                rowsFragment = new PageRowsFragment();
-                rowsFragment.enableRowScaling(false);
-                rowsFragment.setOnItemViewSelectedListener(mRowViewSelectedListener);
-                rowsFragment.setOnItemViewClickedListener(mOnItemViewClickedListener);
-                mFragments.put(position, rowsFragment);
-            }
+            PageRowsFragment rowsFragment = new PageRowsFragment();
+            rowsFragment.enableRowScaling(false);
+            rowsFragment.setOnItemViewSelectedListener(mRowViewSelectedListener);
+            rowsFragment.setOnItemViewClickedListener(mOnItemViewClickedListener);
+            Bundle args = new Bundle();
+            args.putInt("position", position);
+            rowsFragment.setArguments(args);
             return rowsFragment;
         }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
+           // mFragments.remove(position);
+        }
+
+        @Override
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            super.setPrimaryItem(container,position,object);
+            PageRowsFragment rowsFragment = (PageRowsFragment)object;
+            if(mPreFragment!=rowsFragment) {
+                if (rowsFragment != null) {
+                    if ((BlockAdapter) mAdapter.get(position) instanceof BlockAdapter) {
+                        BlockAdapter blockAdapter = (BlockAdapter) mAdapter.get(position);
+                        rowsFragment.setAdapter(blockAdapter);
+                    } else {
+                        rowsFragment.setAdapter((ObjectAdapter) mAdapter.get(position));
+                    }
+                    if(rowsFragment.getOnItemViewClickedListener()==null) {
+                        rowsFragment.setOnItemViewSelectedListener(mRowViewSelectedListener);
+                        rowsFragment.setOnItemViewClickedListener(mOnItemViewClickedListener);
+                    }
+                }
+                if (mPreFragment != null) {
+                    mPreFragment.setAdapter(null);
+                }
+                mPreFragment = rowsFragment;
+            }
+        }
+
     }
 
+   /* private String makeFragmentName(PagerGroup viewpager, long id) {
+        return "android:switcher:" + viewpager.getId() + ":" + id;
+    }*/
 
     public PagesFragment() {
         // Required empty public constructor
@@ -149,10 +154,10 @@ public class PagesFragment extends BaseFragment implements ViewPager.OnPageChang
         //        ViewGroup.LayoutParams.WRAP_CONTENT));
         mPageAdapter = new PagesAdapter(getChildFragmentManager());
         mPager.setAdapter(mPageAdapter);
-        mPager.addOnPageChangeListener(this);
         mFocusHLMgr = new FocusHLMgr((ImageView) root.findViewById(R.id.di_focus_hl), root.findViewById(R.id.di_focus_hl_t));
         return root;
     }
+
 
 
     @Override
