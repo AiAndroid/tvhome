@@ -149,6 +149,7 @@ public class DisplayItem implements Serializable{
             public String android_component() {return get(android_component);}
             public String android_activty()   {return get(android_activity);}
             public String android_extra()     {return get(android_extra);}
+            public String android_intent()    {return get("android_intent");}
             public String apk_url()           {return get(apk_url);}
             public int    apk_version()       {return getInt(get(apk_version), 0);}
             public String tick_url()          {return get(tick_url);}

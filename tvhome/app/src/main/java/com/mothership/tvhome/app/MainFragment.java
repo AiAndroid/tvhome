@@ -844,7 +844,6 @@ public class MainFragment extends BaseFragment {
 
             try{
                 if(di != null && di.target != null){
-
                     //jump to album
                     if("album".equals(di.target.entity)){
                         try {
@@ -856,6 +855,16 @@ public class MainFragment extends BaseFragment {
                         } catch (Exception ne) {
                             ne.printStackTrace();
                         }
+                    }
+
+                    //intent
+                    if(di.target.params != null && !TextUtils.isEmpty(di.target.params.android_intent())) {
+                        try {
+                            Intent intent = Intent.parseUri(di.target.params.android_intent(), 0);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            getContext().startActivity(intent);
+                            return;
+                        }catch (Exception ne){}
                     }
                 }
 
@@ -875,10 +884,15 @@ public class MainFragment extends BaseFragment {
                 }
 
                 if(!TextUtils.isEmpty(di.target.action)) {
-                    Intent intent = Intent.parseUri(di.target.action, 0);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-                    getContext().startActivity(intent);
+                    try {
+                        Intent intent = Intent.parseUri(di.target.action, 0);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                        getContext().startActivity(intent);
+                        return;
+                    }catch (Exception ne){}
                 }
+
+                return;
             }
             catch (Exception e)
             {
