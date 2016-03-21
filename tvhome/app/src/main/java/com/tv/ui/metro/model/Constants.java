@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by liuhuadonbg on 3/2/15.
  */
 public class Constants {
-    public static boolean DEBUG = false;
+    public static boolean DEBUG = true;
     public static final String BENCHMARK = "benchmark";
     public static final String Local_Dir_Video = "local_dir";
     public static final String Local_Video = "local";
