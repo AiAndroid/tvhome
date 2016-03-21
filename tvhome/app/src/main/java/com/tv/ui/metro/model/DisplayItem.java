@@ -35,7 +35,7 @@ public class DisplayItem implements Serializable{
         public int    columns(){return (int)getFloat(String.valueOf(get("columns")), 1.0f);}
         public int    columnspan(){return   (int)getFloat(String.valueOf(get("columnspan")), 1.0f);}
         public int    rowspan(){return   (int)getFloat(String.valueOf(get("rowspan")), 1.0f);}
-        public boolean    unitary(){return  (boolean)get("unitary");}
+        public boolean    unitary(){return  get("unitary")==null?false:(boolean)get("unitary");}
         public int    x(){return  (int)getFloat(String.valueOf(((LinkedTreeMap) get("pos")).get("x")),0.0f);}
         public int    y(){return  (int)getFloat(String.valueOf(((LinkedTreeMap) get("pos")).get("y")),0.0f);}
         public int    w(){return  (int)getFloat(String.valueOf(((LinkedTreeMap) get("pos")).get("w")),1.0f);}

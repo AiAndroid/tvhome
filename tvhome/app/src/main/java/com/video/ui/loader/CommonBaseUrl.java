@@ -31,9 +31,9 @@ public abstract class CommonBaseUrl {
     public static final String API_KEY          = "x457_VKnEUiNinik5bQUnw==";
     public static final String API_TOKEN        = "C8u617rK4WUQyyv1rZPT3B6gfDDndZudprPrRerZy6gUA=";
 
-    public static String BaseHost = "mvideo.duokanbox.com";
-    public static String BaseURL  = "http://"+BaseHost +"/api/a1/";
-    public static String BaseURLHttps  = "https://"+BaseHost +"/api/a1/";
+    public static String BaseHost = "media.tv.mitvos.com";
+    public static String BaseURL  = "http://"+BaseHost +"";
+    public static String BaseURLHttps  = "https://"+BaseHost +"";
     public static String LoginURL = "http://"+BaseHost +"/api/";
 
     public static void setBaseURL(String host){
@@ -134,74 +134,76 @@ public abstract class CommonBaseUrl {
 	protected abstract void getBaseURLFromLoacalSetting();
 
 	public String addCommonParams(String url) {
-        //TODO
-        if(false) {
-            long now = System.currentTimeMillis();
-            CommonUrlBuilder urlBuilder = new CommonUrlBuilder(url);
 
-            urlBuilder.put("_locale", getLocale());
-            urlBuilder.put("_res", getResolution(mAppContext));
-            urlBuilder.put("_devid", getDeviceMd5Id(mAppContext));
-            urlBuilder.put("_md5", iDataORM.getStringValue(mAppContext, iDataORM.device_id_md5, ""));
-            urlBuilder.put("_model", Build.DEVICE);
-            urlBuilder.put("_miuiver", Build.VERSION.INCREMENTAL);
-            urlBuilder.put("_model", Build.MODEL);
-            urlBuilder.put("_andver", String.valueOf(Build.VERSION.SDK_INT));
-            urlBuilder.put("_nonce", nonce());
-            urlBuilder.put("_appver", String.valueOf(versionCode));
-            urlBuilder.put("_ts", String.valueOf(System.currentTimeMillis() / 1000));
-            urlBuilder.put("_ver", versionName);
-            urlBuilder.put("_devtype", "1");
-            urlBuilder.put("_eimi", com.video.ui.Util.getMD5(AccountUtils.getImeiId(mAppContext)));
-            urlBuilder.put("_cam", com.video.ui.Util.getMD5(AccountUtils.getMacAddress(mAppContext)));
-            urlBuilder.put("_diordna", com.video.ui.Util.getMD5(AccountUtils.getAndroidId(mAppContext)));
-            urlBuilder.put("_android", AccountUtils.getAndroidId(mAppContext));
-            urlBuilder.put("_miui", getMIUIVersion());
-            urlBuilder.put("_version", getMIUIVersionType());
-            urlBuilder.put("_plyver", VideoPlayerConstant.VERSION);
-            if (url.contains("/login")) {
-                urlBuilder.put("token", AccountToken());
-                if (!TextUtils.isEmpty(accountName())) {
-                    urlBuilder.put("userid", accountName());
-                }
-            } else {
-                urlBuilder.put("token", AccessToken());
+        long now = System.currentTimeMillis();
+        CommonUrlBuilder urlBuilder = new CommonUrlBuilder(url);
+
+        //for OTT
+        urlBuilder.put("ptf", "207");
+        urlBuilder.put("codever", "1");
+        urlBuilder.put("deviceid", getMacMd5Id(mAppContext));
+
+        urlBuilder.put("_locale", getLocale());
+        urlBuilder.put("_res", getResolution(mAppContext));
+        urlBuilder.put("_devid", getDeviceMd5Id(mAppContext));
+        urlBuilder.put("_md5", iDataORM.getStringValue(mAppContext, iDataORM.device_id_md5, ""));
+        urlBuilder.put("_model", Build.DEVICE);
+        urlBuilder.put("_miuiver", Build.VERSION.INCREMENTAL);
+        urlBuilder.put("_model", Build.MODEL);
+        urlBuilder.put("_andver", String.valueOf(Build.VERSION.SDK_INT));
+        urlBuilder.put("_nonce", nonce());
+        urlBuilder.put("_appver", String.valueOf(versionCode));
+        urlBuilder.put("_ts", String.valueOf(System.currentTimeMillis() / 1000));
+        urlBuilder.put("_ver", versionName);
+        urlBuilder.put("_devtype", "1");
+        urlBuilder.put("_eimi", com.video.ui.Util.getMD5(AccountUtils.getImeiId(mAppContext)));
+        urlBuilder.put("_cam", com.video.ui.Util.getMD5(AccountUtils.getMacAddress(mAppContext)));
+        urlBuilder.put("_diordna", com.video.ui.Util.getMD5(AccountUtils.getAndroidId(mAppContext)));
+        urlBuilder.put("_android", AccountUtils.getAndroidId(mAppContext));
+        urlBuilder.put("_miui", getMIUIVersion());
+        urlBuilder.put("_version", getMIUIVersionType());
+        urlBuilder.put("_plyver", VideoPlayerConstant.VERSION);
+        if (url.contains("/login")) {
+            urlBuilder.put("token", AccountToken());
+            if (!TextUtils.isEmpty(accountName())) {
+                urlBuilder.put("userid", accountName());
             }
-
-            //add op
-            if (TextUtils.isEmpty(iDataORM._op_value)) {
-                iDataORM._op_value = iDataORM.getStringValue(mAppContext, iDataORM._op, "");
-                if (TextUtils.isEmpty(iDataORM._op_value)) {
-                    iDataORM._op_value = "000";
-                }
-            }
-            if (!"000".equals(iDataORM._op_value))
-                urlBuilder.put(iDataORM._op, iDataORM._op_value);
-
-            String tmpUrl = urlBuilder.toUrl();
-            String path;
-            try {
-                path = new URL(tmpUrl).getPath();
-            } catch (MalformedURLException e) {
-                return tmpUrl;
-            }
-
-            int indexOfPath = tmpUrl.indexOf(path);
-            String strForSign = tmpUrl.substring(indexOfPath);
-            if (Constants.DEBUG)
-                Log.d("xxx", "strForSign " + strForSign);
-            String sign = genSignature(strForSign);
-            if (Constants.DEBUG)
-                Log.d("xxx", "sign " + sign);
-
-            urlBuilder.put("opaque", sign);
-
-            if (Constants.DEBUG)
-                Log.d("benchmark", "benchmark url:" + (System.currentTimeMillis() - now));
-
-            return urlBuilder.toUrl();
+        } else {
+            urlBuilder.put("token", AccessToken());
         }
-        return url;
+
+        //add op
+        if (TextUtils.isEmpty(iDataORM._op_value)) {
+            iDataORM._op_value = iDataORM.getStringValue(mAppContext, iDataORM._op, "");
+            if (TextUtils.isEmpty(iDataORM._op_value)) {
+                iDataORM._op_value = "000";
+            }
+        }
+        if (!"000".equals(iDataORM._op_value))
+            urlBuilder.put(iDataORM._op, iDataORM._op_value);
+
+        String tmpUrl = urlBuilder.toUrl();
+        String path;
+        try {
+            path = new URL(tmpUrl).getPath();
+        } catch (MalformedURLException e) {
+            return tmpUrl;
+        }
+
+        int indexOfPath = tmpUrl.indexOf(path);
+        String strForSign = tmpUrl.substring(indexOfPath);
+        if (Constants.DEBUG)
+            Log.d("xxx", "strForSign " + strForSign);
+        String sign = genSignature(strForSign);
+        Log.d("xxx", "sign " + sign);
+
+        urlBuilder.put("opaque", sign);
+
+        if (Constants.DEBUG)
+            Log.d("benchmark", "benchmark url:" + (System.currentTimeMillis() - now));
+
+        return urlBuilder.toUrl();
+
 	}
 
     protected String accountName(){
@@ -333,7 +335,19 @@ public abstract class CommonBaseUrl {
 	}
 
     public static String getDeviceMd5Id(Context con) {
-        String deviceID = getDeviceId(con);
+        String deviceID = AccountUtils.getUid(con);
+        if (!TextUtils.isEmpty(deviceID)) {
+            sDeviceMD5Id = com.video.ui.Util.getMD5(deviceID);
+        }
+
+        if("002".equals(iDataORM._op_value)) {
+            return "11111940";
+        }
+        return sDeviceMD5Id;
+    }
+
+    public static String getMacMd5Id(Context con) {
+        String deviceID = AccountUtils.getMacAddress(con);
         if (!TextUtils.isEmpty(deviceID)) {
             sDeviceMD5Id = com.video.ui.Util.getMD5(deviceID);
         }

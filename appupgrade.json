@@ -1,10 +1,10 @@
 {
     "data": {
-        "version_code":3,
-        "recent_change":"V60 更新：bug fix",
-        "version_name":"MotherShip——开发版(V03)",
+        "version_code":4,
+        "recent_change":"更新：跳转页",
+        "version_name":"MotherShip——开发版(V04)",
         "apk_url":"https://raw.githubusercontent.com/AiAndroid/tvhome/master/release/mothership.apk",
-        "release_date":"2016-03-18 18:45PM",
-        "released_by":"爱码士出品"
+        "release_date":"2016-03-21 15:20PM",
+        "released_by":""
     }
 }

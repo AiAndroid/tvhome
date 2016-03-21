@@ -46,7 +46,7 @@ public abstract class GenericAlbumLoader<T> extends BaseGsonLoader<GenericBlock<
                 mItem = _item;
 
                 String url = "";
-                if(_item.ns.equals("home")) {
+            if(_item.ns!=null&&_item.ns.equals("home")) {
                     String baseURL = "";//CommonUrl.BaseURL;
                     if(_item != null && _item.settings != null && "1".equals(_item.settings.get("from_push"))){
                         baseURL += "push/";
@@ -60,7 +60,7 @@ public abstract class GenericAlbumLoader<T> extends BaseGsonLoader<GenericBlock<
                     url =  processParamsQuery(getContext(), url, _item);
 
                     calledURL = new CommonUrl(getContext()).addCommonParams(url);
-                }else if(_item.ns.equals("search")) {
+                }else if(_item.ns!=null&&_item.ns.equals("search")) {
                     if(_item.id.endsWith("search.choice")) {
                         url = CommonUrl.BaseURL + "c/search";
                         //url = "https://raw.githubusercontent.com/AiAndroid/mobilevideo/master/mobile_search_choice.json";
@@ -73,7 +73,7 @@ public abstract class GenericAlbumLoader<T> extends BaseGsonLoader<GenericBlock<
                     calledURL = new CommonUrl(getContext()).addCommonParams(url);
                 }
                 else {
-                    String baseURL = "";//CommonUrl.BaseURL;
+                    String baseURL = CommonUrl.BaseURL;
                     if(_item != null && _item.settings != null && "1".equals(_item.settings.get("from_push"))){
                         baseURL += "push/";
                     }
@@ -96,7 +96,7 @@ public abstract class GenericAlbumLoader<T> extends BaseGsonLoader<GenericBlock<
 
                 gsonRequest.setRetryPolicy(new DefaultRetryPolicy(DEFAULT_TIMEOUT_MS, IMAGE_MAX_RETRIES, IMAGE_BACKOFF_MULT));
                 //if for search no cache
-                if(mItem.ns.equals("search") || calledURL.contains("search?kw=") || calledURL.contains("bookmark")) {
+                if((mItem.ns!=null&&mItem.ns.equals("search")) || calledURL.contains("search?kw=") || calledURL.contains("bookmark")) {
                     gsonRequest.setShouldCache(false);
                 }
 

@@ -908,6 +908,7 @@ public class MainFragment extends BaseFragment {
     }
 
     public void LoadData(GenericBlock<DisplayItem> data){
+        if(data==null) return;
         final boolean useTestP = false;
         //loadRows();
         TvViewGroupPresenter testP = null;
