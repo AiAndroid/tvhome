@@ -40,7 +40,7 @@ public class FocusHLMgr implements ViewTreeObserver.OnScrollChangedListener
         @Override
         public boolean handleMessage(Message msg)
         {
-            Log.d(TAG, "handle message");
+//            Log.d(TAG, "handle message");
             move2LastFocus();
             return true;
         }
