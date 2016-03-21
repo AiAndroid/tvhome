@@ -47,12 +47,13 @@ public abstract class GenericAlbumLoader<T> extends BaseGsonLoader<GenericBlock<
 
                 String url = "";
                 if(_item.ns.equals("home")) {
-                    String baseURL = CommonUrl.BaseURL;
+                    String baseURL = "";//CommonUrl.BaseURL;
                     if(_item != null && _item.settings != null && "1".equals(_item.settings.get("from_push"))){
                         baseURL += "push/";
                     }
 
-                    url = baseURL + "c/home";
+                    //url = baseURL + "c/home";
+                    url = "http://media.tv.mitvos.com/tv/lean/aio/home?ptf=207&codever=1&deviceid=deb49000000000000000000000000001&opaque=aedf5d2c3d4e03e7841c4faa7210ba74b86c666d";
 
                     setRawURL(url);
 
@@ -72,7 +73,7 @@ public abstract class GenericAlbumLoader<T> extends BaseGsonLoader<GenericBlock<
                     calledURL = new CommonUrl(getContext()).addCommonParams(url);
                 }
                 else {
-                    String baseURL = CommonUrl.BaseURL;
+                    String baseURL = "";//CommonUrl.BaseURL;
                     if(_item != null && _item.settings != null && "1".equals(_item.settings.get("from_push"))){
                         baseURL += "push/";
                     }

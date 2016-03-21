@@ -34,6 +34,7 @@ import com.tv.ui.metro.model.Block;
 import com.tv.ui.metro.model.DisplayItem;
 import com.tv.ui.metro.model.GenericBlock;
 import com.video.ui.loader.BaseGsonLoader;
+import com.video.ui.loader.video.GenericAlbumLoader;
 import com.video.ui.loader.video.TabsGsonLoader;
 
 import java.io.File;
@@ -63,6 +64,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         setContentView(R.layout.activity_main);
         MainFragment mf = (MainFragment)getSupportFragmentManager().findFragmentById(R.id.main_browse_fragment);
         mf.setAdapter(mAdapter);
+
+        item = (DisplayItem) this.getIntent().getSerializableExtra("item");
 
         getLoaderManager().initLoader(TabsGsonLoader.LOADER_ID, null, MainActivity.this);
 
@@ -102,13 +105,17 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     @Override
     public Loader<GenericBlock<DisplayItem>> onCreateLoader(int loaderId, Bundle args) {
         if(loaderId == TabsGsonLoader.LOADER_ID){
-            mLoader = new TabsGsonLoader(this, item);
-            //mLoader.setProgressNotifiable(mLoadingView);
+            createTabsLoader();
             mLoader.forceLoad();
             return mLoader;
         }else{
             return null;
         }
+    }
+
+    //please override this fun
+    protected void createTabsLoader(){
+        mLoader = new TabsGsonLoader(this, item);
     }
 
 
@@ -229,31 +236,6 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
                             }
                         }).start();
 
-                        /*
-                        AlertDialog dialog = new AlertDialog.Builder(context).create();
-                        dialog.setTitle("软件更新");
-                        dialog.setMessage(msg);
-                        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "立即更新", new DialogInterface.OnClickListener(){
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-
-
-
-                            }
-                        });
-                        try {
-                            dialog.show();
-                        } catch (Exception e) {
-                            Log.e(TAG, e.getLocalizedMessage());
-                        }*/
                     }
                 } catch (Exception e) {}
             }

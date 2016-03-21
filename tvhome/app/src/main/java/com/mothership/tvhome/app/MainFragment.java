@@ -842,8 +842,24 @@ public class MainFragment extends BaseFragment {
 
             DisplayItem di = (DisplayItem) item;
 
-            try
-            {
+            try{
+                if(di != null && di.target != null){
+
+                    //jump to album
+                    if("album".equals(di.target.entity)){
+                        try {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse("mitv://video/album"+"?rid=" + di.id));
+                            intent.putExtra("item", di);
+                            getContext().startActivity(intent);
+                            return;
+                        } catch (Exception ne) {
+                            ne.printStackTrace();
+                        }
+                    }
+                }
+
+
                 //for launch 3-rd application
                 if("intent".equals(di.target.entity)){
                     if(!TextUtils.isEmpty(di.target.url)) {
