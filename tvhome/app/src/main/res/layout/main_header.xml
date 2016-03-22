@@ -26,6 +26,6 @@
     android:background="@drawable/main_header_bg"
     android:paddingLeft="@dimen/browse_headers_horizontal_margin"
     android:paddingRight="@dimen/browse_headers_horizontal_margin"
-    android:paddingTop="@dimen/browse_headers_vertical_margin"
+    android:paddingTop="0dp"
     android:paddingBottom="@dimen/browse_headers_vertical_margin"
     />

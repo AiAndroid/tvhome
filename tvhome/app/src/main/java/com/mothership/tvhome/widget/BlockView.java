@@ -5,14 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
 import com.mothership.tvhome.R;
 
 /**
  * Created by wangwei on 3/7/16.
  */
-public class BlockView extends LinearLayout {
+public class BlockView extends FrameLayout {
 
     private RecyclerView mGridView;
     private boolean mIsVertical = false;
@@ -39,7 +39,6 @@ public class BlockView extends LinearLayout {
         // Uncomment this to experiment with page-based scrolling.
         // mGridView.setFocusScrollStrategy(HorizontalGridView.FOCUS_SCROLL_PAGE);
 
-        setOrientation(LinearLayout.VERTICAL);
         setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
         /*if(mGridView instanceof HorizontalGridView){
             HorizontalGridView view = (HorizontalGridView)mGridView;

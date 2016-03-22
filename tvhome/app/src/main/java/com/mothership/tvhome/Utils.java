@@ -99,12 +99,13 @@ public class Utils {
             sUiMap.put("block_list",10001);
             sUiMap.put("block_grid",20101);
             sUiMap.put("block_grid_button",20102);
+            sUiMap.put("block_grid_button_hr",20102);
             sUiMap.put("block_grid_icon",20103);
             sUiMap.put("display_item",30001);
         }
 
         DisplayItem.UI type = di.ui_type;
-        if(type != null)
+        if(type != null&&type.name()!=null)
         {
             int id = sUiMap.get(type.name());
             if(type.unitary()==false){

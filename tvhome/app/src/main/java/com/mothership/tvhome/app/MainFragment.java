@@ -338,11 +338,13 @@ public class MainFragment extends BaseFragment {
         mListener = null;
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
-        showHeaders(true);
+        startHeadersTransitionInternal(mShowingHeaders);
     }
+
 
     /**
      * This interface must be implemented by activities that contain this

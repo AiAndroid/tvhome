@@ -8,7 +8,7 @@
     <dimen name="lb_browse_expanded_row_no_hovercard_bottom_padding">28dp</dimen>
 
     <dimen name="browse_headers_height">100dp</dimen>
-    <dimen name="browse_headers_margin_top">30dp</dimen>
+    <dimen name="browse_headers_margin_top">40dp</dimen>
     <dimen name="browse_headers_anim_top">100dp</dimen>
     <dimen name="browse_header_text_size">22sp</dimen>
     <dimen name="browse_headers_vertical_margin">10dp</dimen>
@@ -27,7 +27,7 @@
     <dimen name="grid_block_horizontal_padding">50dp</dimen>
     <dimen name="grid_block_vertical_padding">25dp</dimen>
     <dimen name="grid_block_head_vertical_padding">20dp</dimen>
-    <dimen name="item_text_bar_height">20dp</dimen>
+    <dimen name="item_text_bar_height">22dp</dimen>
     <dimen name="grid_header_padding_top">20dp</dimen>
 
 

@@ -1,6 +1,7 @@
 package com.mothership.tvhome;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.tv.ui.metro.model.DisplayItem;
 import com.video.ui.loader.video.GenericAlbumLoader;
@@ -24,5 +25,18 @@ public class ChannelActivity extends MainActivity {
         }
 
         mLoader = GenericAlbumLoader.generateTabsLoader(getBaseContext(), item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        View view = findViewById(R.id.back_arrow);
+        view.setVisibility(View.VISIBLE);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        View view = findViewById(R.id.back_arrow);
+        view.setVisibility(View.GONE);
     }
 }

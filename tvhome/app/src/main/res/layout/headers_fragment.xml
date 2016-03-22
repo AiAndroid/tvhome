@@ -26,10 +26,11 @@
         android:id="@+id/headers"
         android:layout_width="match_parent"
         android:layout_height="@dimen/browse_headers_height"
-        android:paddingTop="@dimen/browse_headers_margin_top"
         style="?attr/headersVerticalGridStyle"
         android:paddingLeft="25dp"
+        android:paddingTop="@dimen/browse_headers_margin_top"
         android:clipToPadding="false"
+        android:layout_centerVertical="true"
         />
     <View
         android:id="@+id/fade_out_edge"
@@ -38,4 +39,15 @@
         android:layout_height="@dimen/lb_browse_header_fading_length"
         android:visibility="gone">
     </View>
+
+    <TextView
+        android:id="@+id/back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="&lt;"
+        android:paddingTop="@dimen/browse_headers_margin_top"
+        android:paddingLeft="25dp"
+        android:textSize="@dimen/browse_header_text_size"
+        android:visibility="gone"
+        />
 </RelativeLayout>

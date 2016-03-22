@@ -33,7 +33,7 @@ import java.util.HashMap;
 public class BlockBasePresenter extends RowPresenter {
     private static final String TAG = "BlockBasePresenter";
     private static final boolean DEBUG = true;
-    private static final int DEFAULT_RECYCLED_POOL_SIZE = 24;
+    private static final int DEFAULT_RECYCLED_POOL_SIZE = 30;
     final DisplayItemSelector mDisplayItemSelector = new DisplayItemSelector();
     /**
      * ViewHolder for the BlockBasePresenter.
@@ -57,25 +57,14 @@ public class BlockBasePresenter extends RowPresenter {
             mPaddingLeft = mGridView.getPaddingLeft();
             mPaddingRight = mGridView.getPaddingRight();
 
+            if (mGridView instanceof HorizontalGridView) {
+                HorizontalGridView gridview = (HorizontalGridView) mGridView;
+                gridview.setScrollEnabled(false);
+            } else if (mGridView instanceof VerticalGridView) {
+                VerticalGridView gridview = (VerticalGridView) mGridView;
+                gridview.setScrollEnabled(false);
+            }
 
- /*           ItemAlignmentFacet facet = new ItemAlignmentFacet();
-            // by default align details_frame to half window height
-            ItemAlignmentFacet.ItemAlignmentDef alignDef1 = new ItemAlignmentFacet.ItemAlignmentDef();
-            alignDef1.setItemAlignmentViewId(R.id.details_frame);
-            alignDef1.setItemAlignmentOffset(0);
-            alignDef1.setItemAlignmentOffsetPercent(0);
-            // when description is selected, align details_frame to top edge
-            ItemAlignmentFacet.ItemAlignmentDef alignDef2 = new ItemAlignmentFacet.ItemAlignmentDef();
-            alignDef2.setItemAlignmentViewId(R.id.details_frame);
-            alignDef2.setItemAlignmentFocusViewId(R.id.details_overview_description);
-            alignDef2.setItemAlignmentOffset(- rootView.getResources()
-                    .getDimensionPixelSize(R.dimen.lb_details_v2_align_pos_for_description));
-            alignDef2.setItemAlignmentOffsetPercent(0);
-            ItemAlignmentFacet.ItemAlignmentDef[] defs =
-                    new ItemAlignmentFacet.ItemAlignmentDef[] {alignDef1, alignDef2};
-            facet.setAlignmentDefs(defs);
-            //setFacet(ItemAlignmentFacet.class, facet);
-            p.setFacet(ItemAlignmentFacet.class, facet);*/
         }
 
         public final BlockBasePresenter getBlockPresenter() {
@@ -539,6 +528,7 @@ public class BlockBasePresenter extends RowPresenter {
             {
                 BasePresenter basePresenter = (BasePresenter)mDisplayItemSelector.getPresenter(displayItemBlock);
                 super.onBindRowViewHolder(holder, new Row(new HeaderItem(0,displayItemBlock.title)));
+                //super.onBindRowViewHolder(holder, new Row(new HeaderItem(0,"")));
                 if (displayItemBlock.items != null) {
                     int columns = displayItemBlock.ui_type.columns();
                     int rows = displayItemBlock.items.size() / columns;

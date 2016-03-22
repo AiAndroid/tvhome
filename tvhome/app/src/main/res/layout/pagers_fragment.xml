@@ -4,8 +4,8 @@
     android:layout_height="match_parent">
     <ImageView
         android:id="@+id/di_focus_hl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="700dp"
+        android:layout_height="700dp"
         android:visibility="invisible"
         android:src="@drawable/focus"/>
 <com.mothership.tvhome.widget.PagerGroup
