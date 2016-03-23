@@ -14,6 +14,7 @@ import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -34,7 +35,6 @@ import com.tv.ui.metro.model.Block;
 import com.tv.ui.metro.model.DisplayItem;
 import com.tv.ui.metro.model.GenericBlock;
 import com.video.ui.loader.BaseGsonLoader;
-import com.video.ui.loader.video.GenericAlbumLoader;
 import com.video.ui.loader.video.TabsGsonLoader;
 
 import java.io.File;
@@ -54,7 +54,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     DisplayItemSelector mDiSel = new DisplayItemSelector();
     ArrayObjectAdapter mAdapter = new ArrayObjectAdapter(new CardPresenter());
     Handler mHandler = new Handler();
-
+    private long mPreKeytime = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +100,19 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     @Override
     public void onFinish() {
 
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if(event.getAction()==KeyEvent.ACTION_DOWN) {
+            long time = System.currentTimeMillis();
+            if (time - mPreKeytime < 100) {
+                return true;
+            }
+            mPreKeytime = System.currentTimeMillis();
+        }
+
+        return super.dispatchKeyEvent(event);
     }
 
     @Override

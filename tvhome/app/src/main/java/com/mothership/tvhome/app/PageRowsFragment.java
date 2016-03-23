@@ -248,10 +248,9 @@ public class PageRowsFragment extends BaseRowsFragment {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
                     Utils.setScrolling(false);
-                    Log.d("aaaa", "Scrolling(false)");
                 }else{
                     Utils.setScrolling(true);
-                    Log.d("aaaa","Scrolling(true)");
+
                 }
             }
 

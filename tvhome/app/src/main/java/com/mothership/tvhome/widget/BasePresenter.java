@@ -32,6 +32,7 @@ public class BasePresenter extends Presenter
         public TextView mTitle;
         public TextView mSubTitle;
         public ItemTextView mText;
+        public String imageUrl;
         OnFocusChangeListener mFocusChangeListener = new OnFocusChangeListener();
         public VH(View aView)
         {
@@ -122,20 +123,10 @@ public class BasePresenter extends Presenter
             final String posterUrl = di.images.poster().url;
             if (posterUrl != null)
             {
+                vh.imageUrl = posterUrl;
                 if(Utils.isScrolling()){
                     vh.mImg.setImageResource(R.drawable.item_bg_default);
-                    vh.mImg.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Glide.with(vh.mImg.getContext())
-                                    .load(posterUrl)
-                                    .fitCenter()
-                                    .dontTransform()
-                                    .thumbnail(0.1f)
-                                    .error(R.mipmap.ic_launcher)
-                                    .into(vh.mImg);
-                        }
-                    }, 500);
+                    postLoadImage(vh);
                 }else{
                     Glide.with(vh.mImg.getContext())
                             .load(posterUrl)
@@ -190,20 +181,26 @@ public class BasePresenter extends Presenter
             if (mChainedListener != null) {
                 mChainedListener.onFocusChange(view, hasFocus);
             }
-/*
-            TextView title = (TextView) view.findViewById(R.id.di_title);
-            ItemTextView text = (ItemTextView)view.findViewById(R.id.di_text);
-            if(text!=null&&title!=null) {
-                if (hasFocus) {
-                    text.setVisibility(View.GONE);
-                    title.setVisibility(View.VISIBLE);
-                } else {
-                    title.setVisibility(View.GONE);
-                    text.setVisibility(View.VISIBLE);
-                }
-            }
-*/
 
+        }
+    }
+
+    private void postLoadImage(final VH holder){
+        if(Utils.isScrolling()){
+            holder.mImg.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    postLoadImage(holder);
+                }
+            }, 100);
+        }else{
+            Glide.with(holder.mImg.getContext())
+                    .load(holder.imageUrl)
+                    .fitCenter()
+                    .dontTransform()
+                    .thumbnail(0.1f)
+                    .error(R.mipmap.ic_launcher)
+                    .into(holder.mImg);
         }
     }
 }
