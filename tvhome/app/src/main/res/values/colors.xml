@@ -57,5 +57,5 @@
     <color name="lb_guidedactions_selector_color">#26FFFFFF</color>
     <color name="lb_guidedactions_item_unselected_text_color">#FFF1F1F1</color>
     <!-- end refactor naming -->
-
+    <color name="item_bg">#ff171e38</color>
 </resources>

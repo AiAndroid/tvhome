@@ -7,7 +7,7 @@ android {
         applicationId 'com.mothership.tvhome'
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 4
+        versionCode 5
         versionName "1.0"
     }
     buildTypes {

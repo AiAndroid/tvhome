@@ -123,6 +123,7 @@ public class BasePresenter extends Presenter
             if (posterUrl != null)
             {
                 if(Utils.isScrolling()){
+                    vh.mImg.setImageResource(R.drawable.item_bg_default);
                     vh.mImg.postDelayed(new Runnable() {
                         @Override
                         public void run() {
