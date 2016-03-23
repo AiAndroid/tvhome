@@ -115,4 +115,13 @@ public class Utils {
         }
         return 0;
     }
+
+    static boolean scrolling = false;
+    public static boolean isScrolling(){
+        return scrolling;
+    }
+
+    public static void setScrolling(boolean scroll){
+        scrolling = scroll;
+    }
 }

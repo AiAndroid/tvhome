@@ -16,6 +16,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 import com.mothership.tvhome.R;
+import com.mothership.tvhome.Utils;
 import com.mothership.tvhome.widget.BlockBasePresenter;
 import com.mothership.tvhome.widget.RowPresenter;
 
@@ -243,6 +244,21 @@ public class PageRowsFragment extends BaseRowsFragment {
         mRecycledViewPool = null;
         mPresenterMapper = null;
         setExpand(true);
+        getVerticalGridView().addOnScrollListener(new RecyclerView.OnScrollListener() {
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    Utils.setScrolling(false);
+                    Log.d("aaaa", "Scrolling(false)");
+                }else{
+                    Utils.setScrolling(true);
+                    Log.d("aaaa","Scrolling(true)");
+                }
+            }
+
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+            }
+        });
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mothership.tvhome.R;
+import com.mothership.tvhome.Utils;
 import com.tv.ui.metro.model.DisplayItem;
 
 import static android.support.v17.leanback.widget.FocusHighlight.ZOOM_FACTOR_SMALL;
@@ -118,16 +119,33 @@ public class BasePresenter extends Presenter
         if(di.images != null && di.images.poster() != null)
         {
             Log.d(TAG, di.images.poster().url);
-            String posterUrl = di.images.poster().url;
+            final String posterUrl = di.images.poster().url;
             if (posterUrl != null)
             {
-                Glide.with(vh.mImg.getContext())
-                        .load(posterUrl)
-                        .fitCenter()
-                        .dontTransform()
-                        .thumbnail(0.1f)
-                        .error(R.mipmap.ic_launcher)
-                        .into(vh.mImg);
+                if(Utils.isScrolling()){
+                    vh.mImg.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Glide.with(vh.mImg.getContext())
+                                    .load(posterUrl)
+                                    .fitCenter()
+                                    .dontTransform()
+                                    .thumbnail(0.1f)
+                                    .error(R.mipmap.ic_launcher)
+                                    .into(vh.mImg);
+                        }
+                    }, 500);
+                }else{
+                    Glide.with(vh.mImg.getContext())
+                            .load(posterUrl)
+                            .fitCenter()
+                            .dontTransform()
+                            .thumbnail(0.1f)
+                            .error(R.mipmap.ic_launcher)
+                            .into(vh.mImg);
+                }
+
+
             }
         }
     }
