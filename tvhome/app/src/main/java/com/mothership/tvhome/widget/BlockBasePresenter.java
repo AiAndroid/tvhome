@@ -590,7 +590,7 @@ public class BlockBasePresenter extends RowPresenter {
                             // when description is selected, align details_frame to top edge
                             ItemAlignmentFacet.ItemAlignmentDef alignDef2 = new ItemAlignmentFacet.ItemAlignmentDef();
                             alignDef2.setItemAlignmentFocusViewId(100000 + i);
-                            alignDef2.setItemAlignmentOffsetPercent(100f / rows * i + 100f / rows * 0.5f);
+                            alignDef2.setItemAlignmentOffsetPercent(100f / rows * i + 100f / rows * 0.7f);
                             defs[i + 1] = alignDef2;
                         }
 

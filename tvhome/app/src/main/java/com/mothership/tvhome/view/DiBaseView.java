@@ -51,9 +51,20 @@ public class DiBaseView extends LinearLayout
         }
 
         View tv = aView.findViewById(R.id.di_title);
+        View text = aView.findViewById(R.id.di_text);
         if(tv != null)
         {
             tv.setSelected(aGainFocus);
         }
+        if(tv!=null&&text!=null){
+            if(aGainFocus){
+                tv.setVisibility(View.VISIBLE);
+                text.setVisibility(View.GONE);
+            }else{
+                tv.setVisibility(View.GONE);
+                text.setVisibility(View.VISIBLE);
+            }
+        }
+
     }
 }

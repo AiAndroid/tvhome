@@ -30,6 +30,7 @@ public class BasePresenter extends Presenter
         public ImageView mImg;
         public TextView mTitle;
         public TextView mSubTitle;
+        public ItemTextView mText;
         OnFocusChangeListener mFocusChangeListener = new OnFocusChangeListener();
         public VH(View aView)
         {
@@ -37,6 +38,7 @@ public class BasePresenter extends Presenter
             mImg = (ImageView) aView.findViewById(R.id.di_img);
             mTitle = (TextView) aView.findViewById(R.id.di_title);
             mSubTitle = (TextView) aView.findViewById(R.id.di_subtitle);
+            mText = (ItemTextView)aView.findViewById(R.id.di_text);
 
         }
 
@@ -78,13 +80,14 @@ public class BasePresenter extends Presenter
     @Override
     public void onBindViewHolder(ViewHolder aViewHolder, Object aItem)
     {
-        VH vh = (VH) aViewHolder;
+        final VH vh = (VH) aViewHolder;
         DisplayItem di = (DisplayItem) aItem;
         if(di.ui_type!=null) {
             vh.view.setId(di.ui_type.rows() + 100000);
         }else{
             vh.view.setId(View.NO_ID);
         }
+
         if(vh.mSubTitle != null)
         {
             vh.mSubTitle.setText(di.sub_title);
@@ -94,11 +97,23 @@ public class BasePresenter extends Presenter
             vh.mTitle.setText(di.title);
         }
 
+        if(vh.mText!=null){
+            vh.mText.setText(di.title);
+        }
+
         ViewGroup.LayoutParams lpImg = vh.mImg.getLayoutParams();
         if(mBaseHeight != 0 && mBaseWidth != 0)
         {
             lpImg.width = mBaseWidth;
             lpImg.height = mBaseHeight;
+            if(di.ui_type!=null) {
+                int w = di.ui_type.w();
+                int h = di.ui_type.h();
+                if (w > 0 && h > 0) {
+                    lpImg.width *= w;
+                    lpImg.height *= h;
+                }
+            }
         }
         if(di.images != null && di.images.poster() != null)
         {
@@ -148,12 +163,28 @@ public class BasePresenter extends Presenter
 
         @Override
         public void onFocusChange(View view, boolean hasFocus) {
+            if(hasFocus)
+            Log.d("focus","View "+view, new Exception("e"));
             if (mFocusHighlight != null) {
                 mFocusHighlight.onItemFocused(view, hasFocus);
             }
             if (mChainedListener != null) {
                 mChainedListener.onFocusChange(view, hasFocus);
             }
+/*
+            TextView title = (TextView) view.findViewById(R.id.di_title);
+            ItemTextView text = (ItemTextView)view.findViewById(R.id.di_text);
+            if(text!=null&&title!=null) {
+                if (hasFocus) {
+                    text.setVisibility(View.GONE);
+                    title.setVisibility(View.VISIBLE);
+                } else {
+                    title.setVisibility(View.GONE);
+                    text.setVisibility(View.VISIBLE);
+                }
+            }
+*/
+
         }
     }
 }

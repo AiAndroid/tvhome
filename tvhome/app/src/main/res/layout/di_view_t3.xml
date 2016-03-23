@@ -17,8 +17,8 @@
         android:scaleType="centerCrop"
         />
 
-    <TextView
-        android:id="@+id/di_title"
+    <com.mothership.tvhome.widget.ItemTextView
+        android:id="@+id/di_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -14,10 +14,15 @@
         android:adjustViewBounds="true"
         android:layout_weight="0.99"
         />
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/item_text_bar_height"-->
-        <!--android:orientation="vertical">-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_text_bar_height">
+        <com.mothership.tvhome.widget.ItemTextView
+            android:id="@+id/di_text"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_text_bar_height"
+            android:paddingTop="2dp"
+            />
         <TextView
             android:id="@+id/di_title"
             android:layout_width="match_parent"
@@ -27,6 +32,7 @@
             android:gravity="center"
             android:textSize="16sp"
             android:layout_marginTop="2dp"
+            android:visibility="gone"
             />
         <TextView
             android:id="@+id/di_subtitle"
@@ -34,5 +40,7 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:visibility="gone"/>
+    </FrameLayout>
+
     <!--</LinearLayout>-->
 </com.mothership.tvhome.view.DiBaseView>
