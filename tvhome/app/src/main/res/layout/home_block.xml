@@ -14,7 +14,11 @@
     <!--android:layout_height="wrap_content"-->
     <!--android:background="@drawable/a1"-->
     <!--/>-->
-
+ <!--   <com.mothership.tvhome.tv.TVSurfaceView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="@dimen/source_window_width"
+        android:layout_height="@dimen/source_window_height"
+        android:focusable="true">
+    </com.mothership.tvhome.tv.TVSurfaceView> -->
     <LinearLayout
         android:id="@+id/c2"
         android:layout_width="wrap_content"

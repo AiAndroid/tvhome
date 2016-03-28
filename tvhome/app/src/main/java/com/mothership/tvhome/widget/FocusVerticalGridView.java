@@ -78,4 +78,10 @@ public class FocusVerticalGridView extends VerticalGridView {
 
         return false;
     }
+
+    @Override
+    public void requestChildFocus(View child, View focused) {
+        //if(child==focused)return;
+        super.requestChildFocus(child,focused);
+    }
 }

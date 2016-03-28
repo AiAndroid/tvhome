@@ -610,7 +610,7 @@ public class MainFragment extends BaseFragment {
                     if (DEBUG) Log.v(TAG, "onFocusSearch focused " + focused + " + direction " + direction);
                     if(mCanShowHeaders && direction == View.FOCUS_UP){
                         return mHeadersFragment.getView();
-                    }else if(direction == View.FOCUS_DOWN){
+                    }else if(direction == View.FOCUS_DOWN && mShowingHeaders){
                         return mPagesFragment.getView();
                     }else{
                         return null;
