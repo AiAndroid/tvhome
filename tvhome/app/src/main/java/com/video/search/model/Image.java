@@ -1,4 +1,4 @@
-package com.video.model;
+package com.video.search.model;
 
 /**
  * 海报图/角标

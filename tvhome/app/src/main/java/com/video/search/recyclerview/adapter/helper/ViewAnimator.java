@@ -19,7 +19,7 @@
  *   limitations under the License.
  *  *****************************************************************************
  */
-package com.video.search.access.recyclerview.adapter.helper;
+package com.video.search.recyclerview.adapter.helper;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;

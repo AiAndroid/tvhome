@@ -12,9 +12,9 @@ import android.webkit.MimeTypeMap;
 
 //import com.mitv.video.activity.MainActivity;
 //import com.video.common.Action;
-import com.video.model.HotSR;
-import com.video.model.Item;
-import com.video.model.MediaBase;
+import com.video.search.model.HotSR;
+import com.video.search.model.Item;
+import com.video.search.model.MediaBase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;

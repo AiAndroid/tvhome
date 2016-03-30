@@ -1,7 +1,7 @@
-package com.video.search.access.access.api;
+package com.video.search.access.api;
 
-import com.video.search.access.access.Params;
-import com.video.search.access.access.ResponseStatus;
+import com.video.search.access.Params;
+import com.video.search.access.ResponseStatus;
 
 import org.json.JSONObject;
 

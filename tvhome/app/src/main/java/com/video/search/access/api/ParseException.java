@@ -1,4 +1,4 @@
-package com.video.search.access.access.api;
+package com.video.search.access.api;
 /**
  * 
  * @since 2014-7-10 16:03:43

@@ -1,4 +1,4 @@
-package com.video.model;
+package com.video.search.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

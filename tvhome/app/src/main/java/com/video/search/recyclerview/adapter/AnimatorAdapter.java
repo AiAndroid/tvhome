@@ -15,7 +15,7 @@
  *   limitations under the License.
  *  *****************************************************************************
  */
-package com.video.search.access.recyclerview.adapter;
+package com.video.search.recyclerview.adapter;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -27,8 +27,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.video.search.access.recyclerview.adapter.helper.AnimatorUtil;
-import com.video.search.access.recyclerview.adapter.helper.ViewAnimator;
+import com.video.search.recyclerview.adapter.helper.AnimatorUtil;
+import com.video.search.recyclerview.adapter.helper.ViewAnimator;
 
 /**
  * The class applies multiple {@link Animator}s at once to views when they are first shown.

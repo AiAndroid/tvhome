@@ -1,9 +1,12 @@
-package com.video.model;
+package com.video.search.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.video.search.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zhuzhenhua on 15-12-16.
@@ -15,6 +18,7 @@ public class MediaBase implements Parcelable {
     public String subtitle;
     public String category;// 分类名称,如电影/综艺
     public String posterurl;
+    public List<List<Integer>> highlighting;
     public String md5;
     public String detail_title; // 标题
     public String source_icon_url;
@@ -47,6 +51,18 @@ public class MediaBase implements Parcelable {
         douban_rating = in.readFloat();
         xiaomi_rating = in.readFloat();
         detail_title = in.readString();
+        int arrL = in.readInt();
+        highlighting = new ArrayList();
+        for(int i = 0; i < arrL; ++ i)
+        {
+            int aL = in.readInt();
+            List<Integer> pl = new ArrayList<Integer>();
+            for(int j = 0; j < aL; ++ j)
+            {
+                pl.add(in.readInt());
+            }
+            highlighting.add(pl);
+        }
     }
 
     public static final Creator<MediaBase> CREATOR = new Creator<MediaBase>() {
@@ -77,6 +93,16 @@ public class MediaBase implements Parcelable {
         dest.writeFloat(douban_rating);
         dest.writeFloat(xiaomi_rating);
         dest.writeString(detail_title);
+        dest.writeInt(highlighting.size());
+        for(int i = 0; i < highlighting.size(); ++ i)
+        {
+            List<Integer> lst = highlighting.get(i);
+            dest.writeInt(lst.size());
+            for(Integer val : lst)
+            {
+                dest.writeInt(val);
+            }
+        }
     }
 
     public static class CpExtra {

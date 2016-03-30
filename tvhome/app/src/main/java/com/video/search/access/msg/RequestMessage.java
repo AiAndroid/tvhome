@@ -1,4 +1,4 @@
-package com.video.search.access.access.msg;
+package com.video.search.access.msg;
 
 import org.json.JSONObject;
 
@@ -8,7 +8,8 @@ import org.json.JSONObject;
  *
  * @author zzh
  */
-public class RequestMessage extends Message {
+public class RequestMessage extends Message
+{
 
 	public RequestMessage() {
 		message = new JSONObject();

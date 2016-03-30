@@ -1,9 +1,16 @@
 package com.mothership.tvhome.app;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +18,13 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.mothership.tvhome.R;
-import com.video.search.access.access.Params;
-import com.video.search.access.access.VolleyHelper;
-import com.video.model.MediaBase;
-import com.video.search.access.recyclerview.adapter.AlphaAnimatorAdapter;
+import com.video.search.model.MediaBase;
+import com.video.search.access.Params;
+import com.video.search.access.VolleyHelper;
+import com.video.search.recyclerview.adapter.AlphaAnimatorAdapter;
 import com.video.utils.ViewHelper;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +41,11 @@ public class MediaListFragment extends BaseListFragment {
     private String mActivityName;
 
     protected List<MediaBase> mData;
+    static final Charset Cs;
+    static
+    {
+        Cs = Charset.forName("UTF-8");
+    }
 
     public static Fragment newInstance(List<MediaBase> medias) {
         return newInstance("", medias);
@@ -93,7 +106,67 @@ public class MediaListFragment extends BaseListFragment {
 
             MediaBase m = getItem(position);
             if (m.isNormalItem()) {
-                holder.title.setText(m.medianame);
+//
+                byte bytes[] = null;
+                if(Cs != null && m.highlighting != null && !m.highlighting.isEmpty())
+                {
+                    bytes = m.medianame.getBytes(Cs);
+                }
+                ArrayList<Pair<String, Boolean>> segs = new ArrayList<Pair<String, Boolean>>();
+                if(bytes != null)
+                {
+                    int scanP = 0;
+                    for(List<Integer> l : m.highlighting)
+                    {
+                        int st = 0, ed = 0;
+                        String seg = null;
+                        if(l.size() >= 2)
+                        {
+                            st = l.get(0);
+                            ed = l.get(1);
+                        }
+                        if(st > scanP)
+                        {
+                            seg = new String(bytes, scanP, st);
+                            segs.add(Pair.create(seg, Boolean.FALSE));
+                        }
+
+                        if(ed <= bytes.length)
+                        {
+                            seg = new String(bytes, st, ed - st, Cs);
+                            segs.add(Pair.create(seg, Boolean.TRUE));
+                            scanP = ed;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    if(scanP < bytes.length)
+                    {
+                        String seg = new String(bytes, scanP, bytes.length - scanP, Cs);
+                        segs.add(Pair.create(seg, Boolean.FALSE));
+                    }
+                }
+                if(!segs.isEmpty())
+                {
+                    SpannableStringBuilder ssb = new SpannableStringBuilder();
+                    for(Pair<String, Boolean> p : segs)
+                    {
+                        int st = ssb.length();
+                        ssb.append(p.first);
+                        if(p.second)
+                        {
+                            ForegroundColorSpan span=new ForegroundColorSpan(Color.RED);
+                            ssb.setSpan(span, st, ssb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        }
+                    }
+                    holder.title.setText(ssb);
+                }
+                else
+                {
+                    holder.title.setText(m.medianame);
+                }
 
                 StringBuffer sb = new StringBuffer(m.category);
                 if (m.year > 0) {

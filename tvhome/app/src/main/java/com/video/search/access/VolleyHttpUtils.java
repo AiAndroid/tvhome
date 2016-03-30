@@ -1,12 +1,12 @@
-package com.video.search.access.access;
+package com.video.search.access;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.video.search.access.access.api.ApiCallback;
-import com.video.search.access.access.api.ParseException;
-import com.video.search.access.access.msg.RequestMessage;
+import com.video.search.access.api.ApiCallback;
+import com.video.search.access.api.ParseException;
+import com.video.search.access.msg.RequestMessage;
 
 import org.json.JSONObject;
 

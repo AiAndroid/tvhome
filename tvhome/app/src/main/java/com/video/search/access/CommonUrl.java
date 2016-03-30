@@ -1,4 +1,6 @@
-package com.video.search.access.access;
+package com.video.search.access;
+
+import android.util.Log;
 
 import com.video.search.Config;
 import com.video.search.Constants;
@@ -9,6 +11,7 @@ import java.net.URL;
 
 public class CommonUrl {
 
+    private static final String TAG = "CommonUrl";
     private CommonUrlBuilder mUrlBuilder;
 
 
@@ -25,7 +28,9 @@ public class CommonUrl {
     }
 
     public String build() {
-        return build(Constants.API_TOKEN, Constants.API_SECRET_KEY);
+        String res = build(Constants.API_TOKEN, Constants.API_SECRET_KEY);
+        Log.d(TAG, "build " + res);
+        return res;
     }
 
     public String build(String token, String key) {

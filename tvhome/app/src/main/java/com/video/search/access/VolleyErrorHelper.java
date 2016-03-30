@@ -1,4 +1,4 @@
-package com.video.search.access.access;
+package com.video.search.access;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;

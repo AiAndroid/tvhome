@@ -1,4 +1,4 @@
-package com.video.model;
+package com.video.search.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
 

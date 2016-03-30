@@ -1,4 +1,4 @@
-package com.video.search.access.access;
+package com.video.search.access;
 
 public interface Params {
 

@@ -1,4 +1,4 @@
-package com.video.model;
+package com.video.search.model;
 
 public class Item {
     public String id;

@@ -15,7 +15,9 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/margin_small"
         android:ellipsize="marquee"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:duplicateParentState="true"
+        android:textColor="@color/tv_seach_result_text"/>
 
     <TextView
         android:id="@+id/media_item_sub_text"

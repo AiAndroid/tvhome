@@ -1,4 +1,4 @@
-package com.video.model;
+package com.video.search.model;
 
 /**
  * Created by zhuzhenhua on 15-12-3.

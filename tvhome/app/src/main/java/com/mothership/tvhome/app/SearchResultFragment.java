@@ -14,17 +14,17 @@ import android.widget.TextView;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.mothership.tvhome.R;
 import com.mothership.tvhome.view.TagViewGroup;
-import com.video.search.access.access.CommonUrl;
-import com.video.search.access.access.Params;
-import com.video.search.access.access.VolleyHttpUtils;
-import com.video.search.access.access.api.ApiGetEntity;
-import com.video.search.access.access.msg.RequestMessage;
+import com.video.search.access.CommonUrl;
+import com.video.search.access.Params;
+import com.video.search.access.VolleyHttpUtils;
+import com.video.search.access.api.ApiGetEntity;
+import com.video.search.access.msg.RequestMessage;
 import com.video.search.Action;
 import com.video.search.Config;
 //import com.video.fragment.detail.MediaListFragment;
-import com.video.model.CineasteSR;
-import com.video.model.HotSR;
-import com.video.model.MediaSR;
+import com.video.search.model.CineasteSR;
+import com.video.search.model.HotSR;
+import com.video.search.model.MediaSR;
 import com.video.utils.Tools;
 
 /**

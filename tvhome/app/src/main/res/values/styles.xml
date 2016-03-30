@@ -22,7 +22,7 @@
 
     <style name="KeyboardBtn">
         <item name="android:background">@drawable/key_btn_bg</item>
-        <item name="android:textColor">@color/tv_text</item>
+        <item name="android:textColor">@color/tv_seach_button_text</item>
         <item name="android:textSize">21dp</item>
         <item name="android:layout_width">46dp</item>
         <item name="android:layout_height">46dp</item>

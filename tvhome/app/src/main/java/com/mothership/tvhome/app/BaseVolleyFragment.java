@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.android.volley.RequestQueue;
-import com.video.search.access.access.VolleyHelper;
+import com.video.search.access.VolleyHelper;
 
 /**
  * Created by zhuzhenhua on 16-1-7.

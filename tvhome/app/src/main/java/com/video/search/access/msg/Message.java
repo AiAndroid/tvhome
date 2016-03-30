@@ -1,4 +1,4 @@
-package com.video.search.access.access.msg;
+package com.video.search.access.msg;
 
 import org.json.JSONObject;
 

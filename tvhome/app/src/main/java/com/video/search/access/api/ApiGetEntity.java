@@ -1,4 +1,4 @@
-package com.video.search.access.access.api;
+package com.video.search.access.api;
 
 import com.alibaba.fastjson.JSON;
 import com.video.utils.ReflectUtil;
