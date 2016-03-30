@@ -34,4 +34,12 @@
     <dimen name="source_window_height">300dp</dimen>
 
 
+
+    <dimen name="margin_tiny">5dp</dimen>
+    <dimen name="margin_small">10dp</dimen>
+    <dimen name="margin_normal">15dp</dimen>
+    <dimen name="margin_large">25dp</dimen>
+    <dimen name="margin_xlarge">36dp</dimen>
+
+
 </resources>

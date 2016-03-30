@@ -40,6 +40,13 @@
         <provider
             android:authorities="com.mothership.video.mobile"
             android:name="com.video.ui.idata.iDataProvider"/>
+
+
+        <activity android:name=".SearchActivity">
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN"></action>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

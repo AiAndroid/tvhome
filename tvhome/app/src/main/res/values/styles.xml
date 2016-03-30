@@ -18,4 +18,53 @@
     <style name="tv_text" parent="android:Widget.TextView">
         <item name="android:textColor">@color/tv_text</item>
     </style>
+
+
+    <style name="KeyboardBtn">
+        <item name="android:background">@drawable/key_btn_bg</item>
+        <item name="android:textColor">@color/tv_text</item>
+        <item name="android:textSize">21dp</item>
+        <item name="android:layout_width">46dp</item>
+        <item name="android:layout_height">46dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginRight">6dp</item>
+    </style>
+
+    <style name="KeyboardBtnLight" parent="@style/KeyboardBtn">
+        <item name="android:background">@drawable/key_btn_bg</item>
+    </style>
+
+    <style name="KeyboardNumberBtn" parent="@style/KeyboardBtn">
+        <item name="android:textSize">27dp</item>
+        <item name="android:layout_marginTop">17dp</item>
+        <item name="android:layout_marginBottom">17dp</item>
+        <item name="android:layout_marginLeft">25dp</item>
+        <item name="android:layout_marginRight">25dp</item>
+    </style>
+
+
+    <style name="BaseTag" parent="@style/TextPadding">
+        <item name="android:textSize">16dp</item>
+        <item name="android:layout_marginRight">@dimen/margin_small</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="BaseTag.Round">
+        <item name="android:background">@drawable/list_item_bg</item>
+    </style>
+
+
+    <style name="TextPadding">
+        <item name="android:paddingLeft">@dimen/margin_small</item>
+        <item name="android:paddingRight">@dimen/margin_small</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+    </style>
+
 </resources>

@@ -39,4 +39,5 @@ dependencies {
     compile 'com.facebook.fresco:imagepipeline-okhttp:0.9.0+'
     compile 'com.android.support:gridlayout-v7:23.2.0'
     compile files('libs/mitvmiddleware.jar')
+    compile 'com.alibaba:fastjson:1.2.8'
 }

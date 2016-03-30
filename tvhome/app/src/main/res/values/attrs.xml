@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TagViewGroup">
+        <attr name="tvgBackground" format="reference" />
+        <attr name="tvgTextColor" format="color" />
+        <attr name="tvgBorder" format="dimension" />
+        <attr name="tvgTextSize" format="integer" />
+        <attr name="tvgBorderItem" format="dimension" />
+        <attr name="tvgItemBorderVertical" format="dimension" />
+        <attr name="tvgItemBorderHorizontal" format="dimension" />
+
+        <attr name="tvgSingleLine" format="boolean" />
+        <attr name="tvgShowEndText" format="boolean" />
+        <attr name="tvgShowRightImg" format="boolean" />
+        <attr name="tvgEndText" format="string" />
+        <attr name="tvgRightResId" format="reference" />
+        <attr name="tvgCanTagClick" format="boolean" />
+
+        <attr name="tvgTagResId" format="reference" />
+    </declare-styleable>
+
+</resources>

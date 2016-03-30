@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="30dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="@string/search"
+        android:textSize="24dp" />
+
+    <EditText
+        android:id="@+id/inputBox"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_search"
+        android:focusable="false"
+        android:gravity="center_vertical"
+        android:hint="@string/search_input_hint"
+        android:inputType="textNoSuggestions"
+        android:padding="10dp"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="@string/search_input_sample"
+        android:textColor="#b3ffffff" />
+
+    <GridLayout
+        android:id="@+id/keyBoard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:columnCount="5"
+        android:orientation="horizontal">
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="A" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="B" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="C" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="D" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="E" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="F" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="G" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="H" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="I" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="J" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="K" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="L" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="M">
+
+            <requestFocus />
+        </Button>
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="N" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="O" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="P" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="Q" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="R" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="S" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="T" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="U" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="V" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="W" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="X" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:text="Y" />
+
+        <Button
+            android:id="@+id/switchNumberBtn"
+            style="@style/KeyboardBtnLight"
+            android:text="123"
+            android:textSize="18dp" />
+
+        <Button
+            style="@style/KeyboardBtn"
+            android:layout_column="2"
+            android:text="Z" />
+
+        <ImageButton
+            android:id="@+id/backspaceBtn"
+            style="@style/KeyboardBtnLight"
+            android:layout_column="4"
+            android:layout_gravity="fill"
+            android:src="@drawable/ic_backspace" />
+    </GridLayout>
+
+    <GridLayout
+        android:id="@+id/keyBoardNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:columnCount="3"
+        android:orientation="horizontal"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:visibility="gone">
+
+        <Button
+            style="@style/KeyboardNumberBtn"
+            android:text="1" />
+
+        <Button
+            style="@style/KeyboardNumberBtn"
+            android:text="2" />
+
+        <Button
+            style="@style/KeyboardNumberBtn"
+            android:text="3" />
+
+        <Button
+            style="@style/KeyboardNumberBtn"
+            android:text="4" />
+
+        <Button
+            style="@style/KeyboardNumberBtn"
+            android:text="5" />
+
+        <Button
+            style="@style/KeyboardNumberBtn"
+            android:text="6" />
+
+        <Button
+            style="@style/KeyboardNumberBtn"
+            android:text="7" />
+
+        <Button
+            style="@style/KeyboardNumberBtn"
+            android:text="8" />
+
+        <Button
+            style="@style/KeyboardNumberBtn"
+            android:text="9" />
+
+        <Button
+            android:id="@+id/switchLetterBtn"
+            style="@style/KeyboardNumberBtn"
+            android:text="ABC"
+            android:textSize="18dp" />
+
+        <Button
+            style="@style/KeyboardNumberBtn"
+            android:text="0" />
+
+        <ImageButton
+            android:id="@+id/backspaceBtnInNumber"
+            style="@style/KeyboardNumberBtn"
+            android:src="@drawable/ic_backspace" />
+    </GridLayout>
+
+</LinearLayout>
