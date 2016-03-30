@@ -35,6 +35,7 @@ import java.util.List;
  */
 public class MediaListFragment extends BaseListFragment {
 
+    static final String TAG = "MediaListFragment";
     protected VolleyHelper mVolleyHelper;
     protected RequestQueue mRequestQueue;
 
@@ -111,6 +112,7 @@ public class MediaListFragment extends BaseListFragment {
                 if(Cs != null && m.highlighting != null && !m.highlighting.isEmpty())
                 {
                     bytes = m.medianame.getBytes(Cs);
+//                    Log.d(TAG, m.medianame + " " + bytes.length);
                 }
                 ArrayList<Pair<String, Boolean>> segs = new ArrayList<Pair<String, Boolean>>();
                 if(bytes != null)
@@ -134,6 +136,7 @@ public class MediaListFragment extends BaseListFragment {
                         if(ed <= bytes.length)
                         {
                             seg = new String(bytes, st, ed - st, Cs);
+//                            Log.d(TAG, "got seg " + seg + " st " + st + " ed " + ed);
                             segs.add(Pair.create(seg, Boolean.TRUE));
                             scanP = ed;
                         }
