@@ -1,5 +1,6 @@
 package com.mothership.tvhome.widget;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.NinePatchDrawable;
@@ -35,13 +36,15 @@ public class FocusHLMgr implements ViewTreeObserver.OnScrollChangedListener
     static final int Move2LastFocus = 1;
     static final int MoveDelay = 30;
     int mLastX, mLastY;
+    ValueAnimator mAnim = ValueAnimator.ofFloat(1.0f, 1.1f);
+    int mPl, mPt;
     Handler.Callback mCb = new Handler.Callback()
     {
         @Override
         public boolean handleMessage(Message msg)
         {
 //            Log.d(TAG, "handle message");
-            move2LastFocus();
+            move2LastFocus(false);
             return true;
         }
     };
@@ -54,12 +57,35 @@ public class FocusHLMgr implements ViewTreeObserver.OnScrollChangedListener
         aFocusHL.getViewTreeObserver().addOnScrollChangedListener(this);
 
         mHandler = new Handler(Looper.myLooper(), mCb);
+        mAnim.setDuration(150);
+        mAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
+        {
+            @Override
+            public void onAnimationUpdate(ValueAnimator anim)
+            {
+                float scaleF = ((Float) anim.getAnimatedValue()).floatValue();
+                ViewGroup.LayoutParams lp = mFocusHLT.getLayoutParams();
+                int nw = (int) (scaleF * mTmpR.width()) + mTmpP.left + mTmpP.right;
+                int nh = (int) (scaleF * (mTmpR.height())) + mTmpP.top + mTmpP.bottom;
+                if(lp.width != nw || lp.height != nh)
+                {
+                    lp.width = nw;
+                    lp.height = nh;
+                    mFocusHLT.requestLayout();
+                }
+
+                int curX = (int) (mTmpR.left - mTmpR.width() * (scaleF - 1.0f) / 2 + mPl - mTmpP.left);
+                int curY = (int) (mTmpR.top - mTmpR.height() * (scaleF - 1.0f) / 2 + mPt - mTmpP.top);
+                mFocusHLT.setX(curX);
+                mFocusHLT.setY(curY);
+            }
+        });
     }
 
     public void viewGotFocus(View aFV)
     {
         mLastFocus = aFV;
-        move2LastFocus();
+        move2LastFocus(true);
         postCheckMsg();
     }
 
@@ -72,7 +98,7 @@ public class FocusHLMgr implements ViewTreeObserver.OnScrollChangedListener
         }
     }
 
-    void move2LastFocus()
+    void move2LastFocus(boolean aFocusChanged)
     {
         if(!mLastFocus.hasFocus())
         {
@@ -92,34 +118,26 @@ public class FocusHLMgr implements ViewTreeObserver.OnScrollChangedListener
 
             NinePatchDrawable np = (NinePatchDrawable) mFocusHLT.getBackground();
             np.getPadding(mTmpP);
-
-            int deltaXBase = mTmpR.width(), deltaYBase = mTmpR.height();
-            int pl = 0, pt = 0;
             View v = mLastFocus.findViewById(R.id.di_img);
             if (v != null)
             {
                 v.getDrawingRect(mTmpR);
                 ((ViewGroup)mLastFocus).offsetDescendantRectToMyCoords(v, mTmpR);
-                pl = mTmpR.left;
-                pt = mTmpR.top;
+                mPl = mTmpR.left;
+                mPt = mTmpR.top;
 
                 v.getDrawingRect(mTmpR);
-                pv.offsetDescendantRectToMyCoords(mLastFocus, mTmpR);
+                pv.offsetDescendantRectToMyCoords(v, mTmpR);
             }
-            float scaleF = 1.1f, delta = 0.1f;
-            ViewGroup.LayoutParams lp = mFocusHLT.getLayoutParams();
-            int nw = (int) (scaleF * mTmpR.width()) + mTmpP.left + mTmpP.right;
-            int nh = (int) (scaleF * (mTmpR.height())) + mTmpP.top + mTmpP.bottom;
-            if(lp.width != nw || lp.height != nh)
+
+            if(aFocusChanged)
             {
-                lp.width = nw;
-                lp.height = nh;
-                mFocusHLT.requestLayout();
+                mAnim.start();
             }
 
-
-            int curX = (int)(mTmpR.left - deltaXBase * delta / 2 + pl - mTmpP.left);
-            int curY = (int)(mTmpR.top - deltaYBase * delta / 2 + pt - mTmpP.top);
+            float value = ((Float) mAnim.getAnimatedValue()).floatValue();
+            int curX = (int) (mTmpR.left - mTmpR.width() * (value - 1.0f) / 2 + mPl - mTmpP.left);
+            int curY = (int) (mTmpR.top - mTmpR.height() * (value - 1.0f) / 2 + mPt - mTmpP.top);
             mFocusHLT.setX(curX);
             mFocusHLT.setY(curY);
 
@@ -172,7 +190,7 @@ public class FocusHLMgr implements ViewTreeObserver.OnScrollChangedListener
         if(mLastFocus != null)
         {
             postCheckMsg();
-            move2LastFocus();
+            move2LastFocus(false);
         }
     }
 }
