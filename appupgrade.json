@@ -1,10 +1,10 @@
 {
     "data": {
-        "version_code":8,
-        "recent_change":"更新：输入源",
-        "version_name":"MotherShip——预览版(V08)",
+        "version_code":9,
+        "recent_change":"第一个测试版本",
+        "version_name":"MotherShip(V09)",
         "apk_url":"https://raw.githubusercontent.com/AiAndroid/tvhome/master/release/mothership.apk",
-        "release_date":"2016-05-05 16:30PM",
-        "released_by":""
+        "release_date":"2016-05-27 19:30PM",
+        "released_by":"zhuzhenghua@xiaomi.com"
     }
 }
