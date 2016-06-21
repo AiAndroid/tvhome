@@ -1,10 +1,10 @@
 {
     "data": {
-        "version_code":9,
-        "recent_change":"第一个测试版本",
-        "version_name":"MotherShip(V09)",
+        "version_code":12,
+        "recent_change":"TV All In One",
+        "version_name":"MotherShip(Vi12)",
         "apk_url":"https://raw.githubusercontent.com/AiAndroid/tvhome/master/release/mothership.apk",
-        "release_date":"2016-05-27 19:30PM",
-        "released_by":"zhuzhenhua@xiaomi.com"
+        "release_date":"2016-06-21 19:30PM",
+        "released_by":"TV All In One"
     }
 }
